@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 export default function SplashScreen(){
     // const [progress, setProgress] = useState(0);
 
-    const indicator = document.getElementById("myElement");
+    const indicator = document.getElementById("indicator");
 
     gsap.to(indicator, {
         x: 100, // The value you want to animate
@@ -22,11 +22,11 @@ export default function SplashScreen(){
         </svg>
 
         <div
-			id="progress"
+			className="progress"
 			role="progressbar"
 			aria-valuetext="Loading up macOS Web"
 		>
-			<div className="indicator"></div>
+			<div id="indicator"></div>
 		</div>
       </div>
     )

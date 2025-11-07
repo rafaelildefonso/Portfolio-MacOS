@@ -1,11 +1,19 @@
 import "./App.css";
-import SplashScreen from "./components/SplashScreen";
+import Splash from "./components/Splash";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
+
   return (
-    <>
-      <SplashScreen/>
-    </>
+    <div 
+      className="desktop-screen"
+    >
+      <Splash/>
+      <Header/>
+      <section className="window-area"></section>
+      <Footer/>
+    </div>
   );
 };
 

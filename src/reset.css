@@ -122,3 +122,27 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+button {
+    color: inherit;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #0000;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    position: relative;
+}

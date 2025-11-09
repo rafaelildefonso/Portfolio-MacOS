@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { useWindows } from "../../contexts/WindowContext";
 import "./Window.css";
-import { MinusIcon, XMarkIcon } from "../../assets/icons/Icons";
+import { FulScreenIcon, MinusIcon, XMarkIcon } from "../../assets/icons/Icons";
 
 interface WindowProps {
   id: string;
@@ -12,6 +12,8 @@ interface WindowProps {
   size: { width: number; height: number };
   zIndex: number;
   isMaximized: boolean;
+  isMinimized?: boolean;
+  isVisible?: boolean;
 }
 
 export const Window = ({
@@ -23,6 +25,8 @@ export const Window = ({
   size,
   zIndex,
   isMaximized,
+  isMinimized = false,
+  isVisible = true,
 }: WindowProps) => {
   const {
     closeWindow,
@@ -119,7 +123,7 @@ export const Window = ({
       id={id}
       data-window-id={id}
       ref={windowRef}
-      className="macos-window"
+className={`macos-window ${isMinimized ? 'minimized' : ''}`}
       style={{
         left: position.x,
         top: position.y,
@@ -127,8 +131,13 @@ export const Window = ({
         height: size.height,
         zIndex,
         cursor: isDragging ? "grabbing" : "default",
+        visibility: isVisible ? 'visible' : 'hidden',
+        opacity: isVisible ? 1 : 0,
+        transition: 'opacity 0.2s ease-in-out',
+        position: 'absolute',
+        overflow: 'hidden'
       }}
-      onClick={() => setActiveWindow(id)}
+      onClick={() => !isMinimized && setActiveWindow(id)}
     >
       <div className="liquidGlass-effect"></div>
       
@@ -148,7 +157,10 @@ export const Window = ({
             </button>
             <button
               className="window-control minimize"
-              onClick={() => minimizeWindow(id)}
+              onClick={() => {
+                console.log('=== Botão de minimizar clicado ===', { id, title });
+                minimizeWindow(id);
+              }}
               aria-label="Minimizar"
             >
               <MinusIcon size={12} color="#8B5A00" />
@@ -158,15 +170,7 @@ export const Window = ({
               onClick={() => maximizeWindow(id)}
               aria-label="Maximizar"
             >
-              <svg width="12" height="12" viewBox="0 0 12 12">
-                <path
-                  d="M3 5L6 8L9 5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <FulScreenIcon size={12} color="#006400"/>
             </button>
           </div>
           <div className="window-title">

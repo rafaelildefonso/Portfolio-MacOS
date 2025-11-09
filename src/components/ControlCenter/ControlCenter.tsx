@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../../contexts/ThemeContext";
 import "./ControlCenter.css";
-import { WifiIcon } from "../../assets/icons/Icons";
+import { ThemeIcon, WifiIcon } from "../../assets/icons/Icons";
 
 export const ControlCenter = () => {
   const { toggleTheme, theme } = useTheme();
@@ -30,7 +30,7 @@ export const ControlCenter = () => {
             onClick={() => setWifi(!wifi)}
           />
           <ControlModule
-            icon="🌙"
+            icon={<ThemeIcon size={18} />}
             title="Tema"
             subtitle={theme === "dark" ? "Escuro" : "Claro"}
             active={theme === "dark"}

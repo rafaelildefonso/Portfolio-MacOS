@@ -192,20 +192,39 @@ export const XMarkIcon: IconComponent = ({
     <svg
       width="100%"
       height="100%"
-      viewBox="0 0 16 16"
+      viewBox="1 0 5 7"
       preserveAspectRatio="xMidYMid meet"
       fill={color}
       xmlns="http://www.w3.org/2000/svg"
       style={svgStyle}
       {...props}
     >
-      <g>
-        <path
-          d="M0.252699 15.2429C0.594496 15.575 1.1609 15.575 1.49293 15.2429L7.74293 8.99293L13.9929 15.2429C14.325 15.575 14.9011 15.5847 15.2332 15.2429C15.5652 14.9011 15.5652 14.3445 15.2332 14.0125L8.98317 7.7527L15.2332 1.5027C15.5652 1.17067 15.575 0.604261 15.2332 0.27223C14.8914-0.0695668 14.325-0.0695668 13.9929 0.27223L7.74293 6.52223L1.49293 0.27223C1.1609-0.0695668 0.58473-0.0793324 0.252699 0.27223C-0.0793324 0.614027-0.0793324 1.17067 0.252699 1.5027L6.5027 7.7527L0.252699 14.0125C-0.0793324 14.3445-0.0890981 14.9109 0.252699 15.2429Z"
-          fill={color}
-          fillOpacity="0.85"
-        />
-      </g>
+      <path stroke={color} stroke-width="1.2" stroke-linecap="round" d="M1.182 5.99L5.99 1.182m0 4.95L1.182 1.323"></path>
+    </svg>
+  </div>
+);
+
+export const FulScreenIcon: IconComponent = ({
+  size = "1em",
+  color = "currentColor",
+  className = "",
+  ...props
+}) => (
+  <div
+    style={{ ...iconContainerStyle(size), ...(props.style || {}) }}
+    className={className}
+  >
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="1 0 11 13"
+      preserveAspectRatio="xMidYMid meet"
+      fill={color}
+      xmlns="http://www.w3.org/2000/svg"
+      style={svgStyle}
+      {...props}
+    >
+      <path d="M4.871 3.553L9.37 8.098V3.553H4.871zm3.134 5.769L3.506 4.777v4.545h4.499z" fill={color}></path>
     </svg>
   </div>
 );
@@ -287,7 +306,7 @@ export const ShareIcon: IconComponent = ({
     <svg
       width="100%"
       height="100%"
-      viewBox="0 2 20 22"
+      viewBox="0 2 16 22"
       preserveAspectRatio="xMidYMid meet"
       fill={color}
       xmlns="http://www.w3.org/2000/svg"

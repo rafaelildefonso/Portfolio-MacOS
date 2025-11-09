@@ -1,3 +1,4 @@
+import { ShareIcon } from '../../assets/icons/Icons';
 import './Safari.css';
 
 export const Safari = () => {
@@ -23,9 +24,7 @@ export const Safari = () => {
           <span>sobre-mim.rafael.dev</span>
         </div>
         <button className="safari-share-btn" aria-label="Compartilhar">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 2V10M8 2L5 5M8 2L11 5M3 10V13C3 13.552 3.448 14 4 14H12C12.552 14 13 13.552 13 13V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <ShareIcon/>
         </button>
       </div>
       

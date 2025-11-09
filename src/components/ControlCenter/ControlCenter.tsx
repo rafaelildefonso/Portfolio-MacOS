@@ -5,11 +5,10 @@ import "./ControlCenter.css";
 import { WifiIcon } from "../../assets/icons/Icons";
 
 export const ControlCenter = () => {
-  const { toggleTheme } = useTheme();
+  const { toggleTheme, theme } = useTheme();
   const [volume, setVolume] = useState(50);
   const [brightness, setBrightness] = useState(75);
   const [wifi, setWifi] = useState(true);
-  const [bluetooth, setBluetooth] = useState(true);
 
   return (
     <motion.div 
@@ -31,11 +30,11 @@ export const ControlCenter = () => {
             onClick={() => setWifi(!wifi)}
           />
           <ControlModule
-            icon="🔵"
-            title="Bluetooth"
-            subtitle={bluetooth ? "Ativo" : "Desativado"}
-            active={bluetooth}
-            onClick={() => setBluetooth(!bluetooth)}
+            icon="🌙"
+            title="Tema"
+            subtitle={theme === "dark" ? "Escuro" : "Claro"}
+            active={theme === "dark"}
+            onClick={() => toggleTheme()}
           />
         </div>
 

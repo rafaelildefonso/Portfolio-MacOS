@@ -1,0 +1,713 @@
+/* 
+ * Theme Variables
+ * This file contains all color and styling variables for the application.
+ * Use these variables instead of hardcoded values for consistent theming.
+ */
+
+:root {
+  /* System Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-splash-bg: #000000;
+  
+  /* Grayscale */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #eeeeee;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #bdbdbd;
+  --color-gray-500: #9e9e9e;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
+  
+  /* Primary Colors */
+  --color-primary: #007AFF;
+  --color-primary-light: #5a9eff;
+  --color-primary-dark: #0051a8;
+  --color-primary-contrast: var(--color-white);
+  
+  /* Accent Colors */
+  --color-accent: #34c759;
+  --color-accent-light: #69db7e;
+  --color-accent-dark: #1f7e34;
+  
+  /* Status Colors */
+  --color-success: #34c759;
+  --color-warning: #ff9500;
+  --color-error: #ff3b30;
+  --color-info: #007AFF;
+  --color-status-connected: #34c759;
+  --color-status-disconnected: #ff3b30;
+  
+  /* Window Control Colors */
+  --window-close: #ff5f57;
+  --window-close-hover: #ff3b30;
+  --window-close-icon: #8b0000;
+  --window-minimize: #ffbd2e;
+  --window-minimize-hover: #ff9500;
+  --window-minimize-icon: #8b5a00;
+  --window-maximize: #28c940;
+  --window-maximize-hover: #34c759;
+  --window-maximize-icon: #006400;
+  
+  /* Status Colors */
+  --color-lock-icon: #34c759;
+  --color-badge-bg: rgba(0, 0, 0, 0.1);
+  --color-badge-text: inherit;
+  --color-badge-active-bg: rgba(255, 255, 255, 0.3);
+  
+  /* Backgrounds */
+  --color-bg-primary: var(--color-white);
+  --color-bg-secondary: var(--color-gray-100);
+  --color-bg-tertiary: var(--color-gray-200);
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Text Colors */
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-700);
+  --color-text-tertiary: var(--color-gray-600);
+  --color-text-quaternary: var(--color-gray-500);
+  --color-text-inverse: var(--color-white);
+  
+  /* Borders */
+  --color-border-light: rgba(0, 0, 0, 0.1);
+  --color-border-medium: rgba(0, 0, 0, 0.2);
+  --color-border-heavy: rgba(0, 0, 0, 0.3);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  
+  /* Glass Effects */
+  --glass-bg: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --glass-bg-light: rgba(255, 255, 255, 0.1);
+  --glass-border-light: rgba(255, 255, 255, 0.05);
+  --glass-bg-darker: rgba(0, 0, 0, 0.1);
+  --glass-bg-dark: rgba(30, 30, 30, 0.2);
+  --glass-border-dark: rgba(255, 255, 255, 0.05);
+  --glass-gradient-dark: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 45, 45, 0.8) 100%);
+  
+  /* Safari App */
+  --safari-bg: var(--glass-bg);
+  --safari-toolbar-bg: var(--glass-bg);
+  --safari-toolbar-border: var(--glass-border);
+  --safari-content-bg: var(--glass-bg-light);
+  --safari-url-bg: rgba(255, 255, 255, 0.1);
+  --safari-url-border: rgba(255, 255, 255, 0.1);
+  --safari-url-focus: rgba(0, 122, 255, 0.3);
+  --safari-btn-bg: rgba(255, 255, 255, 0.1);
+  --safari-btn-hover: rgba(0, 0, 0, 0.1);
+  --safari-btn-border: rgba(255, 255, 255, 0.1);
+  --safari-btn-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --safari-lock-icon: #34c759;
+  --safari-avatar-border: rgba(255, 255, 255, 0.1);
+  --safari-avatar-bg: rgba(255, 255, 255, 0.1);
+  --safari-avatar-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --safari-avatar-hover-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  --safari-card-bg: #ffffff;
+  --safari-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --safari-card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --safari-divider: rgba(0, 0, 0, 0.08);
+  --safari-text-primary: #1d1d1f;
+  --safari-text-secondary: #6e6e73;
+  --safari-nav-btn-bg: rgba(255, 255, 255, 0.1);
+  --safari-nav-btn-border: rgba(255, 255, 255, 0.1);
+  --safari-nav-btn-hover: rgba(0, 0, 0, 0.1);
+  --safari-profile-avatar-border: rgba(255, 255, 255, 0.1);
+  --safari-profile-avatar-bg: rgba(255, 255, 255, 0.1);
+  --safari-about-card-bg: rgba(255, 255, 255, 0.4) ;
+  --safari-about-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --safari-about-card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --safari-tech-tag-bg: #007AFF;
+  --safari-tech-tag-text: #ffffff;
+  --safari-experience-divider: rgba(0, 0, 0, 0.08);
+  
+  /* Finder App */
+  --finder-bg: var(--glass-bg);
+  --finder-sidebar-bg: var(--glass-bg);
+  --finder-sidebar-border: var(--glass-border);
+  --finder-section-title: var(--text-secondary);
+  --finder-item-bg: var(--glass-bg);
+  --finder-item-border: var(--glass-border);
+  --finder-item-text: var(--text-primary);
+  --finder-item-hover: var(--glass-hover);
+  --finder-item-active-bg: var(--primary);
+  --finder-item-active-text: var(--text-on-primary);
+  --finder-toolbar-bg: var(--glass-bg);
+  --finder-toolbar-border: var(--glass-border);
+  --finder-view-btn-bg: var(--glass-bg);
+  --finder-view-btn-border: var(--glass-border);
+  --finder-view-btn-text: var(--text-primary);
+  --finder-view-btn-hover: var(--glass-hover);
+  --finder-view-btn-active-bg: var(--primary);
+  --finder-view-btn-active-text: var(--text-on-primary);
+  --finder-view-btn-active-border: var(--primary);
+  --finder-path-text: var(--text-primary);
+  --finder-search-bg: var(--glass-bg);
+  --finder-search-border: var(--glass-border);
+  --finder-search-text: var(--text-primary);
+  --finder-search-caret: var(--primary);
+  --finder-card-bg: var(--glass-bg);
+  --finder-card-border: var(--glass-border);
+  --finder-card-hover-border: var(--primary);
+  --finder-card-selected-border: var(--primary);
+  --finder-card-selected-glow: var(--primary-20);
+  --finder-card-text: var(--text-primary);
+  --finder-card-title: var(--text-primary);
+  --finder-card-info-bg: var(--glass-bg);
+  --finder-preview-bg: var(--glass-bg);
+  --finder-preview-overlay: var(--glass-overlay);
+  --finder-tag-text: var(--text-primary);
+  --finder-tag-bg: var(--glass-bg);
+  --finder-tag-border: var(--glass-border);
+  --finder-tag-hover-bg: var(--glass-hover);
+  
+  /* Tech Tags */
+  --tech-bg: rgba(10, 132, 255, 0.2);
+  --tech-text: #64d2ff;
+  --tech-react: #61dafb;
+  --tech-typescript: #3178c6;
+  --tech-node: #30d158;
+  
+  /* Buttons */
+  --button-bg: var(--glass-bg);
+  --button-text: var(--text-primary);
+  --button-border: var(--glass-border);
+  --button-hover-bg: var(--glass-hover);
+  --button-hover-border: var(--glass-hover);
+  --button-primary-bg: var(--primary);
+  --button-primary-text: var(--text-on-primary);
+  --button-primary-border: var(--primary);
+  --button-primary-hover: var(--primary-dark);
+  
+  /* Numbers App */
+  --numbers-bg: var(--glass-bg);
+  --numbers-toolbar-bg: var(--glass-bg);
+  --numbers-toolbar-border: var(--glass-border);
+  --numbers-content-bg: var(--glass-bg-light);
+  --numbers-card-bg: rgba(255, 255, 255, 0.1);
+  --numbers-card-hover: rgba(255, 255, 255, 0.15);
+  --numbers-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  --numbers-card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --numbers-divider: rgba(255, 255, 255, 0.1);
+  --numbers-scrollbar: rgba(0, 0, 0, 0.1);
+  --numbers-scrollbar-hover: rgba(0, 0, 0, 0.2);
+  --numbers-text-primary: var(--text-primary);
+  --numbers-text-secondary: var(--text-secondary);
+  --numbers-text-tertiary: var(--text-tertiary);
+  --numbers-icon-bg: rgba(0, 0, 0, 0.05);
+  --numbers-icon-color: var(--text-primary);
+  --numbers-progress-bg: rgba(0, 0, 0, 0.06);
+  --numbers-stat-label: var(--text-tertiary);
+  --numbers-stat-value: var(--text-primary);
+  --numbers-search-bg: rgba(255, 255, 255, 0.1);
+  --numbers-search-border: rgba(255, 255, 255, 0.1);
+  --numbers-search-text: var(--text-primary);
+  --numbers-search-placeholder: var(--text-tertiary);
+  --numbers-search-focus: rgba(0, 122, 255, 0.3);
+  --numbers-clear-btn-bg: rgba(0, 122, 255, 0.1);
+  --numbers-clear-btn-hover: rgba(0, 122, 255, 0.15);
+  --numbers-clear-btn-text: #007aff;
+  --numbers-toggle-bg: rgba(255, 255, 255, 0.1);
+  --numbers-toggle-hover: rgba(0, 0, 0, 0.05);
+  --numbers-toggle-active: rgba(255, 255, 255, 0.2);
+  --numbers-category-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --numbers-category-text: #ffffff;
+  --numbers-category-count-bg: rgba(255, 255, 255, 0.15);
+  --numbers-category-count-text: rgba(255, 255, 255, 0.8);
+  --numbers-modal-bg: #ffffff;
+  --numbers-modal-border: rgba(0, 0, 0, 0.05);
+  --numbers-modal-close-bg: rgba(0, 0, 0, 0.05);
+  --numbers-modal-close-hover: rgba(0, 0, 0, 0.1);
+  --numbers-modal-close-icon: #6e6e73;
+  --numbers-modal-divider: rgba(0, 0, 0, 0.05);
+  --numbers-modal-description: #424245;
+  --numbers-btn-outline-bg: transparent;
+  --numbers-btn-outline-border: rgba(0, 0, 0, 0.1);
+  --numbers-btn-outline-text: var(--text-primary);
+  --numbers-btn-outline-hover: rgba(0, 0, 0, 0.02);
+  --numbers-btn-outline-hover-border: rgba(0, 0, 0, 0.2);
+  --numbers-btn-primary-bg: #007aff;
+  --numbers-btn-primary-text: #ffffff;
+  --numbers-btn-primary-hover: #0062cc;
+  --numbers-scrollbar-hover: rgba(0, 0, 0, 0.2);
+  --numbers-category-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --numbers-category-count-bg: rgba(255, 255, 255, 0.15);
+  --numbers-category-count-text: rgba(255, 255, 255, 0.8);
+  --numbers-skill-card-hover: rgba(0, 0, 0, 0.1);
+  --numbers-skill-card-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  
+  /* Mail App */
+  --mail-bg: var(--glass-bg);
+  --mail-sidebar-bg: rgba(245, 245, 247, 0.2);
+  --mail-sidebar-border: var(--glass-border);
+  --mail-content-bg: var(--glass-bg-light);
+  --mail-btn-primary: #007AFF;
+  --mail-btn-hover: #0051D5;
+  --mail-btn-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+  --mail-btn-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+  --mail-text-primary: #fafafa;
+  --mail-text-secondary: #dfdfdf;
+  --mail-folder-hover: rgba(0, 0, 0, 0.05);
+  --mail-folder-active: #007AFF;
+  --mail-folder-bg: rgba(255, 255, 255, 0.1);
+  --mail-folder-border: rgba(255, 255, 255, 0.05);
+  --mail-badge-bg: rgba(0, 0, 0, 0.1);
+  --mail-badge-active: rgba(255, 255, 255, 0.3);
+  --mail-input-border: rgba(0, 0, 0, 0.1);
+  --mail-input-focus: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  --mail-contact-bg: rgba(0, 0, 0, 0.03);
+  --mail-contact-hover: rgba(0, 0, 0, 0.06);
+  --mail-icon-color: #007AFF;
+  --mail-divider: rgba(0, 0, 0, 0.08);
+  
+  /* Component Specific - Light Theme */
+  --dock-bg: rgba(255, 255, 255, 0.2);
+  --dock-border: var(--glass-border);
+  --dock-shadow: var(--glass-shadow);
+  --dock-item-hover: rgba(255, 255, 255, 0.1);
+  --dock-item-active: rgba(255, 255, 255, 0.2);
+  --dock-dot-bg: rgba(255, 255, 255, 0.8);
+  --dock-dot-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+  --dock-label-bg: rgba(0, 0, 0, 0.8);
+  --dock-label-arrow: rgba(0, 0, 0, 0.8);
+  --dock-item-shadow: 
+    -1px -1px 0 0 rgba(255, 255, 255, 0.3),
+    1px 1px 0 0 rgba(0, 0, 0, 0.2);
+  
+  --menubar-bg: var(--glass-bg);
+  --menubar-text: var(--color-text-inverse);
+  --menubar-hover: rgba(255, 255, 255, 0.2);
+  --menubar-active: rgba(255, 255, 255, 0.3);
+  --menubar-divider: rgba(255, 255, 255, 0.2);
+  --menubar-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  --menubar-border: rgba(255, 255, 255, 0.1);
+  --menubar-dropdown-bg: rgba(255, 255, 255, 0.1);
+  --menubar-dropdown-border: rgba(255, 255, 255, 0.1);
+  --menubar-dropdown-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --menubar-status-hover: rgba(255, 255, 255, 0.15);
+  
+  --window-bg: rgba(255, 255, 255, 0.8);
+  --window-border: rgba(255, 255, 255, 0.2);
+  --window-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --window-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.15);
+  --window-header-bg: rgba(255, 255, 255, 0.2);
+  --window-header-border: rgba(255, 255, 255, 0.1);
+  --window-resize-handle: rgba(0, 0, 0, 0.2);
+  --window-title-color: #1d1d1f;
+  
+  --button-bg: rgba(255, 255, 255, 0.1);
+  --button-hover: rgba(255, 255, 255, 0.2);
+  --button-active: rgba(255, 255, 255, 0.3);
+  --button-text: var(--color-text-inverse);
+  
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-text: var(--color-text-inverse);
+  --input-placeholder: rgba(255, 255, 255, 0.5);
+  
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  --tooltip-bg: rgba(0, 0, 0, 0.8);
+  --tooltip-text: var(--color-white);
+  
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.25);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.35);
+  
+  /* Form Elements */
+  --form-bg: rgba(255, 255, 255, 0.1);
+  --form-border: rgba(0, 0, 0, 0.1);
+  --form-text: #1d1d1f;
+  --form-placeholder: #6e6e73;
+  --form-focus: rgba(0, 122, 255, 0.3);
+  --form-focus-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  
+  /* Buttons */
+  --btn-primary-bg: #007AFF;
+  --btn-primary-hover: #0051D5;
+  --btn-primary-text: white;
+  --btn-primary-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+  --btn-primary-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+  
+  /* Control Center */
+  --control-center-bg: rgba(255, 255, 255, 0.1);
+  --control-center-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 12px 48px rgba(0, 0, 0, 0.2);
+  --control-section-bg: rgba(0, 0, 0, 0.05);
+  --control-section-hover: rgba(0, 0, 0, 0.08);
+  --control-section-active: #007AFF;
+  --control-icon-bg: rgba(0, 0, 0, 0.05);
+  --control-icon-color: #6e6e73;
+  --control-slider-bg: rgba(0, 0, 0, 0.1);
+  --control-slider-thumb: #007AFF;
+  --control-slider-thumb-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
+  --control-slider-thumb-hover: 0 4px 12px rgba(0, 122, 255, 0.5);
+  --control-quickaction-bg: rgba(0, 0, 0, 0.05);
+  --control-quickaction-hover: rgba(0, 0, 0, 0.08);
+  --control-wifi-icon-bg: rgba(0, 122, 255, 0.1);
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #2c2c2e;
+  --color-bg-tertiary: #3a3a3c;
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #ebebf5;
+  --color-text-tertiary: #d1d1d6;
+  --color-text-quaternary: #8e8e93;
+  --color-text-muted: #98989d;
+  
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-border-medium: rgba(255, 255, 255, 0.15);
+  --color-border-heavy: rgba(255, 255, 255, 0.2);
+  --color-border-resize: rgba(0, 0, 0, 0.2);
+  
+  /* Component Specific - Dark Theme */
+  --window-bg: rgba(22, 22, 23, 0.8);
+  --window-border: rgba(255, 255, 255, 0.1);
+  --window-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --window-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --window-header-bg: rgba(36, 36, 38, 0.95);
+  --window-header-border: rgba(255, 255, 255, 0.15);
+  --window-resize-handle: rgba(255, 255, 255, 0.3);
+  --window-title-color: #f5f5f7;
+  
+  /* Form Elements - Dark */
+  --form-bg: rgba(60, 60, 60, 0.5);
+  --form-border: rgba(255, 255, 255, 0.1);
+  --form-text: #f5f5f7;
+  --form-placeholder: #98989d;
+  --form-focus: rgba(0, 122, 255, 0.4);
+  --form-focus-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+  
+  /* Buttons - Dark */
+  --btn-primary-bg: rgba(0, 122, 255, 0.8);
+  --btn-primary-hover: rgba(0, 100, 200, 0.9);
+  --btn-primary-text: white;
+  --btn-primary-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+  --btn-primary-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+  
+  /* Profile Section - Dark */
+  --profile-avatar-border: rgba(255, 255, 255, 0.1);
+  --profile-avatar-bg: rgba(30, 30, 30, 0.3);
+  --profile-name: #f5f5f7;
+  --profile-title: #98989d;
+  
+  /* List Items - Dark */
+  --list-divider: rgba(255, 255, 255, 0.08);
+  --list-item-hover: rgba(60, 60, 60, 0.4);
+  --list-item-active: rgba(80, 80, 80, 0.6);
+  
+  --button-bg: rgba(120, 120, 128, 0.25);
+  --button-hover: rgba(120, 120, 128, 0.4);
+  --button-active: rgba(120, 120, 128, 0.5);
+  --button-text: var(--color-white);
+  --button-border: rgba(255, 255, 255, 0.1);
+  
+
+  --dock-border: rgba(255, 255, 255, 0.1);
+  --dock-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.3),
+    -1px -1px 0 0 rgba(255, 255, 255, 0.3),
+    1px 1px 0 0 rgba(0, 0, 0, 0.2);
+  --dock-item-bg: rgba(255, 255, 255, 0.1);
+  --dock-item-hover: rgba(255, 255, 255, 0.2);
+  --dock-item-active: rgba(255, 255, 255, 0.3);
+  --dock-item-dot: rgba(255, 255, 255, 0.6);
+    
+  --input-bg: rgba(120, 120, 128, 0.15);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-text: var(--color-white);
+  --input-placeholder: rgba(255, 255, 255, 0.5);
+  --input-focus: rgba(0, 122, 255, 0.3);
+  
+  --card-bg: rgba(44, 44, 46, 0.95);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --card-hover: rgba(255, 255, 255, 0.15);
+  --card-active: rgba(0, 0, 0, 0.1);
+  --card-dark-bg: rgba(40, 40, 40, 0.8);
+  --card-dark-hover: rgba(60, 60, 60, 0.6);
+  
+  --tooltip-bg: rgba(20, 20, 20, 0.95);
+  --tooltip-text: var(--color-white);
+  --tooltip-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  --scrollbar-thumb: rgba(255, 255, 255, 0.45);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.55);
+  --scrollbar-track: transparent;
+}
+
+/* Dark Theme Overrides */
+:root.dark {
+  /* Mail App Dark Mode */
+  --mail-bg: rgba(30, 30, 30, 0.8);
+  --mail-sidebar-bg: rgba(30, 30, 30, 0.2);
+  --mail-sidebar-border: rgba(255, 255, 255, 0.05);
+  --mail-content-bg: rgba(30, 30, 30, 0.2);
+  --mail-text-primary: #f5f5f7;
+  --mail-text-secondary: #98989d;
+  --mail-folder-hover: rgba(255, 255, 255, 0.1);
+  --mail-folder-active: rgba(0, 122, 255, 0.8);
+  --mail-folder-bg: rgba(255, 255, 255, 0.05);
+  --mail-folder-border: rgba(255, 255, 255, 0.03);
+  --mail-badge-bg: rgba(255, 255, 255, 0.1);
+  --mail-badge-active: rgba(255, 255, 255, 0.3);
+  --mail-input-bg: rgba(60, 60, 60, 0.5);
+  --mail-input-border: rgba(255, 255, 255, 0.1);
+  --mail-input-text: #f5f5f7;
+  --mail-placeholder: #98989d;
+  --mail-contact-bg: rgba(60, 60, 60, 0.4);
+  --mail-contact-hover: rgba(60, 60, 60, 0.6);
+  --mail-divider: rgba(255, 255, 255, 0.08);
+  
+  /* Numbers App Dark Mode */
+  --numbers-bg: rgba(22, 22, 23, 0.5);
+  --numbers-toolbar-bg: rgba(30, 30, 30, 0.8);
+  --numbers-content-bg: rgba(30, 30, 30, 0.3);
+  --numbers-card-bg: rgba(40, 40, 40, 0.6);
+  --numbers-card-hover: rgba(60, 60, 60, 0.6);
+  --numbers-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --numbers-card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --numbers-scrollbar: rgba(255, 255, 255, 0.1);
+  --numbers-scrollbar-hover: rgba(255, 255, 255, 0.2);
+  --numbers-text-primary: #f5f5f7;
+  --numbers-text-secondary: #98989d;
+  --numbers-text-tertiary: #6e6e73;
+  --numbers-icon-bg: rgba(255, 255, 255, 0.1);
+  --numbers-icon-color: #f5f5f7;
+  --numbers-progress-bg: rgba(255, 255, 255, 0.1);
+  --numbers-stat-label: #98989d;
+  --numbers-stat-value: #f5f5f7;
+  --numbers-search-bg: rgba(255, 255, 255, 0.1);
+  --numbers-search-border: rgba(255, 255, 255, 0.1);
+  --numbers-search-text: #f5f5f7;
+  --numbers-search-placeholder: #6e6e73;
+  --numbers-search-focus: rgba(10, 132, 255, 0.3);
+  --numbers-clear-btn-bg: rgba(10, 132, 255, 0.2);
+  --numbers-clear-btn-hover: rgba(10, 132, 255, 0.3);
+  --numbers-clear-btn-text: #64d2ff;
+  --numbers-toggle-bg: rgba(255, 255, 255, 0.1);
+  --numbers-toggle-hover: rgba(255, 255, 255, 0.15);
+  --numbers-toggle-active: rgba(255, 255, 255, 0.25);
+  --numbers-category-bg: linear-gradient(135deg, #7c8bf0 0%, #8a5ab0 100%);
+  --numbers-category-text: #ffffff;
+  --numbers-category-count-bg: rgba(255, 255, 255, 0.15);
+  --numbers-category-count-text: rgba(255, 255, 255, 0.8);
+  --numbers-modal-bg: #1e1e1e;
+  --numbers-modal-border: rgba(255, 255, 255, 0.1);
+  --numbers-modal-close-bg: rgba(255, 255, 255, 0.1);
+  --numbers-modal-close-hover: rgba(255, 255, 255, 0.2);
+  --numbers-modal-close-icon: #8e8e93;
+  --numbers-modal-divider: rgba(255, 255, 255, 0.1);
+  --numbers-modal-description: #8e8e93;
+  --numbers-btn-outline-bg: transparent;
+  --numbers-btn-outline-border: rgba(255, 255, 255, 0.1);
+  --numbers-btn-outline-text: #f5f5f7;
+  --numbers-btn-outline-hover: rgba(255, 255, 255, 0.05);
+  --numbers-btn-outline-hover-border: rgba(255, 255, 255, 0.2);
+  --numbers-btn-primary-bg: #0a84ff;
+  --numbers-btn-primary-text: #ffffff;
+  --numbers-btn-primary-hover: #0071e3;
+  
+  /* Safari App Dark Mode */
+  --safari-bg: rgba(30, 30, 30, 0.2);
+  --safari-toolbar-bg: rgba(30, 30, 30, 0.8);
+  --safari-toolbar-border: rgba(255, 255, 255, 0.05);
+  --safari-content-bg: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 45, 45, 0.8) 100%);
+  --safari-url-bg: rgba(255, 255, 255, 0.05);
+  --safari-url-border: rgba(255, 255, 255, 0.05);
+  --safari-url-text: #f5f5f7;
+  --safari-btn-bg: rgba(255, 255, 255, 0.1);
+  --safari-btn-hover: rgba(255, 255, 255, 0.15);
+  --safari-btn-border: rgba(255, 255, 255, 0.05);
+  --safari-nav-btn-bg: rgba(255, 255, 255, 0.1);
+  --safari-nav-btn-border: rgba(255, 255, 255, 0.05);
+  --safari-nav-btn-hover: rgba(255, 255, 255, 0.15);
+  --safari-avatar-bg: rgba(30, 30, 30, 0.3);
+  --safari-avatar-border: rgba(255, 255, 255, 0.1);
+  --safari-about-card-bg: rgba(40, 40, 40, 0.8);
+  --safari-about-card-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --safari-about-card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --safari-tech-tag-bg: #0a84ff;
+  --safari-tech-tag-text: #ffffff;
+  --safari-experience-divider: rgba(255, 255, 255, 0.08);
+  --safari-text-primary: #f5f5f7;
+  --safari-text-secondary: #98989d;
+  
+  /* Finder Dark Mode */
+  --finder-bg: rgba(30, 30, 30, 0.2);
+  --finder-sidebar-bg: rgba(30, 30, 30, 0.3);
+  --finder-sidebar-border: rgba(255, 255, 255, 0.05);
+  --finder-section-title: #8e8e93;
+  --finder-item-bg: rgba(255, 255, 255, 0.05);
+  --finder-item-border: rgba(255, 255, 255, 0.03);
+  --finder-item-text: #f5f5f7;
+  --finder-item-hover: rgba(255, 255, 255, 0.1);
+  --finder-item-active-bg: rgba(0, 122, 255, 0.8);
+  --finder-item-active-text: #ffffff;
+  --finder-toolbar-bg: rgba(30, 30, 30, 0.8);
+  --finder-toolbar-border: rgba(255, 255, 255, 0.05);
+  --finder-view-btn-bg: rgba(255, 255, 255, 0.05);
+  --finder-view-btn-border: rgba(255, 255, 255, 0.05);
+  --finder-view-btn-text: #98989d;
+  --finder-view-btn-hover: rgba(255, 255, 255, 0.1);
+  --finder-view-btn-active-bg: #0a84ff;
+  --finder-view-btn-active-text: #ffffff;
+  --finder-view-btn-active-border: #0a84ff;
+  --finder-path-text: #f5f5f7;
+  --finder-search-bg: rgba(255, 255, 255, 0.1);
+  --finder-search-border: rgba(255, 255, 255, 0.1);
+  --finder-search-text: #f5f5f7;
+  --finder-search-caret: #0a84ff;
+  --finder-card-bg: rgba(40, 40, 40, 0.8);
+  --finder-card-border: rgba(255, 255, 255, 0.1);
+  --finder-card-hover-border: #0a84ff;
+  --finder-card-selected-border: #0a84ff;
+  --finder-card-selected-glow: rgba(10, 132, 255, 0.3);
+  --finder-card-text: #98989d;
+  --finder-card-title: #f5f5f7;
+  --finder-card-info-bg: rgba(40, 40, 40, 0.9);
+  --finder-preview-bg: rgba(50, 50, 50, 0.8);
+  --finder-preview-overlay: rgba(0, 0, 0, 0.5);
+  --finder-tag-text: #f5f5f7;
+  --finder-tag-bg: rgba(255, 255, 255, 0.1);
+  --finder-tag-border: rgba(255, 255, 255, 0.1);
+  --finder-tag-hover-bg: rgba(255, 255, 255, 0.2);
+  
+  /* Menu Bar Dark Mode */
+  --menubar-bg: rgba(30, 30, 30, 0.3);
+  --menubar-hover: rgba(255, 255, 255, 0.15);
+  --menubar-active: rgba(255, 255, 255, 0.25);
+  --menubar-dropdown-bg: rgba(40, 40, 40, 0.9);
+  --menubar-dropdown-border: rgba(60, 60, 60, 0.6);
+  
+  /* Dock Dark Mode */
+  --dock-dot-bg: rgba(255, 255, 255, 0.9);
+  --dock-dot-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  --dock-label-bg: rgba(20, 20, 20, 0.95);
+  --dock-label-arrow: rgba(20, 20, 20, 0.95);
+  
+  /* Control Center Dark Mode */
+  --control-center-bg: rgba(30, 30, 30, 0.3);
+  --control-section-bg: rgba(255, 255, 255, 0.1);
+  --control-section-hover: rgba(255, 255, 255, 0.15);
+  --control-icon-bg: rgba(255, 255, 255, 0.1);
+  --control-icon-color: #98989d;
+  --control-slider-bg: rgba(255, 255, 255, 0.2);
+  --control-quickaction-bg: rgba(255, 255, 255, 0.1);
+  --control-quickaction-hover: rgba(255, 255, 255, 0.15);
+  --control-wifi-icon-bg: rgba(0, 122, 255, 0.2);
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #2c2c2e;
+  --color-bg-tertiary: #3a3a3c;
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #ebebf5;
+  --color-text-tertiary: #d1d1d6;
+  --color-text-quaternary: #8e8e93;
+  --color-text-muted: #98989d;
+  
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-border-medium: rgba(255, 255, 255, 0.15);
+  --color-border-heavy: rgba(255, 255, 255, 0.2);
+  --color-border-resize: rgba(0, 0, 0, 0.2);
+  
+  /* Component Specific - Dark Theme */
+  --window-bg: rgba(22, 22, 23, 0.8);
+  --window-border: rgba(255, 255, 255, 0.1);
+  --window-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --window-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --window-header-bg: rgba(36, 36, 38, 0.95);
+  --window-header-border: rgba(255, 255, 255, 0.15);
+  --window-resize-handle: rgba(255, 255, 255, 0.3);
+  --window-title-color: #f5f5f7;
+  
+  /* Form Elements - Dark */
+  --form-bg: rgba(60, 60, 60, 0.5);
+  --form-border: rgba(255, 255, 255, 0.1);
+  --form-text: #f5f5f7;
+  --form-placeholder: #98989d;
+  --form-focus: rgba(0, 122, 255, 0.4);
+  --form-focus-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
+  
+  /* Buttons - Dark */
+  --btn-primary-bg: rgba(0, 122, 255, 0.8);
+  --btn-primary-hover: rgba(0, 100, 200, 0.9);
+  --btn-primary-text: white;
+  --btn-primary-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+  --btn-primary-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+  
+  /* Profile Section - Dark */
+  --profile-avatar-border: rgba(255, 255, 255, 0.1);
+  --profile-avatar-bg: rgba(30, 30, 30, 0.3);
+  --profile-name: #f5f5f7;
+  --profile-title: #98989d;
+  
+  /* List Items - Dark */
+  --list-divider: rgba(255, 255, 255, 0.08);
+  --list-item-hover: rgba(60, 60, 60, 0.4);
+  --list-item-active: rgba(80, 80, 80, 0.6);
+  
+  --button-bg: rgba(120, 120, 128, 0.25);
+  --button-hover: rgba(120, 120, 128, 0.4);
+  --button-active: rgba(120, 120, 128, 0.5);
+  --button-text: var(--color-white);
+  --button-border: rgba(255, 255, 255, 0.1);
+  
+  --dock-bg: rgba(50, 50, 50, 0.3);
+  --dock-border: rgba(255, 255, 255, 0.1);
+  --dock-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.3),
+    -1px -1px 0 0 rgba(255, 255, 255, 0.3),
+    1px 1px 0 0 rgba(0, 0, 0, 0.2);
+  --dock-item-bg: rgba(255, 255, 255, 0.1);
+  --dock-item-hover: rgba(255, 255, 255, 0.2);
+  --dock-item-active: rgba(255, 255, 255, 0.3);
+  --dock-item-dot: rgba(255, 255, 255, 0.6);
+    
+  --input-bg: rgba(120, 120, 128, 0.15);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-text: var(--color-white);
+  --input-placeholder: rgba(255, 255, 255, 0.5);
+  --input-focus: rgba(0, 122, 255, 0.3);
+  
+  --card-bg: rgba(44, 44, 46, 0.95);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --card-hover: rgba(255, 255, 255, 0.15);
+  --card-active: rgba(0, 0, 0, 0.1);
+  --card-dark-bg: rgba(40, 40, 40, 0.8);
+  --card-dark-hover: rgba(60, 60, 60, 0.6);
+  
+  --tooltip-bg: rgba(20, 20, 20, 0.95);
+  --tooltip-text: var(--color-white);
+  --tooltip-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  --scrollbar-thumb: rgba(255, 255, 255, 0.45);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.55);
+  --scrollbar-track: transparent;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

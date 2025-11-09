@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import "./Splash.css";
 
 const Splash = () => {
   const [isLoading, setIsLoading] = useState(true);

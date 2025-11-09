@@ -1,0 +1,319 @@
+/* Mail App Styles */
+.mail-app {
+  display: flex;
+  height: 100%;
+  background: var(--mail-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--glass-shadow);
+}
+
+.mail-sidebar {
+  width: 240px;
+  background: var(--mail-sidebar-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-right: 1px solid var(--mail-sidebar-border);
+  padding: 20px 16px;
+  overflow-y: auto;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.compose-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--mail-btn-primary);
+  color: var(--color-white);
+  border: 1px solid var(--mail-btn-border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 24px;
+  box-shadow: var(--mail-btn-shadow);
+  backdrop-filter: blur(10px);
+}
+
+.compose-btn:hover {
+  background: var(--mail-btn-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--mail-btn-hover-shadow);
+}
+
+.mail-folders h4 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--mail-text-secondary);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.mail-folders ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mail-folders li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--mail-text-primary);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  margin: 5px 0;
+  background: var(--mail-folder-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--mail-folder-border);
+}
+
+.mail-folders li:hover {
+  background: var(--mail-folder-hover);
+}
+
+.mail-folders li.active {
+  background: var(--mail-folder-active);
+  color: var(--color-white);
+}
+
+.folder-icon {
+  font-size: 18px;
+}
+
+.badge {
+  margin-left: auto;
+  padding: 2px 8px;
+  background: var(--mail-badge-bg);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mail-folders li.active .badge {
+  background: var(--mail-badge-active);
+}
+
+.mail-content {
+  flex: 1;
+  padding: 32px 48px;
+  overflow-y: auto;
+  background: var(--mail-content-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.mail-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.mail-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--mail-text-primary);
+  margin-bottom: 8px;
+}
+
+.mail-header p {
+  font-size: 16px;
+  color: var(--mail-text-secondary);
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto 48px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mail-text-primary);
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--mail-input-border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  transition: all 0.2s;
+  background: var(--mail-folder-bg);
+  color: var(--mail-text-primary);
+  backdrop-filter: blur(10px);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--mail-btn-primary);
+  box-shadow: 0 0 0 3px var(--mail-input-focus);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.send-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: var(--mail-btn-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.send-btn:hover {
+  background: var(--mail-btn-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--mail-btn-hover-shadow);
+}
+
+.contact-info {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 32px;
+  border-top: 1px solid var(--mail-divider);
+}
+
+.contact-info h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--mail-text-primary);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contact-methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--mail-folder-bg);
+  border-radius: 12px;
+  color: var(--mail-text-primary);
+  text-decoration: none;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.contact-method:hover {
+  background: var(--mail-contact-hover);
+  transform: translateX(4px);
+}
+
+.contact-method svg {
+  flex-shrink: 0;
+  color: var(--mail-icon-color);
+}
+
+/* Dark mode handled by theme variables */
+@media (prefers-color-scheme: dark) {
+  .mail-app {
+    background: var(--mail-bg);
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .mail-sidebar {
+    background: var(--mail-sidebar-bg);
+    border-right-color: var(--mail-sidebar-border);
+  }
+  
+  .mail-folders li {
+    color: var(--mail-text-primary);
+    background: var(--mail-folder-bg);
+    border-color: var(--mail-folder-border);
+  }
+  
+  .mail-folders li:hover {
+    background: var(--mail-folder-hover);
+  }
+  
+  .mail-folders li.active {
+    background: var(--mail-folder-active);
+  }
+  
+  .mail-content {
+    background: var(--mail-content-bg);
+  }
+  
+  .compose-btn {
+    box-shadow: var(--mail-btn-shadow);
+  }
+
+  .mail-header h2,
+  .form-group label,
+  .contact-info h3 {
+    color: var(--mail-text-primary);
+  }
+
+  .mail-header p {
+    color: var(--mail-text-secondary);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    background: var(--mail-folder-bg);
+    border-color: var(--mail-input-border);
+    color: var(--mail-text-primary);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--mail-placeholder);
+  }
+
+  .contact-method {
+    background: var(--mail-folder-bg);
+    color: var(--mail-text-primary);
+  }
+
+  .contact-method:hover {
+    background: var(--mail-contact-hover);
+  }
+
+  .contact-info {
+    border-top-color: var(--mail-divider);
+  }
+}

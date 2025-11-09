@@ -1,0 +1,258 @@
+/* Window Styles */
+.macos-window {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12),
+    0 6px 12px rgba(0, 0, 0, 0.08),
+    0 16px 64px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  z-index: 5;
+  isolation: isolate;
+  /* backdrop-filter: blur(40px) saturate(180%); */
+  /* -webkit-backdrop-filter: blur(40px) saturate(180%); */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.macos-window:hover {
+  box-shadow: 
+    0 0 0 0.5px rgba(0, 0, 0, 0.1),
+    0 12px 48px rgba(0, 0, 0, 0.2),
+    0 24px 96px rgba(0, 0, 0, 0.15);
+}
+
+/* Titlebar */
+.window-titlebar {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: grab;
+  user-select: none;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+  min-width: 0; /* Prevent titlebar from shrinking */
+}
+
+/* Liquid glass overlay */
+.macos-window .liquidGlass-effect {
+  position: absolute;
+  inset: 0;
+  /* backdrop-filter: blur(40px) saturate(180%); */
+  /* -webkit-backdrop-filter: blur(40px) saturate(180%); */
+  filter: url(#glass-distortion);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 12px;
+}
+
+/* Ensure window content renders above overlay */
+.macos-window .window-container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.window-titlebar:active {
+  cursor: grabbing;
+}
+
+/* Window Controls (Traffic Lights) */
+.window-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0; /* Prevent controls from shrinking */
+  min-width: 80px; /* Ensure enough space for controls */
+}
+
+.window-control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+  position: relative;
+  overflow: visible;
+}
+
+.window-control svg {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+}
+
+.window-controls:hover .window-control svg {
+  opacity: 1;
+}
+
+.window-control.close {
+  background: linear-gradient(180deg, #FF5F57 0%, #FF3B30 100%);
+}
+
+.window-control.close svg {
+      padding: 0.15rem;
+}
+
+.window-control.close svg path {
+  color: #8B0000;
+}
+
+.window-control.minimize {
+  background: linear-gradient(180deg, #FFBD2E 0%, #FF9500 100%);
+}
+
+.window-control.minimize svg path {
+  stroke: #8B5A00;
+}
+
+.window-control.maximize {
+  background: linear-gradient(180deg, #28C940 0%, #34C759 100%);
+}
+
+.window-control.maximize svg path {
+  stroke: #006400;
+}
+
+.window-control:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Window Title */
+.window-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  pointer-events: none;
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+}
+
+.window-app-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.window-spacer {
+  width: 68px;
+}
+
+/* Window Content */
+.window-content {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+  background: transparent;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Resize Handle */
+.window-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+}
+
+.window-resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .macos-window {
+    background: rgba(40, 40, 40, 0.3);
+  }
+
+  .window-titlebar {
+    background: rgba(50, 50, 50, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .window-title {
+    color: #f5f5f7;
+  }
+
+  .window-content {
+    background: rgba(30, 30, 30, 0.3);
+    color: #f5f5f7;
+  }
+
+  .window-resize-handle::after {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Scrollbar Styling */
+.window-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.window-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+  background-clip: content-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  .window-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    background-clip: content-box;
+  }
+
+  .window-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+    background-clip: content-box;
+  }
+}

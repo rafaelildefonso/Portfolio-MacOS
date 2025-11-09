@@ -1,0 +1,183 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  z-index: 1000;
+  pointer-events: none;
+  will-change: transform;
+  transition: all 0.3s ease;
+}
+
+.footer-content {
+  display: flex;
+  align-items: flex-end;
+  z-index: 1000;
+  gap: 0.2rem;
+  padding: 0.3rem;
+  background: var(--dock-bg);
+  border-radius: 1.7rem;
+  border: 0.1px solid var(--dock-border);
+  pointer-events: auto;
+  height: 4rem;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  box-shadow: var(--dock-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.footer-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: -1;
+  bottom: 60%;
+  border-radius: var(--dock-glow-radius);
+  pointer-events: none;
+  background: var(--dock-glow);
+  opacity: var(--dock-glow-opacity);
+  transition: all 0.3s ease;
+}
+
+.dock-item {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  min-width: var(--dock-item-size);
+  height: 100%;
+  will-change: transform, width;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  z-index: var(--z-index-dock-item);
+  opacity: var(--dock-item-opacity);
+  border-radius: var(--dock-item-border-radius);
+}
+
+.footer-content button span {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.dock-icon {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+  transform-origin: bottom center;
+  will-change: transform, filter;
+  filter: var(--dock-icon-shadow);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  border-radius: var(--dock-icon-border-radius);
+  padding: var(--dock-icon-padding);
+}
+
+.dock-item .dot {
+  width: var(--dock-dot-size);
+  height: var(--dock-dot-size);
+  background: var(--dock-dot-color);
+  border-radius: 50%;
+  margin-top: var(--dock-dot-margin);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateZ(0);
+  will-change: opacity, transform;
+  box-shadow: var(--dock-dot-shadow);
+}
+
+.dock-item .dot.active {
+  opacity: 1;
+}
+
+/* Dark mode is now handled by theme variables */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode overrides are handled by theme variables */
+}
+
+/* Dock Label on Hover */
+.dock-label {
+  position: relative;
+  background: var(--dock-bg);
+  /* backdrop-filter: blur(10px); */
+  /* -webkit-backdrop-filter: blur(10px); */
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: var(--z-index-dock-label);
+  animation: labelFadeIn 0.2s ease-out;
+  box-shadow: var(--dock-label-shadow);
+  border: 1px solid var(--dock-label-border);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+transform: translateZ(0);
+  isolation: isolate;
+}
+
+/* Liquid glass effect for dropdowns */
+.dock-label .liquidGlass-effect {
+  position: absolute;
+  inset: 0;
+  /* backdrop-filter: blur(40px) saturate(180%); */
+  /* -webkit-backdrop-filter: blur(40px) saturate(180%); */
+  filter: url(#glass-distortion);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.dock-label::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: var(--dock-label-arrow-size) solid transparent;
+  border-top-color: var(--dock-label-bg);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+@keyframes labelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Dark mode is now handled by theme variables */
+@media (prefers-color-scheme: dark) {
+  /* Dark mode overrides are handled by theme variables */
+}
+
+.dock-item:hover .dock-icon {
+  transform: scale(var(--dock-item-hover-scale)) translateY(calc(-1 * var(--dock-item-hover-lift)));
+  opacity: 1;
+  filter: var(--dock-icon-hover-shadow);
+}

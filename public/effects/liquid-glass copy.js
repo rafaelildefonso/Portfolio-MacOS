@@ -1,14 +1,17 @@
-// Vanilla JS Liquid Glass Effect - Paste into browser console
-// Created by Shu Ding (https://github.com/shuding/liquid-glass) in 2025.
+// Liquid Glass Effect for elements with 'liquid-glass-effect' class
+// Based on original work by Shu Ding (https://github.com/shuding/liquid-glass)
 
 (function() {
   'use strict';
   
-  // Check if liquid glass already exists and destroy it
-  if (window.liquidGlass) {
-    window.liquidGlass.destroy();
-    console.log('Previous liquid glass effect removed.');
-  }
+  // Global instance management
+  window.liquidGlass = {
+    shaders: [],
+    destroy() {
+      this.shaders.forEach(shader => shader.destroy());
+      this.shaders = [];
+    }
+  };
   
   // Utility functions
   function smoothStep(a, b, t) {
@@ -30,49 +33,35 @@
     return { type: 't', x, y };
   }
 
-  // Generate unique ID
   function generateId() {
-    return 'liquid-glass-' + Math.random().toString(36).substr(2, 9);
+    return 'lg-' + Math.random().toString(36).substr(2, 9);
   }
 
-  // Main Shader class
+  // Shader class for each element
   class Shader {
     constructor(options = {}) {
       this.width = options.width || 100;
       this.height = options.height || 100;
-      this.fragment = options.fragment || ((uv) => texture(uv.x, uv.y));
       this.canvasDPI = 1;
       this.id = generateId();
-      this.offset = 10; // Viewport boundary offset
-      
-      this.mouse = { x: 0, y: 0 };
-      this.mouseUsed = false;
+      this.intensity = 0.5; // Reduz a intensidade do efeito
       
       this.createElement();
-      this.setupEventListeners();
-      this.updateShader();
     }
 
     createElement() {
       // Create container
       this.container = document.createElement('div');
       this.container.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: ${this.width}px;
-        height: ${this.height}px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         overflow: hidden;
-        border-radius: 150px;
-        box-shadow:
-          0 4px 8px rgba(0, 0, 0, 0.25),
-          0 -10px 25px inset rgba(0, 0, 0, 0.15),
-          0 -1px 4px 1px inset rgba(255, 255, 255, 0.74);
-        cursor: grab;
-        backdrop-filter: url(#${this.id}_filter) blur(0.25px) brightness(1.5) saturate(1.1);
-        z-index: 9999;
-        pointer-events: auto;
+        pointer-events: none;
+        backdrop-filter: url(#${this.id}_filter) blur(0.5px) brightness(1.1) saturate(1.1);
+        -webkit-backdrop-filter: url(#${this.id}_filter) blur(0.5px) brightness(1.1) saturate(1.1);
       `;
 
       // Create SVG filter
@@ -140,75 +129,8 @@
       return { x: constrainedX, y: constrainedY };
     }
 
-    setupEventListeners() {
-      let isDragging = false;
-      let startX, startY, initialX, initialY;
-
-      this.container.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        this.container.style.cursor = 'grabbing';
-        startX = e.clientX;
-        startY = e.clientY;
-        const rect = this.container.getBoundingClientRect();
-        initialX = rect.left;
-        initialY = rect.top;
-        e.preventDefault();
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-          const deltaX = e.clientX - startX;
-          const deltaY = e.clientY - startY;
-          
-          // Calculate new position
-          const newX = initialX + deltaX;
-          const newY = initialY + deltaY;
-          
-          // Constrain position within viewport bounds
-          const constrained = this.constrainPosition(newX, newY);
-          
-          this.container.style.left = constrained.x + 'px';
-          this.container.style.top = constrained.y + 'px';
-          this.container.style.transform = 'none';
-        }
-
-        // Update mouse position for shader
-        const rect = this.container.getBoundingClientRect();
-        this.mouse.x = (e.clientX - rect.left) / rect.width;
-        this.mouse.y = (e.clientY - rect.top) / rect.height;
-        
-        if (this.mouseUsed) {
-          this.updateShader();
-        }
-      });
-
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
-        this.container.style.cursor = 'grab';
-      });
-
-      // Handle window resize to maintain constraints
-      window.addEventListener('resize', () => {
-        const rect = this.container.getBoundingClientRect();
-        const constrained = this.constrainPosition(rect.left, rect.top);
-        
-        if (rect.left !== constrained.x || rect.top !== constrained.y) {
-          this.container.style.left = constrained.x + 'px';
-          this.container.style.top = constrained.y + 'px';
-          this.container.style.transform = 'none';
-        }
-      });
-    }
 
     updateShader() {
-      const mouseProxy = new Proxy(this.mouse, {
-        get: (target, prop) => {
-          this.mouseUsed = true;
-          return target[prop];
-        }
-      });
-
-      this.mouseUsed = false;
 
       const w = this.width * this.canvasDPI;
       const h = this.height * this.canvasDPI;
@@ -220,10 +142,15 @@
       for (let i = 0; i < data.length; i += 4) {
         const x = (i / 4) % w;
         const y = Math.floor(i / 4 / w);
-        const pos = this.fragment(
-          { x: x / w, y: y / h },
-          mouseProxy
-        );
+        
+        // Create liquid effect
+        const ix = x / w - 0.5;
+        const iy = y / h - 0.5;
+        const distanceToEdge = roundedRectSDF(ix, iy, 0.3, 0.2, 0.6);
+        const displacement = smoothStep(0.8, 0, distanceToEdge - 0.15);
+        const scaled = smoothStep(0, 1, displacement);
+        const pos = texture(ix * scaled + 0.5, iy * scaled + 0.5);
+        
         const dx = pos.x * w - x;
         const dy = pos.y * h - y;
         maxScale = Math.max(maxScale, Math.abs(dx), Math.abs(dy));
@@ -259,37 +186,81 @@
     }
   }
 
-  // Create the liquid glass effect
-  function createLiquidGlass() {
-    // Create shader
-    const shader = new Shader({
-      width: 300,
-      height: 200,
-      fragment: (uv, mouse) => {
-        const ix = uv.x - 0.5;
-        const iy = uv.y - 0.5;
-        const distanceToEdge = roundedRectSDF(
-          ix,
-          iy,
-          0.3,
-          0.2,
-          0.6
-        );
-        const displacement = smoothStep(0.8, 0, distanceToEdge - 0.15);
-        const scaled = smoothStep(0, 1, displacement);
-        return texture(ix * scaled + 0.5, iy * scaled + 0.5);
+  // Apply effect to all elements with the liquid-glass-effect class
+  function initLiquidGlass() {
+    const elements = document.querySelectorAll('.liquid-glass-effect');
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const shader = new Shader({
+        width: Math.round(rect.width),
+        height: Math.round(rect.height)
+      });
+
+      // Configure shader element
+      shader.container.style.position = 'absolute';
+      shader.container.style.top = '0';
+      shader.container.style.left = '0';
+      shader.container.style.width = '100%';
+      shader.container.style.height = '100%';
+      
+      // Ensure parent has position relative
+      if (getComputedStyle(el).position === 'static') {
+        el.style.position = 'relative';
       }
+      
+      // Add SVG filter to body
+      shader.svg.id = shader.id + '_svg';
+      document.body.appendChild(shader.svg);
+      
+      // Add shader to element
+      el.appendChild(shader.container);
+      
+      // Update shader with liquid effect
+      shader.updateShader = function() {
+        const w = this.width * this.canvasDPI;
+        const h = this.height * this.canvasDPI;
+        const data = new Uint8ClampedArray(w * h * 4);
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const x = (i / 4) % w;
+          const y = Math.floor(i / 4 / w);
+          
+          // Create subtle liquid effect
+          const ix = (x / w - 0.5) * 0.8; // Reduz o deslocamento
+          const iy = (y / h - 0.5) * 0.8; // Reduz o deslocamento
+          const distanceToEdge = roundedRectSDF(ix, iy, 0.2, 0.1, 0.5);
+          const displacement = smoothStep(0.6, 0, distanceToEdge - 0.1) * this.intensity;
+          const scaled = smoothStep(0, 0.5, displacement); // Suaviza a transição
+          const pos = texture(
+            ix * scaled * 0.5 + 0.5, 
+            iy * scaled * 0.5 + 0.5
+          );
+          
+          // Convert to displacement map
+          data[i] = pos.x * 255;
+          data[i + 1] = pos.y * 255;
+          data[i + 2] = 0;
+          data[i + 3] = 255;
+        }
+        
+        // Apply effect
+        this.context.putImageData(new ImageData(data, w, h), 0, 0);
+        this.feImage.setAttributeNS('http://www.w3.org/1999/xlink', 'href', this.canvas.toDataURL());
+        this.feDisplacementMap.setAttribute('scale', '8');
+      };
+      
+      // Initial update
+      shader.updateShader();
+      
+      // Add to global instance
+      window.liquidGlass.shaders.push(shader);
     });
-
-    // Add to page
-    shader.appendTo(document.body);
-
-    console.log('Liquid Glass effect created! Drag the glass around the page.');
-    
-    // Return shader instance so it can be removed if needed
-    window.liquidGlass = shader;
   }
-
-  // Initialize
-  createLiquidGlass();
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLiquidGlass);
+  } else {
+    initLiquidGlass();
+  }
 })();

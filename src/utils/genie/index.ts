@@ -66,8 +66,8 @@ export const genieMinimize = (
   // Calcular as transformações necessárias
   const scaleX = dockRect.width / windowRect.width;
   const scaleY = dockRect.height / windowRect.height;
-  const translateX = dockRect.left - windowRect.left + (dockRect.width / 2) - (windowRect.width / 2);
-  const translateY = dockRect.top - windowRect.top + (dockRect.height / 2) - (windowRect.height / 2);
+  // const translateX = dockRect.left - windowRect.left + (dockRect.width / 2) - (windowRect.width / 2);
+  // const translateY = dockRect.top - windowRect.top + (dockRect.height / 2) - (windowRect.height / 2);
   
   // Forçar um repaint
   container.offsetHeight;

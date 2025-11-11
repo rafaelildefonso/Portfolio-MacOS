@@ -74,7 +74,7 @@ export const Finder = () => {
       name: 'Linked',
       description: 'Aplicativo de organização de links',
       tech: ['React Native'],
-      image: '/images/projects/tasks.jpg',
+      image: '/images/projects/linked.png',
       github: 'https://github.com/rafaelildefonso/Linked',
       demo: ''
     },
@@ -83,7 +83,7 @@ export const Finder = () => {
       name: 'Mapa',
       description: 'Aplicativo de mapas e rotas',
       tech: ['React Native'],
-      image: '/images/projects/tasks.jpg',
+      image: '/images/projects/mapas.png',
       github: 'https://github.com/rafaelildefonso/app_rotas',
       demo: ''
     },

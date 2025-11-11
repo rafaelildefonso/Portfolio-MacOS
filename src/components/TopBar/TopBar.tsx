@@ -1,10 +1,10 @@
 // src/components/Header.tsx
 import { useEffect, useRef, useState } from "react";
 import { ControlCenter } from "../ControlCenter/ControlCenter";
-import "./MenuBar.css";
+import "./TopBar.css";
 import { SearchIcon, WifiIcon, ControlCenterIcon } from "../../assets/icons/Icons";
 
-const MenuBar = () => {
+const TopBar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const headerRef = useRef<HTMLDivElement>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -210,4 +210,4 @@ const MenuBar = () => {
   );
 };
 
-export default MenuBar;
+export default TopBar;

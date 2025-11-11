@@ -56,7 +56,7 @@ export const Finder = () => {
       name: 'Pertinho',
       description: 'Aplicativo de encontrar locais perto de você',
       tech: ['React Native', 'Prisma'],
-      image: '/images/projects/tasks.jpg',
+      image: '/images/projects/pertinho.png',
       github: 'https://github.com/rafaelildefonso/Pertinho',
       demo: ''
     },

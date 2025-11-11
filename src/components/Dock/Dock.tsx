@@ -48,14 +48,16 @@ const Dock = () => {
       };
     }
     
-    const button = dockRef.current?.children[index] as HTMLElement;
+    const dockButtons = dockRef.current?.querySelectorAll<HTMLButtonElement>('.dock-item');
+    const button = dockButtons?.[index];
     if (!button) return { 
       ...baseStyle,
       width: `${baseWidth}px`
     };
     
     const buttonRect = button.getBoundingClientRect();
-    const buttonCenter = buttonRect.left + buttonRect.width / 2 - dockRef.current!.getBoundingClientRect().left;
+    const dockRect = dockRef.current!.getBoundingClientRect();
+    const buttonCenter = buttonRect.left + buttonRect.width / 2 - dockRect.left;
     const distance = mouseX - buttonCenter;
     
     const width = calculateWidth(distance);

@@ -1,7 +1,7 @@
 import "./App.css";
 import Splash from "./components/Splash/Splash";
-import Header from "./components/MenuBar/MenuBar";
-import Footer from "./components/Dock/Dock";
+import TopBar from "./components/TopBar/TopBar";
+import Dock from "./components/Dock/Dock";
 import { WindowProvider } from "./contexts/WindowContext";
 import { WindowManager } from "./components/WindowManager/WindowManager";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -17,11 +17,11 @@ const App: React.FC = () => {
           className="desktop-screen"
         >
           <Splash/>
-          <Header/>
+          <TopBar/>
           <section className="window-area">
             <WindowManager />
           </section>
-          <Footer/>
+          <Dock/>
           <ContextMenu />
         </div>
       </WindowProvider>

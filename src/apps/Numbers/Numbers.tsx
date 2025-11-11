@@ -50,7 +50,7 @@ export const Numbers = () => {
       { name: 'CSS', proficiency: 90, startDate: '2024-01-20', projects: 8, icon: '🎨', color: '#1572B6' },
       { name: 'JavaScript', proficiency: 95, startDate: '2024-01-20', projects: 9, icon: '🎨', color: '#1572B6' },
       { name: 'Next.js', proficiency: 75, startDate: '2025-04-13', projects: 2, icon: '▲', color: '#000000' },
-      { name: 'TailwindCSS', proficiency: 50, startDate: '2021-11-15', projects: 2, icon: '🌊', color: '#06B6D4' },
+      { name: 'TailwindCSS', proficiency: 50, startDate: '2025-09-25', projects: 2, icon: '🌊', color: '#06B6D4' },
     ],
     'Backend': [
       { name: 'Node.js', proficiency: 75, startDate: '2025-04-13', projects: 1, icon: '🟢', color: '#339933' },

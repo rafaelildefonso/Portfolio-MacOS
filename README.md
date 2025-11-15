@@ -3,7 +3,7 @@
 <div align="center">
   <img src="public/images/wallpaper.jpg" alt="Preview do Projeto" width="800"/>
   
-  [![Versão](https://img.shields.io/badge/versão-1.0.0-blue)](https://github.com/seu-usuario/portfolio/releases)
+  [![Versão](https://img.shields.io/badge/versão-1.0.0-blue)](https://github.com/rafaelildefonso/portfolio/releases)
   [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)](https://reactjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
   [![Vite](https://img.shields.io/badge/Vite-4.3.9-646CFF?logo=vite)](https://vitejs.dev/)

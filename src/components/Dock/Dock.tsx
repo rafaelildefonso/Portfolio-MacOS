@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useWindows } from '../../contexts/WindowContext';
 import { Safari } from '../../apps/Safari/Safari';
@@ -8,6 +9,7 @@ import { Numbers } from '../../apps/Numbers/Numbers';
 import "./Dock.css";
 
 const Dock = () => {
+  const { t } = useTranslation();
   const dockRef = useRef<HTMLDivElement>(null);
   const { openWindow, windows, setActiveWindow } = useWindows();
   const [mouseX, setMouseX] = useState<number | null>(null);
@@ -120,7 +122,7 @@ const Dock = () => {
     switch (appName) {
       case 'about_me':
         openWindow({
-          title: 'Sobre Mim',
+          title: t('apps.about_me'),
           appIcon: '/images/icons/about_me.png',
           content: <Safari />,
           position: { x: centerX, y: centerY },
@@ -129,7 +131,7 @@ const Dock = () => {
         break;
       case 'projects':
         openWindow({
-          title: 'Projetos',
+          title: t('apps.projects'),
           appIcon: '/images/icons/projects.png',
           content: <Finder />,
           position: { x: centerX, y: centerY - 100 },
@@ -138,7 +140,7 @@ const Dock = () => {
         break;
       case 'contact':
         openWindow({
-          title: 'Contato',
+          title: t('apps.contact'),
           appIcon: '/images/icons/contact.png',
           content: <Mail />,
           position: { x: centerX , y: centerY  },
@@ -147,7 +149,7 @@ const Dock = () => {
         break;
       case 'skills':
         openWindow({
-          title: 'Habilidades',
+          title: t('apps.skills'),
           appIcon: '/images/icons/skills.png',
           content: <Numbers />,
           position: { x: centerX, y: centerY },
@@ -164,12 +166,12 @@ const Dock = () => {
   const [bouncingIcon, setBouncingIcon] = useState<string | null>(null);
 
   const buttons = [
-    { icon: 'projects', alt: 'Projetos', label: 'Projetos', appId: 'projects' },
-    { icon: 'about_me', alt: 'Sobre Mim', label: 'Sobre Mim', appId: 'about_me' },
-    { icon: 'skills', alt: 'Habilidades', label: 'Habilidades', appId: 'skills' },
-    { icon: 'github', alt: 'GitHub', label: 'GitHub', appId: 'github' },
-    { icon: 'linkedin', alt: 'LinkedIn', label: 'LinkedIn', appId: 'linkedin' },
-    { icon: 'contact', alt: 'Contato', label: 'Contato', appId: 'contact' }
+    { icon: 'projects', alt: t('apps.projects'), label: t('apps.projects'), appId: 'projects' },
+    { icon: 'about_me', alt: t('apps.about_me'), label: t('apps.about_me'), appId: 'about_me' },
+    { icon: 'skills', alt: t('apps.skills'), label: t('apps.skills'), appId: 'skills' },
+    { icon: 'github', alt: t('apps.github'), label: t('apps.github'), appId: 'github' },
+    { icon: 'linkedin', alt: t('apps.linkedin'), label: t('apps.linkedin'), appId: 'linkedin' },
+    { icon: 'contact', alt: t('apps.contact'), label: t('apps.contact'), appId: 'contact' }
   ];
 
   const handleDockIconClick = async (appName: string) => {
@@ -221,7 +223,7 @@ const Dock = () => {
               <img 
                 src={`/images/icons/${btn.icon}.png`} 
                 alt={btn.alt} 
-                className="dock-icon"
+                className="dock-icon genie-thumb"
               />
             </motion.span>
             {hasOpenWindow(btn.icon) && <div className="app-indicator"></div>}

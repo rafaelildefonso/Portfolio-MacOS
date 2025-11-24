@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
 export interface WindowState {
@@ -36,9 +36,8 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
   const [windows, setWindows] = useState<WindowState[]>([]);
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
   const [nextZIndex, setNextZIndex] = useState(100);
-  const animationRefs = useRef<Record<string, { windowEl: HTMLElement | null; dockIcon: HTMLElement | null }>>({});
 
-  const openWindow = (window: Omit<WindowState, 'id' | 'isMinimized' | 'isMaximized' | 'zIndex'>) => {
+  const openWindow = async (window: Omit<WindowState, 'id' | 'isMinimized' | 'isMaximized' | 'zIndex'>) => {
     const id = `window-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const newWindow: WindowState = {
       ...window,
@@ -46,35 +45,18 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
       isMinimized: false,
       isMaximized: false,
       zIndex: nextZIndex,
+      isVisible: false, // Inicialmente invisível para animação
     };
+    
+    // Adicionar janela ao estado (invisível)
     setWindows((prev) => [...prev, newWindow]);
     setActiveWindowId(id);
     setNextZIndex((prev) => prev + 1);
-  };
-
-  const closeWindow = (id: string) => {
-    // Limpar referência de animação se existir
-    if (animationRefs.current[id]) {
-      delete animationRefs.current[id];
-    }
     
-    setWindows((prev) => prev.filter((w) => w.id !== id));
-    if (activeWindowId === id) {
-      setActiveWindowId(null);
-    }
-  };
-
-  const minimizeWindow = async (id: string) => {
-    console.log('=== minimizeWindow chamada para a janela ID:', id);
-    const window = windows.find(w => w.id === id);
-    if (!window) {
-      console.error('Janela não encontrada com o ID:', id);
-      return;
-    }
-    console.log('Janela encontrada:', window.title);
+    // Aguardar o DOM atualizar
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     
-    // Encontrar o elemento da janela e o ícone do dock correspondente
-    console.log('Procurando elementos no DOM...');
+    // Encontrar elementos
     const windowElement = document.querySelector(`[data-window-id="${id}"]`) as HTMLElement;
     
     // Mapear títulos para IDs de aplicativo do dock
@@ -86,82 +68,166 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
     };
     
     const appId = appIdMap[window.title] || window.title.toLowerCase();
-    console.log('Procurando ícone do dock com data-dock-app:', appId);
     const dockIcon = document.querySelector(`[data-dock-app="${appId}"]`) as HTMLElement;
     
-    console.log('Elemento da janela encontrado:', !!windowElement);
-    console.log('Ícone do dock encontrado:', !!dockIcon);
-    
-    // Se não encontrou o elemento da janela ou o ícone do dock, minimiza normalmente
-    if (!windowElement || !dockIcon) {
-      console.warn('Elemento da janela ou ícone do dock não encontrado. Minimizando sem animação.');
-      setWindows(prev =>
-        prev.map(w => (w.id === id ? { ...w, isMinimized: true } : w))
-      );
-      return;
-    }
-    
-    // Armazenar referências para a animação
-    console.log('Armazenando referências para a animação...');
-    animationRefs.current[id] = { windowEl: windowElement, dockIcon };
-    
-    // Mostrar estilos atuais do elemento
-    console.log('Estilos iniciais da janela:', {
-      display: windowElement.style.display,
-      visibility: windowElement.style.visibility,
-      opacity: windowElement.style.opacity,
-      transform: windowElement.style.transform
-    });
-    
-    // Tornar a janela invisível, mas mantê-la no DOM para a animação
-    console.log('Preparando elemento para animação...');
-    windowElement.style.visibility = 'hidden';
-    windowElement.style.opacity = '0';
-    
-    // Forçar um repaint antes de começar a animação
-    console.log('Forçando repaint...');
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    
-    // Tornar a janela visível novamente para a animação
-    console.log('Iniciando animação...');
-    windowElement.style.visibility = 'visible';
-    windowElement.style.opacity = '1';
-    
-    // Iniciar animação de minimizar
-    try {
-      // Usar o módulo de animação Genie
-      const { genieMinimize } = await import('../utils/genie');
-      
-      console.log('Iniciando animação Genie...');
-      
-      // Executar animação
-      await genieMinimize(
-        windowElement,
-        dockIcon,
-        () => {
-          console.log('Animação Genie concluída');
-          // Callback chamado quando a animação termina
-          setWindows(prev =>
-            prev.map(w => 
-              w.id === id 
-                ? { ...w, isMinimized: true, isVisible: false } 
-                : w
-            )
-          );
-          
-          // Limpar referência após a animação
-          if (animationRefs.current[id]) {
-            animationRefs.current[id].windowEl = null;
+    // Se encontrou os elementos, executar animação genie
+    if (windowElement && dockIcon) {
+      try {
+        const { genieExpand } = await import('../utils/genie');
+        
+        // IMPORTANTE: Não ocultar a janela ANTES de criar o genie element
+        // O genieExpand precisa da janela visível para capturar o conteúdo
+        // Mas vamos garantir que ela não apareça na tela ainda
+        const originalDisplay = windowElement.style.display;
+        
+        // Tornar visível temporariamente para captura (mas fora da tela se necessário)
+        windowElement.style.display = originalDisplay || 'block';
+        windowElement.style.visibility = 'visible';
+        windowElement.style.opacity = '1';
+        
+        // Aguardar renderização completa antes de capturar
+        await new Promise(resolve => requestAnimationFrame(() => 
+          requestAnimationFrame(() => requestAnimationFrame(resolve))
+        ));
+        
+        // Executar animação genie (ela vai capturar o conteúdo e depois ocultar)
+        await genieExpand(
+          dockIcon,
+          windowElement,
+          () => {
+            // Callback quando animação termina - mostrar janela
+            windowElement.style.display = originalDisplay || 'block';
+            windowElement.style.visibility = 'visible';
+            windowElement.style.opacity = '1';
+            // Atualizar estado para garantir visibilidade
+            setWindows(prev =>
+              prev.map(w => 
+                w.id === id 
+                  ? { ...w, isVisible: true } 
+                  : w
+              )
+            );
+            console.log('Animação Genie de abertura concluída');
           }
-        }
-      );
-    } catch (error) {
-      console.error('Erro ao carregar animação Genie:', error);
-      // Fallback para minimização normal
+        );
+      } catch (error) {
+        console.error('Erro ao executar animação Genie:', error);
+        // Fallback: tornar janela visível normalmente
+        setWindows(prev =>
+          prev.map(w => 
+            w.id === id 
+              ? { ...w, isVisible: true } 
+              : w
+          )
+        );
+      }
+    } else {
+      // Se não encontrou elementos, tornar visível normalmente
       setWindows(prev =>
-        prev.map(w => (w.id === id ? { ...w, isMinimized: true } : w))
+        prev.map(w => 
+          w.id === id 
+            ? { ...w, isVisible: true } 
+            : w
+        )
       );
     }
+  };
+
+  const closeWindow = async (id: string) => {
+    const window = windows.find(w => w.id === id);
+    if (!window) return;
+    
+    // Encontrar elemento da janela
+    const windowElement = document.querySelector(`[data-window-id="${id}"]`) as HTMLElement;
+    
+    // Usar efeito "pop" ao invés de genie para fechar
+    if (windowElement) {
+      try {
+        const { popEffect } = await import('../utils/genie');
+        
+        // Aguardar atualização do DOM
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        
+        // Executar animação pop
+        await popEffect(
+          windowElement,
+          () => {
+            // Callback quando animação termina - remover janela
+            setWindows((prev) => prev.filter((w) => w.id !== id));
+            if (activeWindowId === id) {
+              setActiveWindowId(null);
+            }
+          }
+        );
+        return; // Não remover janela ainda, a animação vai fazer isso
+      } catch (error) {
+        console.error('Erro ao executar animação Pop:', error);
+        // Fallback: fechar normalmente
+      }
+    }
+    
+    // Se não encontrou elementos ou erro, fechar normalmente
+    setWindows((prev) => prev.filter((w) => w.id !== id));
+    if (activeWindowId === id) {
+      setActiveWindowId(null);
+    }
+  };
+
+  const minimizeWindow = async (id: string) => {
+    const window = windows.find(w => w.id === id);
+    if (!window) return;
+    
+    // Encontrar elementos
+    const windowElement = document.querySelector(`[data-window-id="${id}"]`) as HTMLElement;
+    
+    // Mapear títulos para IDs de aplicativo do dock
+    const appIdMap: Record<string, string> = {
+      'Sobre Mim': 'about_me',
+      'Projetos': 'projects',
+      'Contato': 'contact',
+      'Habilidades': 'skills'
+    };
+    
+    const appId = appIdMap[window.title] || window.title.toLowerCase();
+    const dockIcon = document.querySelector(`[data-dock-app="${appId}"]`) as HTMLElement;
+    
+    // Se encontrou os elementos, executar animação genie
+    if (windowElement && dockIcon) {
+      try {
+        const { genieMinimize } = await import('../utils/genie');
+        
+        // A função genieMinimize vai capturar o conteúdo antes de ocultar
+        // Não precisamos ocultar aqui, a função faz isso internamente
+        
+        // Aguardar atualização do DOM
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        
+        // Executar animação genie
+        await genieMinimize(
+          windowElement,
+          dockIcon,
+          () => {
+            // Callback quando animação termina
+            setWindows(prev =>
+              prev.map(w => 
+                w.id === id 
+                  ? { ...w, isMinimized: true, isVisible: false } 
+                  : w
+              )
+            );
+          }
+        );
+        return;
+      } catch (error) {
+        console.error('Erro ao executar animação Genie:', error);
+        // Fallback para minimização normal
+      }
+    }
+    
+    // Se não encontrou elementos ou erro, minimizar normalmente
+    setWindows(prev =>
+      prev.map(w => (w.id === id ? { ...w, isMinimized: true } : w))
+    );
   };
 
   const maximizeWindow = (id: string) => {
@@ -204,15 +270,24 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
     
     // Se a janela está minimizada, restaurar com animação
     if (window.isMinimized) {
-      const dockIcon = document.querySelector(`[data-dock-app="${window.title.toLowerCase()}"]`) as HTMLElement;
       const windowElement = document.querySelector(`[data-window-id="${id}"]`) as HTMLElement;
+      
+      // Mapear títulos para IDs de aplicativo do dock
+      const appIdMap: Record<string, string> = {
+        'Sobre Mim': 'about_me',
+        'Projetos': 'projects',
+        'Contato': 'contact',
+        'Habilidades': 'skills'
+      };
+      
+      const appId = appIdMap[window.title] || window.title.toLowerCase();
+      const dockIcon = document.querySelector(`[data-dock-app="${appId}"]`) as HTMLElement;
       
       if (windowElement && dockIcon) {
         try {
-          // Usar o módulo de animação Genie
           const { genieRestore } = await import('../utils/genie');
           
-          // Tornar a janela visível antes da animação (mas transparente)
+          // Tornar a janela visível no estado mas ocultar visualmente durante animação
           setWindows(prev =>
             prev.map(w => 
               w.id === id 
@@ -227,21 +302,27 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
           );
           
           // Forçar atualização do DOM
-          await new Promise(resolve => requestAnimationFrame(resolve));
+          await new Promise(resolve => requestAnimationFrame(() => 
+            requestAnimationFrame(() => requestAnimationFrame(resolve))
+          ));
+          
+          // Garantir que janela está completamente invisível
+          const originalDisplay = windowElement.style.display;
+          windowElement.style.display = 'none';
+          windowElement.style.visibility = 'hidden';
+          windowElement.style.opacity = '0';
           
           // Executar animação de restauração
           await genieRestore(
-            windowElement,
             dockIcon,
+            windowElement,
             () => {
-              // Callback chamado quando a animação termina
+              // Callback chamado quando a animação termina - mostrar janela
+              windowElement.style.display = originalDisplay || 'block';
+              windowElement.style.visibility = 'visible';
+              windowElement.style.opacity = '1';
               setActiveWindowId(id);
               setNextZIndex(prev => prev + 1);
-              
-              // Limpar referência após a animação
-              if (animationRefs.current[id]) {
-                delete animationRefs.current[id];
-              }
             }
           );
           

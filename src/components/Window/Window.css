@@ -13,6 +13,7 @@
   /* backdrop-filter: blur(40px) saturate(180%); */
   /* -webkit-backdrop-filter: blur(40px) saturate(180%); */
   border: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
 }
 
 .macos-window:hover {
@@ -84,7 +85,6 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
   position: relative;
   overflow: visible;
 }
@@ -105,7 +105,7 @@
 }
 
 .window-control.close {
-  background: linear-gradient(180deg, #FF5F57 0%, #FF3B30 100%);
+  background-color:  #FF5F57 ;
 }
 
 .window-control.close svg {
@@ -114,12 +114,12 @@
 
 
 .window-control.minimize {
-  background: linear-gradient(180deg, #FFBD2E 0%, #FF9500 100%);
+  background-color:  #FFBD2E ;
 }
 
 
 .window-control.maximize {
-  background: linear-gradient(180deg, #28C940 0%, #34C759 100%);
+  background-color:  #28C940 ;
 }
 
 

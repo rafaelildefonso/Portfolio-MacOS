@@ -1,0 +1,249 @@
+{
+  "numbers": {
+    "title": "Habilidades Técnicas",
+    "subtitle": "Minhas competências e experiência",
+    "searchPlaceholder": "Pesquisar habilidades...",
+    "viewModes": {
+      "grid": "Visualização em grade",
+      "list": "Visualização em lista"
+    },
+    "stats": {
+      "categories": "{{count}} Categorias",
+      "skills": "{{count}} Habilidades",
+      "skill": "{{count}} Habilidade",
+      "skills_plural": "{{count}} Habilidades",
+      "projects": "{{count}} projeto",
+      "projects_plural": "{{count}} projetos"
+    },
+    "tableHeaders": {
+      "technology": "Tecnologia",
+      "proficiency": "Proficiência",
+      "experience": "Experiência",
+      "projects": "Projetos"
+    },
+    "proficiencyLevels": {
+      "expert": "Especialista",
+      "advanced": "Avançado",
+      "intermediate": "Intermediário",
+      "beginner": "Iniciante"
+    },
+    "time": {
+      "year": "{{count}} ano",
+      "year_plural": "{{count}} anos",
+      "month": "{{count}} mês",
+      "month_plural": "{{count}} meses",
+      "and": "e"
+    },
+    "softSkills": {
+      "communication": "Comunicação",
+      "teamwork": "Trabalho em Equipe",
+      "problemSolving": "Resolução de Problemas",
+      "timeManagement": "Gestão de Tempo"
+    },
+    "skillCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "devops": "DevOps",
+      "design": "Design",
+      "softSkills": "Soft Skills"
+    },
+    "skillDetails": {
+      "proficiency": "Proficiência",
+      "experience": "Experiência",
+      "projects": "Projetos",
+      "description": "Descrição"
+    },
+    "noResults": "Nenhuma habilidade encontrada para sua busca.",
+    "close": "Fechar"
+  },
+  "mail": {
+    "compose": "Nova Mensagem",
+    "mailboxes": "Caixas de Correio",
+    "inbox": "Entrada",
+    "sent": "Enviados",
+    "drafts": "Rascunhos",
+    "favorites": "Favoritos",
+    "trash": "Lixeira",
+    "contactTitle": "Entre em Contato",
+    "contactSubtitle": "Vamos conversar sobre seu próximo projeto?",
+    "form": {
+      "name": "Nome",
+      "namePlaceholder": "Seu nome completo",
+      "email": "E-mail",
+      "emailPlaceholder": "seu@email.com",
+      "phone": "Telefone",
+      "phonePlaceholder": "(00) 00000-0000",
+      "subject": "Assunto",
+      "subjectPlaceholder": "Sobre o que é?",
+      "message": "Mensagem",
+      "messagePlaceholder": "Digite sua mensagem aqui...",
+      "submit": "Enviar Mensagem",
+      "sending": "Enviando...",
+      "success": "Mensagem enviada com sucesso!",
+      "error": "Erro ao enviar mensagem. Por favor, tente novamente.",
+      "validation": {
+        "required": "é obrigatório",
+        "email": "Por favor, insira um e-mail válido",
+        "phone": "Por favor, insira um telefone válido (DDD + número)",
+        "messageMinLength": "A mensagem deve ter pelo menos 10 caracteres"
+      }
+    }
+  },
+  "safari": {
+    "link": "sobre-mim.rafael.dev",
+    "back": "Voltar",
+    "forward": "Avançar",
+    "share": "Compartilhar",
+    "profile": {
+      "name": "Rafael Ildefonso",
+      "title": "Desenvolvedor Full Stack & UI/UX",
+      "about_me": {
+        "title": "🎯 Sobre Mim",
+        "description": "Desenvolvedor apaixonado por criar experiências únicas. Especializado em React, Flutter e JavaScript."
+      },
+      "technologies": {
+        "title": "💻 Tecnologias"
+      },
+      "experience": {
+        "title": "🚀 Experiência",
+        "items": [
+          {
+            "role": "Desenvolvedor Full Stack",
+            "company": "Agência Propagare",
+            "period": "2025 - Presente"
+          }
+        ]
+      },
+      "education": {
+        "title": "📚 Educação",
+        "items": [
+          {
+            "degree": "Técnico de Informática",
+            "institution": "Colégio Cotemig"
+          }
+        ]
+      }
+    }
+  },
+  "apps": {
+    "about_me": "Sobre Mim",
+    "projects": "Projetos",
+    "contact": "Contato",
+    "skills": "Habilidades",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "projects": {
+    "shelfai": {
+      "description": "ShelfAI é a plataforma que ajuda pequenas e médias lojas a organizar produtos para cadastro em e-commerces."
+    },
+    "pertinho": {
+      "description": "Aplicativo de encontrar locais perto de você"
+    },
+    "herculion": {
+      "description": "Projeto escolar de marca de loja de carros"
+    },
+    "linked": {
+      "description": "Aplicativo de organização de links"
+    },
+    "mapa": {
+      "description": "Aplicativo de mapas e rotas"
+    },
+    "vipergray": {
+      "description": "Projeto escolar de marca de mouses sem fios"
+    }
+  },
+  "finder": {
+    "filters": "Filtros",
+    "allProjects": "Todos os Projetos",
+    "favorites": "Favoritos",
+    "technologies": "Tecnologias",
+    "projects": "Projetos",
+    "searchPlaceholder": "Pesquisar projetos...",
+    "clearSearch": "Limpar pesquisa",
+    "noProjects": "Nenhum projeto encontrado.",
+    "clearFilters": "Limpar filtros",
+    "addToFavorites": "Adicionar aos favoritos",
+    "removeFromFavorites": "Remover dos favoritos",
+    "github": "GitHub",
+    "demo": "Demo"
+  },
+  "controlCenter": {
+    "wifi": {
+      "title": "Wi-Fi",
+      "connected": "Conectado",
+      "disconnected": "Desconectado"
+    },
+    "music": {
+      "title": "Não reproduzindo"
+    },
+    "theme": {
+      "title": "Tema",
+      "dark": "Escuro",
+      "light": "Claro"
+    },
+    "display": "Tela",
+    "sound": "Som",
+    "language": "Idioma",
+    "pt": "Português",
+    "en": "English"
+  },
+  "topBar": {
+    "menu": {
+      "apple": {
+        "_title": "Apple",
+        "aboutThisMac": "Sobre Este Mac",
+        "systemPreferences": "Preferências do Sistema...",
+        "appStore": "App Store",
+        "recentItems": "Itens Recentes",
+        "forceQuit": "Forçar Encerrar...",
+        "sleep": "Repousar",
+        "restart": "Reiniciar...",
+        "shutDown": "Desligar..."
+      },
+      "file": {
+        "_title": "Arquivo",
+        "newFinderWindow": "Nova Janela do Finder",
+        "newFolder": "Nova Pasta",
+        "newSmartFolder": "Nova Pasta Inteligente",
+        "newTab": "Nova Aba",
+        "getInfo": "Obter Informações",
+        "search": "Buscar"
+      },
+      "edit": {
+        "_title": "Editar",
+        "undo": "Desfazer",
+        "redo": "Refazer",
+        "cut": "Cortar",
+        "copy": "Copiar",
+        "paste": "Colar",
+        "emojiAndSymbols": "Emoji e Símbolos"
+      },
+      "view": {
+        "_title": "Visualizar",
+        "asIcons": "como Ícones",
+        "asList": "como Lista",
+        "asColumns": "como Colunas",
+        "asGallery": "como Galeria",
+        "useStacks": "Usar Conjuntos",
+        "sortBy": "Organizar Por"
+      },
+      "go": {
+        "_title": "Ir",
+        "back": "Voltar",
+        "forward": "Avançar",
+        "enclosingFolder": "Pasta Original",
+        "recent": "Recentes",
+        "documents": "Documentos",
+        "desktop": "Computador",
+        "downloads": "Downloads",
+        "home": "Início"
+      }
+    },
+    "status": {
+      "wifi": "Wi-Fi",
+      "search": "Pesquisar",
+      "controlCenter": "Centro de Controle"
+    }
+  }
+}

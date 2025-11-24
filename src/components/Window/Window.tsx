@@ -133,9 +133,10 @@ className={`macos-window ${isMinimized ? 'minimized' : ''}`}
         cursor: isDragging ? "grabbing" : "default",
         visibility: isVisible ? 'visible' : 'hidden',
         opacity: isVisible ? 1 : 0,
-        transition: 'opacity 0.2s ease-in-out',
+        transition: isVisible ? 'opacity 0.2s ease-in-out' : 'none', // Sem transição quando invisível
         position: 'absolute',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: isVisible ? 'block' : 'none'
       }}
       onClick={() => !isMinimized && setActiveWindow(id)}
     >

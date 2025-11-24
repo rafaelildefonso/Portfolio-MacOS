@@ -290,6 +290,7 @@
   --menubar-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   --menubar-border: rgba(255, 255, 255, 0.1);
   --menubar-dropdown-bg: rgba(255, 255, 255, 0.1);
+  --menubar-dropdown-text: rgb(0, 0, 0);
   --menubar-dropdown-border: rgba(255, 255, 255, 0.1);
   --menubar-dropdown-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   --menubar-status-hover: rgba(255, 255, 255, 0.15);

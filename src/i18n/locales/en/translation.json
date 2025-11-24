@@ -1,0 +1,250 @@
+{
+  "numbers": {
+    "title": "Technical Skills",
+    "subtitle": "My competencies and experience",
+    "searchPlaceholder": "Search skills...",
+    "viewModes": {
+      "grid": "Grid view",
+      "list": "List view"
+    },
+    "stats": {
+      "categories": "{{count}} Categories",
+      "skills": "{{count}} Skills",
+      "skill": "{{count}} Skill",
+      "skills_plural": "{{count}} Skills",
+      "projects": "{{count}} project",
+      "projects_plural": "{{count}} projects"
+    },
+    "tableHeaders": {
+      "technology": "Technology",
+      "proficiency": "Proficiency",
+      "experience": "Experience",
+      "projects": "Projects"
+    },
+    "proficiencyLevels": {
+      "expert": "Expert",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate",
+      "beginner": "Beginner"
+    },
+    "time": {
+      "year": "{{count}} year",
+      "year_plural": "{{count}} years",
+      "month": "{{count}} month",
+      "month_plural": "{{count}} months",
+      "and": "and"
+    },
+    "softSkills": {
+      "communication": "Communication",
+      "teamwork": "Teamwork",
+      "problemSolving": "Problem Solving",
+      "timeManagement": "Time Management"
+    },
+    "skillCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "devops": "DevOps",
+      "design": "Design",
+      "softSkills": "Soft Skills"
+    },
+    "skillDetails": {
+      "proficiency": "Proficiency",
+      "experience": "Experience",
+      "projects": "Projects",
+      "description": "Description"
+    },
+    "noResults": "No skills found matching your search.",
+    "close": "Close"
+  },
+  "mail": {
+    "compose": "New Message",
+    "mailboxes": "Mailboxes",
+    "inbox": "Inbox",
+    "sent": "Sent",
+    "drafts": "Drafts",
+    "favorites": "Favorites",
+    "trash": "Trash",
+    "contactTitle": "Get in Touch",
+    "contactSubtitle": "Let's talk about your next project?",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "(00) 00000-0000",
+      "subject": "Subject",
+      "subjectPlaceholder": "What is this about?",
+      "message": "Message",
+      "messagePlaceholder": "Type your message here...",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent successfully!",
+      "error": "Error sending message. Please try again.",
+      "validation": {
+        "required": "is required",
+        "email": "Please enter a valid email",
+        "phone": "Please enter a valid phone number (DDD + number)",
+        "messageMinLength": "Message must be at least 10 characters long"
+      }
+    }
+  },
+  "safari": {
+    "link": "about-me.rafael.dev",
+    "back": "Back",
+    "forward": "Forward",
+    "share": "Share",
+    "profile": {
+      "name": "Rafael Ildefonso",
+      "title": "Full Stack Developer & UI/UX",
+      "about_me": {
+        "title": "🎯 About Me",
+        "description": "Developer passionate about creating unique experiences. Specialized in React, Flutter, and JavaScript."
+      },
+      "technologies": {
+        "title": "💻 Technologies"
+      },
+      "experience": {
+        "title": "🚀 Experience",
+        "items": [
+          {
+            "role": "Full Stack Developer",
+            "company": "Agência Propagare",
+            "period": "2025 - Present"
+          }
+        ]
+      },
+      "education": {
+        "title": "📚 Education",
+        "items": [
+          {
+            "degree": "Technical IT Course",
+            "institution": "Colégio Cotemig"
+          }
+        ]
+      }
+    }
+  },
+  "apps": {
+    "about_me": "About Me",
+    "projects": "Projects",
+    "contact": "Contact",
+    "skills": "Skills",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "projects": {
+    "shelfai": {
+      "description": "ShelfAI is a platform that helps small and medium-sized stores organize products for e-commerce registration."
+    },
+    "pertinho": {
+      "description": "App to find places near you"
+    },
+    "herculion": {
+      "description": "School project for a car dealership brand"
+    },
+    "linked": {
+      "description": "Link organization app"
+    },
+    "mapa": {
+      "description": "Maps and routes app"
+    },
+    "vipergray": {
+      "description": "School project for a wireless mouse brand"
+    }
+  },
+  "finder": {
+    "filters": "Filters",
+    "allProjects": "All Projects",
+    "favorites": "Favorites",
+    "technologies": "Technologies",
+    "projects": "Projects",
+    "searchPlaceholder": "Search projects...",
+    "clearSearch": "Clear search",
+    "noProjects": "No projects found.",
+    "clearFilters": "Clear filters",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "github": "GitHub",
+    "demo": "Demo"
+  },
+  "controlCenter": {
+    "wifi": {
+      "title": "Wi-Fi",
+      "connected": "Connected",
+      "disconnected": "Disconnected"
+    },
+    "music": {
+      "title": "Not playing"
+    },
+    "theme": {
+      "title": "Theme",
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "display": "Display",
+    "sound": "Sound",
+    "language": "Language",
+    "pt": "Português",
+    "en": "English"
+  },
+  "topBar": {
+    "menu": {
+      "_title": "Menu",
+      "apple": {
+        "_title": "Apple",
+        "aboutThisMac": "About This Mac",
+        "systemPreferences": "System Preferences...",
+        "appStore": "App Store",
+        "recentItems": "Recent Items",
+        "forceQuit": "Force Quit...",
+        "sleep": "Sleep",
+        "restart": "Restart...",
+        "shutDown": "Shut Down..."
+      },
+      "file": {
+        "_title": "File",
+        "newFinderWindow": "New Finder Window",
+        "newFolder": "New Folder",
+        "newSmartFolder": "New Smart Folder",
+        "newTab": "New Tab",
+        "getInfo": "Get Info",
+        "search": "Search"
+      },
+      "edit": {
+        "_title": "Edit",
+        "undo": "Undo",
+        "redo": "Redo",
+        "cut": "Cut",
+        "copy": "Copy",
+        "paste": "Paste",
+        "emojiAndSymbols": "Emoji & Symbols"
+      },
+      "view": {
+        "_title": "View",
+        "asIcons": "as Icons",
+        "asList": "as List",
+        "asColumns": "as Columns",
+        "asGallery": "as Gallery",
+        "useStacks": "Use Stacks",
+        "sortBy": "Sort By"
+      },
+      "go": {
+        "_title": "Go",
+        "back": "Back",
+        "forward": "Forward",
+        "enclosingFolder": "Enclosing Folder",
+        "recent": "Recent",
+        "documents": "Documents",
+        "desktop": "Desktop",
+        "downloads": "Downloads",
+        "home": "Home"
+      }
+    },
+    "status": {
+      "wifi": "Wi-Fi",
+      "search": "Search",
+      "controlCenter": "Control Center"
+    }
+  }
+}

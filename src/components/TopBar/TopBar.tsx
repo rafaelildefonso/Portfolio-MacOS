@@ -1,5 +1,5 @@
-// src/components/Header.tsx
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ControlCenter } from "../ControlCenter/ControlCenter";
 import "./TopBar.css";
 import { SearchIcon, WifiIcon, ControlCenterIcon } from "../../assets/icons/Icons";
@@ -41,77 +41,89 @@ const TopBar = () => {
     };
   }, [isControlCenterOpen]);
 
+  const { t } = useTranslation();
+
   const menuItems = [
     {
-      name: "Apple",
+      id: 'apple',
       items: [
-        "Sobre Este Mac",
-        "divider",
-        "Preferências do Sistema...",
-        "App Store...",
-        "divider",
-        "Itens Recentes",
-        "divider",
-        "Forçar Encerramento...",
-        "divider",
-        "Suspender",
-        "Reiniciar...",
-        "Desligar...",
+        { key: 'aboutThisMac', isDivider: false },
+        { key: 'divider1', isDivider: true },
+        { key: 'systemPreferences', isDivider: false },
+        { key: 'appStore', isDivider: false },
+        { key: 'divider2', isDivider: true },
+        { key: 'recentItems', isDivider: false },
+        { key: 'divider3', isDivider: true },
+        { key: 'forceQuit', isDivider: false },
+        { key: 'divider4', isDivider: true },
+        { key: 'sleep', isDivider: false },
+        { key: 'restart', isDivider: false },
+        { key: 'shutDown', isDivider: false },
       ],
     },
     {
-      name: "Arquivo",
+      id: 'file',
       items: [
-        "Nova Janela do Finder",
-        "Nova Pasta",
-        "Nova Pasta Inteligente",
-        "Nova Aba",
-        "divider",
-        "Obter Informações",
-        "divider",
-        "Buscar",
+        { key: 'newFinderWindow', isDivider: false },
+        { key: 'newFolder', isDivider: false },
+        { key: 'newSmartFolder', isDivider: false },
+        { key: 'newTab', isDivider: false },
+        { key: 'divider1', isDivider: true },
+        { key: 'getInfo', isDivider: false },
+        { key: 'divider2', isDivider: true },
+        { key: 'search', isDivider: false },
       ],
     },
     {
-      name: "Editar",
+      id: 'edit',
       items: [
-        "Desfazer",
-        "Refazer",
-        "divider",
-        "Recortar",
-        "Copiar",
-        "Colar",
-        "divider",
-        "Emoji e Símbolos",
+        { key: 'undo', isDivider: false },
+        { key: 'redo', isDivider: false },
+        { key: 'divider1', isDivider: true },
+        { key: 'cut', isDivider: false },
+        { key: 'copy', isDivider: false },
+        { key: 'paste', isDivider: false },
+        { key: 'divider2', isDivider: true },
+        { key: 'emojiAndSymbols', isDivider: false },
       ],
     },
     {
-      name: "Visualizar",
+      id: 'view',
       items: [
-        "Como Ícones",
-        "Como Lista",
-        "Como Colunas",
-        "Como Galeria",
-        "divider",
-        "Usar Pilhas",
-        "Organizar Por",
+        { key: 'asIcons', isDivider: false },
+        { key: 'asList', isDivider: false },
+        { key: 'asColumns', isDivider: false },
+        { key: 'asGallery', isDivider: false },
+        { key: 'divider1', isDivider: true },
+        { key: 'useStacks', isDivider: false },
+        { key: 'sortBy', isDivider: false },
       ],
     },
     {
-      name: "Ir",
+      id: 'go',
       items: [
-        "Voltar",
-        "Avançar",
-        "Pasta Delimitadora",
-        "divider",
-        "Recentes",
-        "Documentos",
-        "Área de Trabalho",
-        "Downloads",
-        "Início",
+        { key: 'back', isDivider: false },
+        { key: 'forward', isDivider: false },
+        { key: 'enclosingFolder', isDivider: false },
+        { key: 'divider1', isDivider: true },
+        { key: 'recent', isDivider: false },
+        { key: 'documents', isDivider: false },
+        { key: 'desktop', isDivider: false },
+        { key: 'downloads', isDivider: false },
+        { key: 'home', isDivider: false },
       ],
     },
   ];
+
+  // Helper function to get translation key for menu items
+  const getMenuTitle = (menuId: string) => {
+    return t(`topBar.menu.${menuId}._title`);
+  };
+
+  // Helper function to get translation key for menu items
+  const getMenuItemKey = (menuId: string, itemKey: string) => {
+    return `topBar.menu.${menuId}.${itemKey}`;
+  };
 
   return (
     <header
@@ -124,16 +136,17 @@ const TopBar = () => {
         {menuItems.map((menu, index) => (
           <div
             key={index}
-            className={`menu-item ${activeMenu === menu.name ? "active" : ""}`}
-            onMouseEnter={() => setActiveMenu(menu.name)}
+            className={`menu-item ${activeMenu === menu.id ? "active" : ""}`}
+            onMouseEnter={() => setActiveMenu(menu.id)}
           >
-            {menu.name === "Apple" ? (
-              <button className="menu-button apple-button">
+            {menu.id === "apple" ? (
+              <button className="menu-button apple-button" aria-label={getMenuTitle('apple')}>
                 <svg
                   viewBox="0 0 24 24"
                   width="16"
                   height="16"
                   className="apple-icon"
+                  aria-hidden="true"
                 >
                   <path
                     fill="currentColor"
@@ -142,16 +155,16 @@ const TopBar = () => {
                 </svg>
               </button>
             ) : (
-              <button className="menu-button">{menu.name}</button>
+              <button className="menu-button">{getMenuTitle(menu.id)}</button>
             )}
-            {activeMenu === menu.name && (
+            {activeMenu === menu.id && (
               <div
                 className="menu-dropdown"
                 ref={(el) => {
                   if (el) {
-                    dropdownRefs.current[menu.name] = el;
+                    dropdownRefs.current[menu.id] = el;
                   } else {
-                    delete dropdownRefs.current[menu.name];
+                    delete dropdownRefs.current[menu.id];
                   }
                 }}
               >
@@ -161,11 +174,14 @@ const TopBar = () => {
                   data-liquid-applied="false"
                 >
                   {menu.items.map((item, i) =>
-                    item === "divider" ? (
-                      <div key={i} className="divider"></div>
+                    item.isDivider ? (
+                      <div key={`${menu.id}-${item.key}-${i}`} className="divider"></div>
                     ) : (
-                      <button key={i} className="menu-dropdown-item">
-                        {item}
+                      <button 
+                        key={`${menu.id}-${item.key}-${i}`} 
+                        className="menu-dropdown-item"
+                      >
+                        {t(getMenuItemKey(menu.id, item.key))}
                       </button>
                     )
                   )}
@@ -177,17 +193,20 @@ const TopBar = () => {
       </div>
       <div className="macos-status">
         <div className="status-icons">
-          <div className="status-button">
-            <WifiIcon size={12} className="status-icon" />
+          <div className="status-button" aria-label={t('topBar.status.wifi')}>
+            <WifiIcon size={12} className="status-icon" aria-hidden="true" />
           </div>
-          <div className="status-button">
-            <SearchIcon size={12} className="status-icon" />
+          <div className="status-button" aria-label={t('topBar.status.search')}>
+            <SearchIcon size={12} className="status-icon" aria-hidden="true" />
           </div>
           <div
             className="status-button"
             onClick={() => setIsControlCenterOpen(!isControlCenterOpen)}
+            aria-label={t('topBar.status.controlCenter')}
+            aria-expanded={isControlCenterOpen}
+            role="button"
           >
-            <ControlCenterIcon size={12} className="status-icon" />
+            <ControlCenterIcon size={12} className="status-icon" aria-hidden="true" />
           </div>
         </div>
         <div className="status-time">

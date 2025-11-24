@@ -76,7 +76,7 @@ body {
 .liquidGlass-effect {
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(10px);
   filter: url(#glass-distortion);
   overflow: hidden;
 }

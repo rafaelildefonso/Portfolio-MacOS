@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Mail.css';
 import { DraftIcon, ImportIcon, ShareIcon, StarIcon, TrashIcon } from '../../assets/icons/Icons';
+import { formatPhoneNumber, validateEmail, validatePhone } from '../../utils/formatters';
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+interface FormErrors {
+  [key: string]: string;
+}
 
 export const Mail = () => {
-  const [formData, setFormData] = useState({
+  const { t } = useTranslation();
+  const mailT = t('mail', { returnObjects: true }) as any;
+  
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -11,12 +28,95 @@ export const Mail = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  useEffect(() => {
+    if (submitSuccess) {
+      const timer = setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitSuccess]);
+
+  const validateForm = () => {
+    const newErrors: FormErrors = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = `${mailT.form.name} ${mailT.form.validation.required}`;
+    }
+    
+    if (!formData.email) {
+      newErrors.email = `${mailT.form.email} ${mailT.form.validation.required}`;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = mailT.form.validation.email;
+    }
+    
+    if (!formData.phone) {
+      newErrors.phone = `${mailT.form.phone} ${mailT.form.validation.required}`;
+    } else if (!validatePhone(formData.phone)) {
+      newErrors.phone = mailT.form.validation.phone;
+    }
+    
+    if (!formData.subject.trim()) {
+      newErrors.subject = `${mailT.form.subject} ${mailT.form.validation.required}`;
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = `${mailT.form.message} ${mailT.form.validation.required}`;
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = mailT.form.validation.messageMinLength;
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    
+    if (name === 'phone') {
+      const formattedValue = formatPhoneNumber(value);
+      setFormData(prev => ({ ...prev, [name]: formattedValue }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+    
+    // Limpa o erro quando o usuário começa a digitar
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Formulário enviado:', formData);
-    // Implementar envio real do formulário aqui
-    alert('Mensagem enviada com sucesso!');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Simulando envio do formulário
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Formulário enviado:', formData);
+      
+      // Limpa o formulário após o envio
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setSubmitSuccess(true);
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+      alert(mailT.form.error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -26,32 +126,32 @@ export const Mail = () => {
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M2 6L8 10L14 6M2 6L2 12C2 12.5523 2.44772 13 3 13H13C13.5523 13 14 12.5523 14 12V6M2 6L8 2L14 6" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
           </svg>
-          Nova Mensagem
+          {mailT.compose}
         </button>
         
         <div className="mail-folders">
-          <h4>Caixas de Correio</h4>
+          <h4>{mailT.mailboxes}</h4>
           <ul>
             <li className="active">
               <span className="folder-icon"><ImportIcon/></span>
-              Entrada
+              {mailT.inbox}
               <span className="badge">1</span>
             </li>
             <li>
               <span className="folder-icon"><ShareIcon/></span>
-              Enviados
+              {mailT.sent}
             </li>
             <li>
               <span className="folder-icon"><DraftIcon/></span>
-              Rascunhos
+              {mailT.drafts}
             </li>
             <li>
               <span className="folder-icon"><StarIcon/></span>
-              Favoritos
+              {mailT.favorites}
             </li>
             <li>
               <span className="folder-icon"><TrashIcon/></span>
-              Lixeira
+              {mailT.trash}
             </li>
           </ul>
         </div>
@@ -59,77 +159,141 @@ export const Mail = () => {
 
       <div className="mail-content">
         <div className="mail-header">
-          <h2>Entre em Contato</h2>
-          <p>Vamos conversar sobre seu próximo projeto?</p>
+          <h2>{mailT.contactTitle}</h2>
+          <p>{mailT.contactSubtitle}</p>
         </div>
 
         <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="name">Nome</label>
+              <label htmlFor="name">{mailT.form.name}</label>
               <input
                 type="text"
                 id="name"
+                name="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Seu nome completo"
-                required
+                onChange={handleChange}
+                onBlur={() => {
+                  if (!formData.name.trim()) {
+                    setErrors(prev => ({ ...prev, name: `${mailT.form.name} ${mailT.form.validation.required}` }));
+                  }
+                }}
+                placeholder={mailT.form.namePlaceholder}
+                className={errors.name ? 'input-error' : ''}
               />
+              {errors.name && <span className="error-message">{errors.name}</span>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">E-mail</label>
+              <label htmlFor="email">{mailT.form.email}</label>
               <input
                 type="email"
                 id="email"
+                name="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="seu@email.com"
-                required
+                onChange={handleChange}
+                onBlur={() => {
+                  if (!formData.email) {
+                    setErrors(prev => ({ ...prev, email: `${mailT.form.email} ${mailT.form.validation.required}` }));
+                  } else if (!validateEmail(formData.email)) {
+                    setErrors(prev => ({ ...prev, email: mailT.form.validation.email }));
+                  }
+                }}
+                placeholder={mailT.form.emailPlaceholder}
+                className={errors.email ? 'input-error' : ''}
               />
+              {errors.email && <span className="error-message">{errors.email}</span>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Telefone</label>
+              <label htmlFor="phone">{mailT.form.phone}</label>
               <input
                 type="tel"
                 id="phone"
+                name="phone"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="(31) 99999-9999"
-                required
+                onChange={handleChange}
+                onBlur={() => {
+                  if (!formData.phone) {
+                    setErrors(prev => ({ ...prev, phone: `${mailT.form.phone} ${mailT.form.validation.required}` }));
+                  } else if (!validatePhone(formData.phone)) {
+                    setErrors(prev => ({ ...prev, phone: mailT.form.validation.phone }));
+                  }
+                }}
+                placeholder={mailT.form.phonePlaceholder}
+                className={errors.phone ? 'input-error' : ''}
               />
+              {errors.phone && <span className="error-message">{errors.phone}</span>}
             </div>
 
           <div className="form-group">
-            <label htmlFor="subject">Assunto</label>
+            <label htmlFor="subject">{mailT.form.subject}</label>
             <input
               type="text"
               id="subject"
+              name="subject"
               value={formData.subject}
-              onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-              placeholder="Qual o motivo do contato?"
-              required
+              onChange={handleChange}
+              onBlur={() => {
+                if (!formData.subject.trim()) {
+                  setErrors(prev => ({ ...prev, subject: `${mailT.form.subject} ${mailT.form.validation.required}` }));
+                }
+              }}
+              placeholder={mailT.form.subjectPlaceholder}
+              className={errors.subject ? 'input-error' : ''}
             />
+            {errors.subject && <span className="error-message">{errors.subject}</span>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="message">Mensagem</label>
+            <label htmlFor="message">{mailT.form.message}</label>
             <textarea
               id="message"
-              rows={8}
+              name="message"
               value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Conte mais sobre seu projeto ou ideia..."
-              required
-            />
+              onChange={handleChange}
+              onBlur={() => {
+                if (!formData.message.trim()) {
+                  setErrors(prev => ({ ...prev, message: `${mailT.form.message} ${mailT.form.validation.required}` }));
+                } else if (formData.message.trim().length < 10) {
+                  setErrors(prev => ({ ...prev, message: mailT.form.validation.messageMinLength }));
+                }
+              }}
+              placeholder={mailT.form.messagePlaceholder}
+              rows={5}
+              className={errors.message ? 'input-error' : ''}
+            ></textarea>
+            {errors.message && <span className="error-message">{errors.message}</span>}
           </div>
 
-          <button type="submit" className="send-btn">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M14 2L7 9M14 2L9 14L7 9M14 2L2 7L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Enviar Mensagem
-          </button>
+          <div className="form-footer">
+            <button 
+              type="submit" 
+              className={`send-btn ${isSubmitting ? 'sending' : ''} ${submitSuccess ? 'success' : ''}`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                  {mailT.form.sending}
+                </button>
+              ) : submitSuccess ? (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M13 4L6 11L3 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Mensagem Enviada!
+                </>
+              ) : (
+                <button type="submit" className="submit-btn">
+                  {mailT.form.submit}
+                </button>
+              )}
+            </button>
+            {submitSuccess && (
+              <div className="success-message">
+                {mailT.form.success}
+              </div>
+            )}
+          </div>
         </form>
 
         <div className="contact-info">

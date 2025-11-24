@@ -1,0 +1,60 @@
+/* Genie Effect Styles - Adaptado do código original */
+
+.genie {
+  position: fixed;
+  display: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.genie.expand .genie-step {
+  transition: background-position 700ms ease-out;
+  -moz-transition: background-position 700ms ease-out;
+  -webkit-transition: background-position 700ms ease-out;
+}
+
+.genie.fan .genie-step {
+  transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -webkit-transition: all 300ms ease-out;
+}
+
+.genie.collapse .genie-step {
+  transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -webkit-transition: all 300ms ease-out;
+}
+
+.genie.change-pace {
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+}
+
+.genie.change-pace .genie-step {
+  transition: background-position 1330ms ease-in;
+  -moz-transition: background-position 1330ms ease-in;
+  -webkit-transition: background-position 1330ms ease-in;
+}
+
+.genie .genie-step {
+  background-repeat: no-repeat;
+  background-image: inherit;
+  background-size: 100%;
+  position: absolute;
+}
+
+/* Estilos para ícones do dock que podem usar genie effect */
+.dock-icon.genie-thumb {
+  transition: background-position 700ms ease-out;
+  -moz-transition: background-position 700ms ease-out;
+  -webkit-transition: background-position 700ms ease-out;
+}
+
+.dock-icon.paced-thumb {
+  transition: background-position 630ms ease-in;
+  -moz-transition: background-position 630ms ease-in;
+  -webkit-transition: background-position 630ms ease-in;
+}
+

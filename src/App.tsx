@@ -7,6 +7,7 @@ import { WindowManager } from "./components/WindowManager/WindowManager";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import './styles/theme.css';
+import './styles/genie.css';
 
 const App: React.FC = () => {
 

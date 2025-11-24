@@ -1,6 +1,63 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Numbers.css';
+
+interface NumbersTranslations {
+  title: string;
+  subtitle: string;
+  searchPlaceholder: string;
+  viewModes: {
+    grid: string;
+    list: string;
+  };
+  stats: {
+    categories: string;
+    skills: string;
+    skill: string;
+    skills_plural: string;
+  };
+  tableHeaders: {
+    technology: string;
+    proficiency: string;
+    experience: string;
+    projects: string;
+  };
+  proficiencyLevels: {
+    expert: string;
+    advanced: string;
+    intermediate: string;
+    beginner: string;
+  };
+  time: {
+    year: string;
+    year_plural: string;
+    month: string;
+    month_plural: string;
+    and: string;
+  };
+  softSkills: {
+    communication: string;
+    teamwork: string;
+    problemSolving: string;
+    timeManagement: string;
+  };
+  skillCategories: {
+    frontend: string;
+    backend: string;
+    devops: string;
+    design: string;
+    softSkills: string;
+  };
+  skillDetails: {
+    proficiency: string;
+    experience: string;
+    projects: string;
+    description: string;
+  };
+  noResults: string;
+  close: string;
+}
 
 interface Skill {
   name: string;
@@ -30,19 +87,44 @@ const calculateTimeSince = (startDate?: string): { years: number; months: number
   return { years, months };
 };
 
-const getProficiencyText = (percentage: number) => {
-  if (percentage >= 90) return 'Especialista';
-  if (percentage >= 75) return 'Avançado';
-  if (percentage >= 50) return 'Intermediário';
-  return 'Iniciante';
+const getProficiencyText = (percentage: number, t: any) => {
+  const { proficiencyLevels } = t('numbers', { returnObjects: true }) as NumbersTranslations;
+  if (percentage >= 90) return proficiencyLevels.expert;
+  if (percentage >= 75) return proficiencyLevels.advanced;
+  if (percentage >= 50) return proficiencyLevels.intermediate;
+  return proficiencyLevels.beginner;
+};
+
+const formatTimeSince = (startDate: string | undefined, t: any) => {
+  if (!startDate) return '';
+  
+  const { years, months } = calculateTimeSince(startDate);
+  const { time } = t('numbers', { returnObjects: true }) as NumbersTranslations;
+  
+  const yearsText = years > 0 
+    ? t('numbers.time.year', { count: years })
+    : '';
+    
+  const monthsText = months > 0 
+    ? t('numbers.time.month', { count: months })
+    : '';
+    
+  if (years > 0 && months > 0) {
+    return `${yearsText} ${time.and} ${monthsText}`;
+  }
+  
+  return yearsText || monthsText;
 };
 
 export const Numbers = () => {
+  const { t } = useTranslation();
+  const numbersT = t('numbers', { returnObjects: true }) as NumbersTranslations;
+  
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const skills: Record<string, Skill[]> = {
-    'Frontend': [
+    [numbersT.skillCategories.frontend]: [
       { name: 'React', proficiency: 80, startDate: '2025-09-25', projects: 2, icon: '⚛️', color: '#61dafb' },
       { name: 'TypeScript', proficiency: 80, startDate: '2025-04-13', projects: 4, icon: '📘', color: '#3178c6' },
       { name: 'React Native', proficiency: 70, startDate: '2025-04-13', projects: 2, icon: '⚛️', color: '#61dafb' },
@@ -52,26 +134,26 @@ export const Numbers = () => {
       { name: 'Next.js', proficiency: 75, startDate: '2025-04-13', projects: 2, icon: '▲', color: '#000000' },
       { name: 'TailwindCSS', proficiency: 50, startDate: '2025-09-25', projects: 2, icon: '🌊', color: '#06B6D4' },
     ],
-    'Backend': [
+    [numbersT.skillCategories.backend]: [
       { name: 'Node.js', proficiency: 75, startDate: '2025-04-13', projects: 1, icon: '🟢', color: '#339933' },
       { name: 'Python', proficiency: 70, startDate: '2024-01-15', projects: 2, icon: '🐍', color: '#3776AB' },
       { name: 'MongoDB', proficiency: 50, startDate: '2025-04-13', projects: 1, icon: '🍃', color: '#47A248' },
       { name: 'PostgreSQL', proficiency: 70, startDate: '2025-04-15', projects: 2, icon: '🐘', color: '#4169E1' },
       { name: 'REST APIs', proficiency: 90, startDate: '2025-04-13', projects: 4, icon: '🔌', color: '#FF6C37' },
     ],
-    'DevOps': [
+    [numbersT.skillCategories.devops]: [
       { name: 'Git', proficiency: 90, startDate: '2025-01-10', icon: '📦', color: '#F05032' },
       { name: 'Docker', proficiency: 60, startDate: '2025-07-03', icon: '🐳', color: '#2496ED' },
     ],
-    'Design': [
+    [numbersT.skillCategories.design]: [
       { name: 'Figma', proficiency: 80, startDate: '2024-06-6', projects: 12, icon: '🎨', color: '#F24E1E' },
       { name: 'UI/UX', proficiency: 85, startDate: '2024-01-20', projects: 15, icon: '✨', color: '#FF3366' },
     ],
-    'Soft Skills': [
-      { name: 'Comunicação', proficiency: 75, icon: '💬', color: '#4CAF50' },
-      { name: 'Trabalho em Equipe', proficiency: 90, icon: '👥', color: '#2196F3' },
-      { name: 'Resolução de Problemas', proficiency: 95, icon: '🧩', color: '#9C27B0' },
-      { name: 'Gestão de Tempo', proficiency: 85, icon: '⏰', color: '#FF9800' },
+    [numbersT.skillCategories.softSkills]: [
+      { name: numbersT.softSkills.communication, proficiency: 75, icon: '💬', color: '#4CAF50' },
+      { name: numbersT.softSkills.teamwork, proficiency: 90, icon: '👥', color: '#2196F3' },
+      { name: numbersT.softSkills.problemSolving, proficiency: 95, icon: '🧩', color: '#9C27B0' },
+      { name: numbersT.softSkills.timeManagement, proficiency: 85, icon: '⏰', color: '#FF9800' },
     ]
   };
 
@@ -87,6 +169,12 @@ export const Numbers = () => {
 
   const totalSkills = Object.values(filteredSkills).flat().length;
   const totalCategories = Object.keys(filteredSkills).length;
+  
+  const getSkillCountText = (count: number) => {
+    return count === 1 
+      ? t('numbers.stats.skill', { count })
+      : t('numbers.stats.skills', { count });
+  };
 
   return (
     <div className="numbers-app">
@@ -96,7 +184,7 @@ export const Numbers = () => {
             <button 
               className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
               onClick={() => setViewMode('grid')}
-              title="Visualização em grade"
+              title={numbersT.viewModes.grid}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5"/>
@@ -108,7 +196,7 @@ export const Numbers = () => {
             <button 
               className={`view-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
               onClick={() => setViewMode('list')}
-              title="Visualização em lista"
+              title={numbersT.viewModes.list}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M3 4H13M3 8H13M3 12H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -123,7 +211,7 @@ export const Numbers = () => {
             <input
               type="text"
               id='pesquisar'
-              placeholder="Pesquisar habilidades..."
+              placeholder={numbersT.searchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
@@ -138,14 +226,14 @@ export const Numbers = () => {
           </div>
         </div>
         <div className="toolbar-title">
-          <h2>Habilidades Técnicas</h2>
-          <p className="toolbar-subtitle">Minhas competências e experiência</p>
+          <h2>{numbersT.title}</h2>
+          <p className="toolbar-subtitle">{numbersT.subtitle}</p>
         </div>
         <div className="toolbar-section">
           <div className="stats-badge">
-            <span className="stat">{totalCategories} Categorias</span>
+            <span className="stat">{t('numbers.stats.categories', { count: totalCategories })}</span>
             <span className="divider">|</span>
-            <span className="stat">{totalSkills} Habilidades</span>
+            <span className="stat">{getSkillCountText(totalSkills)}</span>
           </div>
         </div>
       </div>
@@ -164,7 +252,9 @@ export const Numbers = () => {
               >
                 <div className="category-header">
                   <h2 className="category-title">{category}</h2>
-                  <span className="category-count">{items.length} {items.length === 1 ? 'habilidade' : 'habilidades'}</span>
+                  <span className="category-count">
+                    {t('numbers.stats.skills', { count: items.length })}
+                  </span>
                 </div>
                 
                 {viewMode === 'list' ? (
@@ -174,13 +264,17 @@ export const Numbers = () => {
                       category === 'DevOps' ? 'devops-header' :
                       category === 'Design' ? 'design-header' : ''
                     }`}>
-                      <div className="col-tech">Tecnologia</div>
-                      <div className="col-progress">Proficiência</div>
-                      {(category === 'Frontend' || category === 'Backend' || category === 'Design' || category === 'DevOps') && (
-                        <div className="col-years">Experiência</div>
+                      <div className="col-tech">{numbersT.tableHeaders.technology}</div>
+                      <div className="col-progress">{numbersT.tableHeaders.proficiency}</div>
+                      {(category === numbersT.skillCategories.frontend || 
+                        category === numbersT.skillCategories.backend || 
+                        category === numbersT.skillCategories.design || 
+                        category === numbersT.skillCategories.devops) && (
+                        <div className="col-years">{numbersT.tableHeaders.experience}</div>
                       )}
-                      {(category === 'Frontend' || category === 'Backend') && (
-                        <div className="col-projects">Projetos</div>
+                      {(category === numbersT.skillCategories.frontend || 
+                        category === numbersT.skillCategories.backend) && (
+                        <div className="col-projects">{numbersT.tableHeaders.projects}</div>
                       )}
                     </div>
                     {items.map((skill) => (
@@ -205,7 +299,7 @@ export const Numbers = () => {
                         </div>
                         <div className="col-progress">
                           <div className="skill-meta">
-                            <span className="skill-level">{getProficiencyText(skill.proficiency)}</span>
+                            <span className="skill-level">{getProficiencyText(skill.proficiency, t)}</span>
                             <span className="skill-percent">{skill.proficiency}%</span>
                           </div>
                           <div className="progress-bar">
@@ -221,26 +315,17 @@ export const Numbers = () => {
                         {(category === 'Frontend' || category === 'Backend' || category === 'Design' || category === 'DevOps') && (
                           <>
                             <div className="col-years">
-                              <span className="years-badge">
-                                {skill.startDate ? (() => {
-                                  const { years, months } = calculateTimeSince(skill.startDate);
-                                  let timeStr = '';
-                                  if (years > 0) {
-                                    timeStr += `${years} ${years === 1 ? 'ano' : 'anos'}`;
-                                  }
-                                  if (months > 0) {
-                                    if (timeStr) timeStr += ' ';
-                                    timeStr += `${months} ${months === 1 ? 'mês' : 'meses'}`;
-                                  }
-                                  return timeStr || 'Menos de um mês';
-                                })() : '-'}
-                              </span>
+                              <div className="experience-cell">
+                                {formatTimeSince(skill.startDate, t)}
+                              </div>
                             </div>
                             {(category === 'Frontend' || category === 'Backend') && (
                               <div className="col-projects">
-                                <span className="projects-badge">
-                                  {skill.projects !== undefined ? `${skill.projects} ${skill.projects === 1 ? 'projeto' : 'projetos'}` : '-'}
-                                </span>
+                                <div className="projects-cell">
+                                  {skill.projects === 1 
+                                    ? t('numbers.stats.projects', { count: skill.projects })
+                                    : t('numbers.stats.projects_plural', { count: skill.projects })}
+                                </div>
                               </div>
                             )}
                           </>
@@ -271,17 +356,19 @@ export const Numbers = () => {
                         </div>
                         <div className="skill-progress">
                           <div className="skill-meta">
-                            {/* <span className="skill-level">{getProficiencyText(skill.proficiency)}</span> */}
                             <span className="skill-percent">{skill.proficiency}%</span>
                           </div>
                           <div className="progress-bar">
-                            <div 
+                            <motion.div 
                               className="progress-fill"
-                              style={{ 
-                                width: `${skill.proficiency}%`,
-                                backgroundColor: skill.color
-                              }}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${skill.proficiency}%` }}
+                              transition={{ duration: 1, delay: 0.2 }}
+                              style={{ backgroundColor: skill.color }}
                             />
+                            <span className="progress-text">
+                              {skill.proficiency}% {getProficiencyText(skill.proficiency, t)}
+                            </span>
                           </div>
                         </div>
                         <div className="skill-stats">
@@ -289,25 +376,18 @@ export const Numbers = () => {
                             <div className="stat">
                               <span className="stat-label">Experiência</span>
                               <span className="stat-value">
-                                {(() => {
-                                  const { years, months } = calculateTimeSince(skill.startDate);
-                                  let timeStr = '';
-                                  if (years > 0) {
-                                    timeStr += `${years} ${years === 1 ? 'ano' : 'anos'}`;
-                                  }
-                                  if (months > 0) {
-                                    if (timeStr) timeStr += ' ';
-                                    timeStr += `${months} ${months === 1 ? 'mês' : 'meses'}`;
-                                  }
-                                  return timeStr || 'Menos de um mês';
-                                })()}
+                                {formatTimeSince(skill.startDate, t)}
                               </span>
                             </div>
                           )}
                           {skill.projects !== undefined && (
                             <div className="stat">
-                              <span className="stat-label">Projetos</span>
-                              <span className="stat-value">{skill.projects}</span>
+                              <span className="stat-label">{numbersT.tableHeaders.projects}</span>
+                              <span className="stat-value">
+                                {skill.projects === 1 
+                                  ? t('numbers.stats.projects', { count: skill.projects })
+                                  : t('numbers.stats.projects_plural', { count: skill.projects })}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -328,7 +408,7 @@ export const Numbers = () => {
                 <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" />
                 <path d="M10 7V10M10 10V13M10 10H13M10 10H7" strokeLinecap="round" />
               </svg>
-              <h3>Nenhuma habilidade encontrada</h3>
+              <p>{numbersT.noResults}</p>
               <p>Tente usar termos diferentes na sua busca.</p>
               <button 
                 className="clear-search-btn" 
@@ -360,10 +440,9 @@ export const Numbers = () => {
                 <button 
                   className="close-modal"
                   onClick={() => setSelectedSkill(null)}
+                  aria-label={numbersT.close}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M18 6L6 18M6 6l12 12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  ×
                 </button>
                 
                 <div className="skill-modal-header">
@@ -376,7 +455,7 @@ export const Numbers = () => {
                   <div className="skill-title">
                     <h2>{selectedSkill.name}</h2>
                     <div className="skill-level-badge" style={{ backgroundColor: `${selectedSkill.color}15`, color: selectedSkill.color }}>
-                      {getProficiencyText(selectedSkill.proficiency)}
+                      {getProficiencyText(selectedSkill.proficiency, t)}
                     </div>
                   </div>
                 </div>
@@ -401,25 +480,14 @@ export const Numbers = () => {
                         <div className="stat">
                           <span className="stat-label">Experiência</span>
                           <span className="stat-value">
-                            {(() => {
-                              const { years, months } = calculateTimeSince(selectedSkill.startDate);
-                              let timeStr = '';
-                              if (years > 0) {
-                                timeStr += `${years} ${years === 1 ? 'ano' : 'anos'}`;
-                              }
-                              if (months > 0) {
-                                if (timeStr) timeStr += ' ';
-                                timeStr += `${months} ${months === 1 ? 'mês' : 'meses'}`;
-                              }
-                              return timeStr || 'Menos de um mês';
-                            })()}
+                            {formatTimeSince(selectedSkill.startDate, t)}
                           </span>
                         </div>
                       )}
                       {selectedSkill.projects !== undefined && (
                         <div className="stat">
                           <span className="stat-label">Projetos</span>
-                          <span className="stat-value">{selectedSkill.projects}</span>
+                          <span className="stat-value">{t('numbers.stats.projects', { count: selectedSkill.projects })}</span>
                         </div>
                       )}
                     </div>

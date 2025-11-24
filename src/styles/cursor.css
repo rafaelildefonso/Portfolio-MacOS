@@ -1,0 +1,33 @@
+/* Hide default cursor on non-touch devices */
+@media (pointer: fine) {
+  html, body, a, button, input, textarea, select, * {
+    cursor: none !important;
+  }
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  /* Prevent any interaction */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.custom-cursor img {
+  /* Ensure the image doesn't add layout shift or interaction */
+  display: block;
+  /* Default size, can be adjusted per cursor type if needed */
+  width: 32px; 
+  height: auto;
+  /* Smooth transition for cursor icon changes if desired, 
+     but usually instant is better for cursor feel. 
+     Maybe opacity fade for load? */
+}
+
+/* Optional: Add a transition for the transform if you want a "laggy" cursor effect,
+   but for a system replacement, instant (no transition) is usually preferred 
+   to feel responsive. */

@@ -147,6 +147,7 @@ className={`macos-window ${isMinimized ? 'minimized' : ''}`}
           className="window-titlebar"
           onMouseDown={handleMouseDown}
           onDoubleClick={handleDoubleClick}
+          data-cursor={isDragging ? "grabbing" : "grab"}
         >
           <div className="window-controls">
             <button

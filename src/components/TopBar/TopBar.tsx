@@ -193,13 +193,13 @@ const TopBar = () => {
       </div>
       <div className="macos-status">
         <div className="status-icons">
-          <div className="status-button" aria-label={t('topBar.status.wifi')}>
+          <button className="status-button" aria-label={t('topBar.status.wifi')}>
             <WifiIcon size={12} className="status-icon" aria-hidden="true" />
-          </div>
-          <div className="status-button" aria-label={t('topBar.status.search')}>
+          </button>
+          <button className="status-button" aria-label={t('topBar.status.search')}>
             <SearchIcon size={12} className="status-icon" aria-hidden="true" />
-          </div>
-          <div
+          </button>
+          <button
             className="status-button"
             onClick={() => setIsControlCenterOpen(!isControlCenterOpen)}
             aria-label={t('topBar.status.controlCenter')}
@@ -207,7 +207,7 @@ const TopBar = () => {
             role="button"
           >
             <ControlCenterIcon size={12} className="status-icon" aria-hidden="true" />
-          </div>
+          </button>
         </div>
         <div className="status-time">
           {currentTime.toLocaleTimeString("en-US", {

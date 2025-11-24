@@ -8,24 +8,29 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { ContextMenu } from "./components/ContextMenu/ContextMenu";
 import './styles/theme.css';
 import './styles/genie.css';
+import { CursorProvider } from "./contexts/CursorContext";
+import { CustomCursor } from "./components/CustomCursor/CustomCursor";
 
 const App: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <WindowProvider>
-        <div 
-          className="desktop-screen"
-        >
-          <Splash/>
-          <TopBar/>
-          <section className="window-area">
-            <WindowManager />
-          </section>
-          <Dock/>
-          <ContextMenu />
-        </div>
-      </WindowProvider>
+      <CursorProvider>
+        <WindowProvider>
+          <div 
+            className="desktop-screen"
+          >
+            <Splash/>
+            <TopBar/>
+            <section className="window-area">
+              <WindowManager />
+            </section>
+            <Dock/>
+            <ContextMenu />
+          </div>
+          <CustomCursor />
+        </WindowProvider>
+      </CursorProvider>
       <svg>
         <filter id="glass-distortion">
           <feTurbulence

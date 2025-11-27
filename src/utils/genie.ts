@@ -27,27 +27,27 @@ const getDimensions = (el: HTMLElement): Dimensions | null => {
 };
 
 // Função auxiliar para obter o centro de um elemento
-const getElementCenter = (
-  el: HTMLElement | null
-): { x: number; y: number } | null => {
-  if (!el) return null;
+// const getElementCenter = (
+//   el: HTMLElement | null
+// ): { x: number; y: number } | null => {
+//   if (!el) return null;
 
-  try {
-    const rect = el.getBoundingClientRect();
-    const scrollX =
-      window.pageXOffset || document.documentElement.scrollLeft || 0;
-    const scrollY =
-      window.pageYOffset || document.documentElement.scrollTop || 0;
+//   try {
+//     const rect = el.getBoundingClientRect();
+//     const scrollX =
+//       window.pageXOffset || document.documentElement.scrollLeft || 0;
+//     const scrollY =
+//       window.pageYOffset || document.documentElement.scrollTop || 0;
 
-    return {
-      x: rect.left + scrollX + rect.width / 2,
-      y: rect.top + scrollY + rect.height / 2,
-    };
-  } catch (error) {
-    console.error("Erro ao obter centro do elemento:", error);
-    return null;
-  }
-};
+//     return {
+//       x: rect.left + scrollX + rect.width / 2,
+//       y: rect.top + scrollY + rect.height / 2,
+//     };
+//   } catch (error) {
+//     console.error("Erro ao obter centro do elemento:", error);
+//     return null;
+//   }
+// };
 
 const prefixedEvent = (
   el: HTMLElement,

@@ -184,7 +184,7 @@
 .finder-search svg {
   position: absolute;
   left: 10px;
-  color: var(--search-icon);
+  color: var(--finder-search-icon);
 }
 
 .clear-search {
@@ -192,7 +192,7 @@
   right: 8px;
   background: none;
   border: none;
-  color: var(--search-icon);
+  color: var(--finder-search-icon);
   cursor: pointer;
   width: 20px;
   height: 20px;
@@ -278,14 +278,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 2px;
   cursor: pointer;
+  padding-left: 1.5px;
   z-index: 2;
   transition: all 0.2s ease;
 }
 
 .favorite-btn:hover {
-  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .favorite-btn.active {
@@ -304,7 +304,6 @@
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
   border-color: var(--finder-card-hover-border);
 }
@@ -468,4 +467,58 @@
 /* Dark mode is now handled by theme variables */
 @media (prefers-color-scheme: dark) {
   /* All dark mode styles are now handled by theme variables */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .finder-app {
+    flex-direction: column;
+  }
+
+  .finder-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    border-right: none;
+    border-bottom: 1px solid var(--finder-sidebar-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 8px;
+  }
+
+  .finder-section {
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .finder-toolbar {
+    padding: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .finder-search {
+    order: 3;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .finder-view-controls {
+    display: none; /* Hide view controls on mobile to save space */
+  }
+
+  .finder-projects-grid {
+    padding: 12px;
+  }
+
+  .project-card {
+    margin: 8px 0;
+  }
+
+  .project-preview {
+    height: 160px;
+  }
 }

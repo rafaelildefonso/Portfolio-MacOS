@@ -93,22 +93,25 @@
   padding: var(--dock-icon-padding);
 }
 
+
 .dock-item .dot {
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
   width: var(--dock-dot-size);
   height: var(--dock-dot-size);
   background: var(--dock-dot-color);
   border-radius: 50%;
-  margin-top: var(--dock-dot-margin);
   opacity: 0;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  transform: translateZ(0);
-  will-change: opacity, transform;
+  transition: opacity 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   box-shadow: var(--dock-dot-shadow);
 }
 
 .dock-item .dot.active {
   opacity: 1;
 }
+
 
 /* Dark mode is now handled by theme variables */
 @media (prefers-color-scheme: dark) {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ContextMenu.css';
+import { FileIcon, FolderIcon, PaletteIcon, RefreshIcon, SettingsIcon } from '../../assets/icons/Icons';
 
 interface MenuPosition {
   x: number;
@@ -50,13 +51,13 @@ export const ContextMenu = () => {
         >
           <div className="liquidGlass-effect"></div>
           <div className="context-menu-content">
-            <MenuItem icon="📁" label="Nova Pasta" />
-            <MenuItem icon="📄" label="Obter Informações" />
+            <MenuItem icon={<FolderIcon />} label="Nova Pasta" />
+            <MenuItem icon={<FileIcon />} label="Obter Informações" />
             <Divider />
-            <MenuItem icon="🎨" label="Mudar Papel de Parede..." />
-            <MenuItem icon="⚙️" label="Preferências do Sistema" />
+            <MenuItem icon={<PaletteIcon />} label="Mudar Papel de Parede..." />
+            <MenuItem icon={<SettingsIcon />} label="Preferências do Sistema" />
             <Divider />
-            <MenuItem icon="🔄" label="Atualizar" onClick={() => window.location.reload()} />
+            <MenuItem icon={<RefreshIcon />} label="Atualizar" onClick={() => window.location.reload()} />
           </div>
         </motion.div>
       )}
@@ -65,7 +66,7 @@ export const ContextMenu = () => {
 };
 
 interface MenuItemProps {
-  icon: string;
+  icon: React.ReactNode | string;
   label: string;
   onClick?: () => void;
   disabled?: boolean;

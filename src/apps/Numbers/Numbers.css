@@ -284,6 +284,7 @@
   align-items: center;
   font-size: 12px;
   gap: 5px;
+  margin-bottom: 5px;
 }
 
 .skill-level {
@@ -386,7 +387,8 @@
 }
 
 .skill-progress {
-  margin-bottom: 32px;
+  margin-top: 16px;
+  margin-bottom: 22px;
 }
 
 .skill-stats {
@@ -665,7 +667,7 @@
 .skill-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
 }
 
 .col-progress {
@@ -705,7 +707,7 @@
 .col-projects {
   font-size: 14px;
   font-weight: 500;
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
   text-align: center;
 }
 
@@ -807,7 +809,7 @@
 .skill-title h2 {
   margin: 0 0 4px 0;
   font-size: 20px;
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
 }
 
 .skill-level-badge {
@@ -851,7 +853,7 @@
 .progress-value {
   font-size: 14px;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
   min-width: 40px;
   text-align: right;
 }
@@ -866,14 +868,14 @@
 
 .stat-label {
   font-size: 12px;
-  color: #6e6e73;
+  color: var(--numbers-text-tertiary);
   margin-bottom: 4px;
 }
 
 .stat-value {
   font-size: 16px;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
 }
 
 .skill-description {
@@ -885,14 +887,14 @@
 .skill-description h3 {
   margin: 0 0 12px 0;
   font-size: 14px;
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
 }
 
 .skill-description p {
   margin: 0;
   font-size: 14px;
   line-height: 1.5;
-  color: #424245;
+  color: var(--numbers-text-secondary);
 }
 
 .skill-actions {
@@ -916,7 +918,7 @@
 .btn-outline {
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  color: #1d1d1f;
+  color: var(--numbers-text-primary);
 }
 
 .btn-outline:hover {
@@ -1201,75 +1203,61 @@
   }
 }
   
-  .numbers-content {
-    background: var(--numbers-content-bg);
-  }
 
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
   .numbers-toolbar {
-    background: rgba(30, 30, 30, 0.8);
-    border-bottom-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    height: auto;
   }
 
-  .toolbar-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: #f5f5f7;
-  }
-
-  .toolbar-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
+  .toolbar-section {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .toolbar-title {
-    color: #f5f5f7;
+    margin: 0 8px;
   }
 
-  .toolbar-stats {
-    color: #98989d;
+  .search-bar {
+    width: 100%;
   }
 
   .numbers-content {
-    background: rgba(26, 26, 26, 0.8) ;
+    padding: 12px;
+    gap: 16px;
   }
 
-  .skill-category {
-    background: rgba(40, 40, 40, 0.8);
+  .category-header {
+    padding: 0 16px;
+    min-height: 48px;
   }
 
-  .table-header {
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom-color: rgba(255, 255, 255, 0.08);
+  .skills-table {
+    display: block;
+    overflow-x: auto;
   }
 
-  .table-row {
-    border-bottom-color: rgba(255, 255, 255, 0.06);
+  .table-header, .table-row {
+    min-width: 600px; /* Force horizontal scroll for table */
+    padding: 12px 16px;
   }
 
-  .table-row:hover {
-    background: rgba(255, 255, 255, 0.03);
+  .skills-grid {
+    grid-template-columns: 1fr;
+    padding: 12px;
   }
 
-  .skill-icon {
-    background: rgba(255, 255, 255, 0.1);
+  .skill-card {
+    padding: 16px;
   }
 
-  .skill-name,
-  .col-years,
-  .col-projects {
-    color: #f5f5f7;
+  .skill-stats {
+    padding-top: 20px;
   }
-
-  .progress-bar {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .numbers-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    background-clip: content-box;
-  }
-
-  .numbers-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-    background-clip: content-box;
-  }
-
+}

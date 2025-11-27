@@ -70,45 +70,45 @@ const Dock = () => {
   };
 
 
-  // Verifica se app tem janela aberta (incluindo minimizada)
-  const hasOpenWindow = (appName: string) => {
-    return windows.some(w => w.title.toLowerCase().includes(appName.replace('_', ' ')));
+  // Verifica se app tem janela aberta (incluindo minimizada) - usando appId
+  const hasOpenWindow = (appId: string) => {
+    return windows.some(w => w.appId === appId);
   };
 
-  // Encontra janela minimizada para restaurar
-  const findMinimizedWindow = (appName: string) => {
+  // Encontra janela minimizada para restaurar - usando appId
+  const findMinimizedWindow = (appId: string) => {
     return windows.find(w => 
-      w.isMinimized && w.title.toLowerCase().includes(appName.replace('_', ' '))
+      w.isMinimized && w.appId === appId
     );
   };
 
-  // Encontra janela aberta (não minimizada)
-  const findOpenWindow = (appName: string) => {
+  // Encontra janela aberta (não minimizada) - usando appId
+  const findOpenWindow = (appId: string) => {
     return windows.find(w => 
-      !w.isMinimized && w.title.toLowerCase().includes(appName.replace('_', ' '))
+      !w.isMinimized && w.appId === appId
     );
   };
 
-  const handleAppClick = async (appName: string) => {
+  const handleAppClick = async (appId: string) => {
     // Links externos
-    if (appName === 'github') {
+    if (appId === 'github') {
       window.open('https://github.com/rafaelildefonso', '_blank');
       return;
     }
-    if (appName === 'linkedin') {
+    if (appId === 'linkedin') {
       window.open('https://linkedin.com/in/rafael-ildefonso', '_blank');
       return;
     }
 
     // Verifica se existe uma janela minimizada para restaurar
-    const minimizedWindow = findMinimizedWindow(appName);
+    const minimizedWindow = findMinimizedWindow(appId);
     if (minimizedWindow) {
       setActiveWindow(minimizedWindow.id);
       return;
     }
 
     // Verifica se existe janela aberta (traz para frente)
-    const existingWindow = findOpenWindow(appName);
+    const existingWindow = findOpenWindow(appId);
     if (existingWindow) {
       setActiveWindow(existingWindow.id);
       return;
@@ -119,14 +119,15 @@ const Dock = () => {
     const centerX = (window.innerWidth - 800) / 2;
     const centerY = (window.innerHeight - 600) / 2;
 
-    switch (appName) {
+    switch (appId) {
       case 'about_me':
         openWindow({
           title: t('apps.about_me'),
           appIcon: '/images/icons/about_me.png',
           content: <Safari />,
           position: { x: centerX, y: centerY },
-          size: { width: 800, height: 600 }
+          size: { width: 800, height: 600 },
+          appId: 'about_me'
         });
         break;
       case 'projects':
@@ -135,7 +136,8 @@ const Dock = () => {
           appIcon: '/images/icons/projects.png',
           content: <Finder />,
           position: { x: centerX, y: centerY - 100 },
-          size: { width: 900, height: 650 }
+          size: { width: 900, height: 650 },
+          appId: 'projects'
         });
         break;
       case 'contact':
@@ -144,7 +146,8 @@ const Dock = () => {
           appIcon: '/images/icons/contact.png',
           content: <Mail />,
           position: { x: centerX , y: centerY  },
-          size: { width: 750, height: 600 }
+          size: { width: 750, height: 600 },
+          appId: 'contact'
         });
         break;
       case 'skills':
@@ -153,11 +156,12 @@ const Dock = () => {
           appIcon: '/images/icons/skills.png',
           content: <Numbers />,
           position: { x: centerX, y: centerY },
-          size: { width: 850, height: 700 }
+          size: { width: 850, height: 700 },
+          appId: 'skills'
         });
         break;
       default:
-        console.log('App não implementado:', appName);
+        console.log('App não implementado:', appId);
     }
   };
 
@@ -174,14 +178,14 @@ const Dock = () => {
     { icon: 'contact', alt: t('apps.contact'), label: t('apps.contact'), appId: 'contact' }
   ];
 
-  const handleDockIconClick = async (appName: string) => {
+  const handleDockIconClick = async (appId: string) => {
     // Trigger bounce animation
-    setBouncingIcon(appName);
+    setBouncingIcon(appId);
     setTimeout(() => setBouncingIcon(null), 600);
     
     // Wait for bounce to finish before opening
     await new Promise(resolve => setTimeout(resolve, 300));
-    handleAppClick(appName);
+    handleAppClick(appId);
   };
 
   return (
@@ -199,11 +203,11 @@ const Dock = () => {
             data-dock-app={btn.appId}
             style={getIconStyle(index)}
             className="dock-item"
-            onClick={() => handleDockIconClick(btn.icon)}
+            onClick={() => handleDockIconClick(btn.appId)}
             onMouseEnter={() => setHoveredButton(btn.icon)}
             onMouseLeave={() => setHoveredButton(null)}
             animate={{
-              y: bouncingIcon === btn.icon ? [-20, 0, -10, 0] : 0
+              y: bouncingIcon === btn.appId ? [-20, 0, -10, 0] : 0
             }}
             transition={{
               duration: 0.6,
@@ -226,7 +230,7 @@ const Dock = () => {
                 className="dock-icon genie-thumb"
               />
             </motion.span>
-            {hasOpenWindow(btn.icon) && <div className="app-indicator"></div>}
+            {hasOpenWindow(btn.appId) && <div className="dot active"></div>}
           </motion.button>
         ))}
       </div>

@@ -47,6 +47,16 @@ export const Window = ({
     height: 0,
   });
 
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest(".window-controls") || isMaximized)
       return;
@@ -60,7 +70,9 @@ export const Window = ({
   };
 
   const handleDoubleClick = () => {
-    maximizeWindow(id);
+    if (!isSmallScreen) {
+      maximizeWindow(id);
+    }
   };
 
   const handleResizeMouseDown = (e: React.MouseEvent) => {
@@ -80,7 +92,7 @@ export const Window = ({
     const handleMouseMove = (e: MouseEvent) => {
       if (isDragging && !isMaximized) {
         const newX = e.clientX - dragOffset.x;
-        const newY = Math.max(30, e.clientY - dragOffset.y);
+        const newY = Math.max(30, e.clientY - dragOffset.y); // Enforce TopBar limit (30px)
         updateWindowPosition(id, { x: newX, y: newY });
       }
 
@@ -133,7 +145,10 @@ className={`macos-window ${isMinimized ? 'minimized' : ''}`}
         cursor: isDragging ? "grabbing" : "default",
         visibility: isVisible ? 'visible' : 'hidden',
         opacity: isVisible ? 1 : 0,
-        transition: isVisible ? 'opacity 0.2s ease-in-out' : 'none', // Sem transição quando invisível
+        // Add smooth transitions for maximize/restore, but disable during drag/resize for performance
+        transition: (isDragging || isResizing) 
+          ? 'none' 
+          : 'width 0.3s cubic-bezier(0.2, 0, 0, 1), height 0.3s cubic-bezier(0.2, 0, 0, 1), top 0.3s cubic-bezier(0.2, 0, 0, 1), left 0.3s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s ease-in-out',
         position: 'absolute',
         overflow: 'hidden',
         display: isVisible ? 'block' : 'none'
@@ -168,11 +183,18 @@ className={`macos-window ${isMinimized ? 'minimized' : ''}`}
               <MinusIcon size={12} color="#8B5A00" />
             </button>
             <button
-              className="window-control maximize"
-              onClick={() => maximizeWindow(id)}
+              className={`window-control maximize ${isSmallScreen ? 'disabled' : ''}`}
+              onClick={() => !isSmallScreen && maximizeWindow(id)}
               aria-label="Maximizar"
+              disabled={isSmallScreen}
+              style={{ 
+                opacity: isSmallScreen ? 0.5 : 1, 
+                cursor: isSmallScreen ? 'default' : 'pointer',
+                backgroundColor: isSmallScreen ? '#ccc' : undefined,
+                borderColor: isSmallScreen ? '#bbb' : undefined
+              }}
             >
-              <FulScreenIcon size={12} color="#006400"/>
+              <FulScreenIcon size={12} color={isSmallScreen ? "#666" : "#006400"}/>
             </button>
           </div>
           <div className="window-title">
@@ -186,6 +208,7 @@ className={`macos-window ${isMinimized ? 'minimized' : ''}`}
           <div
             className="window-resize-handle"
             onMouseDown={handleResizeMouseDown}
+            data-cursor="nwse-resize"
           />
         )}
       </div>

@@ -12,6 +12,7 @@ export interface WindowState {
   position: { x: number; y: number };
   size: { width: number; height: number };
   zIndex: number;
+  appId?: string;
   previousBounds?: {
     position: { x: number; y: number };
     size: { width: number; height: number };
@@ -37,15 +38,37 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
   const [nextZIndex, setNextZIndex] = useState(100);
 
-  const openWindow = async (window: Omit<WindowState, 'id' | 'isMinimized' | 'isMaximized' | 'zIndex'>) => {
+  const openWindow = async (windowProps: Omit<WindowState, 'id' | 'isMinimized' | 'isMaximized' | 'zIndex'>) => {
+    // Check if app is already open
+    if (windowProps.appId) {
+      const existingWindow = windows.find(w => w.appId === windowProps.appId);
+      if (existingWindow) {
+        setActiveWindow(existingWindow.id);
+        return;
+      }
+    }
+
     const id = `window-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const isSmallScreen = window.innerWidth < 768;
+    
+    // Calculate centered position
+    const windowWidth = windowProps.size?.width || 800;
+    const windowHeight = windowProps.size?.height || 600;
+    
+    const centerX = Math.max(0, (window.innerWidth - windowWidth) / 2);
+    const centerY = Math.max(30, (window.innerHeight - windowHeight) / 2); // Ensure it doesn't go under TopBar
+
     const newWindow: WindowState = {
-      ...window,
+      ...windowProps,
       id,
       isMinimized: false,
-      isMaximized: false,
+      isMaximized: isSmallScreen, // Auto-maximize on small screens
       zIndex: nextZIndex,
       isVisible: false, // Inicialmente invisível para animação
+      position: isSmallScreen ? { x: 0, y: 30 } : { x: centerX, y: centerY },
+      size: isSmallScreen 
+        ? { width: window.innerWidth, height: window.innerHeight - 30 - 80 } // Adjust for dock/topbar if needed
+        : (windowProps.size || { width: 800, height: 600 }),
     };
     
     // Adicionar janela ao estado (invisível)
@@ -67,7 +90,7 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
       'Habilidades': 'skills'
     };
     
-    const appId = appIdMap[window.title] || window.title.toLowerCase();
+    const appId = appIdMap[windowProps.title] || windowProps.title.toLowerCase();
     const dockIcon = document.querySelector(`[data-dock-app="${appId}"]`) as HTMLElement;
     
     // Se encontrou os elementos, executar animação genie
@@ -78,17 +101,11 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
         // IMPORTANTE: Não ocultar a janela ANTES de criar o genie element
         // O genieExpand precisa da janela visível para capturar o conteúdo
         // Mas vamos garantir que ela não apareça na tela ainda
-        const originalDisplay = windowElement.style.display;
+        // const originalDisplay = windowElement.style.display;
         
-        // Tornar visível temporariamente para captura (mas fora da tela se necessário)
-        windowElement.style.display = originalDisplay || 'block';
-        windowElement.style.visibility = 'visible';
-        windowElement.style.opacity = '1';
-        
-        // Aguardar renderização completa antes de capturar
-        await new Promise(resolve => requestAnimationFrame(() => 
-          requestAnimationFrame(() => requestAnimationFrame(resolve))
-        ));
+        // REMOVIDO: Código que causava flash (tornar visível antes da animação)
+        // A função genieExpand foi atualizada para lidar com janelas ocultas/invisíveis
+        // usando clonagem off-screen e visibility: hidden temporário
         
         // Executar animação genie (ela vai capturar o conteúdo e depois ocultar)
         await genieExpand(
@@ -96,7 +113,7 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
           windowElement,
           () => {
             // Callback quando animação termina - mostrar janela
-            windowElement.style.display = originalDisplay || 'block';
+            windowElement.style.display = 'block';
             windowElement.style.visibility = 'visible';
             windowElement.style.opacity = '1';
             // Atualizar estado para garantir visibilidade

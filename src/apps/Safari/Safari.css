@@ -255,3 +255,57 @@
 }
 
 /* Dark mode is now handled by theme variables */
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .safari-toolbar {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    height: auto;
+    gap: 8px;
+  }
+  
+  .safari-nav-buttons {
+    order: 1;
+  }
+
+  .safari-share-btn {
+    order: 2;
+    margin-left: auto;
+  }
+  
+  .safari-url-bar {
+    order: 3;
+    width: 100%;
+    margin-top: 4px;
+    height: 32px;
+  }
+  
+  .safari-content {
+    padding: 16px;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 16px;
+    border-width: 3px;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+  }
+  
+  .profile-title {
+    font-size: 14px;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .about-card {
+    padding: 16px;
+  }
+}

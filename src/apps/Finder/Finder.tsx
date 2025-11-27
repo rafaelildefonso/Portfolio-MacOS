@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Finder.css';
+import { FolderIcon, StarFillIcon, StarIcon } from '../../assets/icons/Icons';
 
 type FilterType = 'all' | 'favorites' | 'react' | 'typescript' | 'node';
 
@@ -142,14 +143,14 @@ export const Finder = () => {
               className={activeFilter === 'all' ? 'active' : ''}
               onClick={() => setActiveFilter('all')}
             >
-              <span className="finder-icon">📁</span>
+              <span className="finder-icon"><FolderIcon /></span>
               {t('finder.allProjects')}
             </li>
             <li 
               className={activeFilter === 'favorites' ? 'active' : ''}
               onClick={() => setActiveFilter('favorites')}
             >
-              <span className="finder-icon">⭐</span>
+              <span className="finder-icon"><StarIcon/></span>
               {t('finder.favorites')}
               <span className="favorite-count">{favorites.length}</span>
             </li>
@@ -243,7 +244,7 @@ export const Finder = () => {
                 }}
                 aria-label={favorites.includes(project.id) ? t('finder.removeFromFavorites') : t('finder.addToFavorites')}
               >
-                {favorites.includes(project.id) ? '★' : '☆'}
+                {favorites.includes(project.id) ? <StarFillIcon /> : <StarIcon />}
               </button>
               <div className="project-preview">
                 <img src={project.image} alt={project.name} />

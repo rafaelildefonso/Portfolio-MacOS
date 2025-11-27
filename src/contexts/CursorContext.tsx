@@ -110,6 +110,8 @@ export const CursorProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         setCursorType('progress');
       } else if (computedStyle.cursor === 'vertical-text') {
         setCursorType('vertical-text');
+      } else if (computedStyle.cursor === 'nwse-resize') {
+        setCursorType('nwse-resize');
       } else {
         setCursorType('default');
       }

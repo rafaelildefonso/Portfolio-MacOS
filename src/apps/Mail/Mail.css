@@ -416,3 +416,41 @@
     border-top-color: var(--mail-divider);
   }
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .mail-app {
+    flex-direction: column;
+  }
+
+  .mail-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--mail-sidebar-border);
+    padding: 12px;
+  }
+
+  .mail-content {
+    padding: 16px;
+    border-radius: 0;
+  }
+
+  .mail-header h2 {
+    font-size: 24px;
+  }
+
+  .compose-btn {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+  }
+
+  .mail-folders li {
+    padding: 8px 12px;
+  }
+
+  .contact-form {
+    margin-bottom: 24px;
+  }
+}

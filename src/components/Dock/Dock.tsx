@@ -11,7 +11,7 @@ import "./Dock.css";
 const Dock = () => {
   const { t } = useTranslation();
   const dockRef = useRef<HTMLDivElement>(null);
-  const { openWindow, windows, setActiveWindow } = useWindows();
+  const { openWindow, windows, setActiveWindow, activeWindowId, minimizeWindow } = useWindows();
   const [mouseX, setMouseX] = useState<number | null>(null);
   const baseWidth = 57.6; // Base width in pixels
   const distanceLimit = baseWidth * 6;
@@ -110,7 +110,12 @@ const Dock = () => {
     // Verifica se existe janela aberta (traz para frente)
     const existingWindow = findOpenWindow(appId);
     if (existingWindow) {
-      setActiveWindow(existingWindow.id);
+      if(activeWindowId !== existingWindow.id){
+        setActiveWindow(existingWindow.id);
+      }
+      else {
+        minimizeWindow(existingWindow.id);
+      }
       return;
     }
 

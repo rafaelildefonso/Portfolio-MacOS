@@ -98,14 +98,14 @@
       "name": "Rafael Ildefonso",
       "title": "Desenvolvedor Full Stack & UI/UX",
       "about_me": {
-        "title": "🎯 Sobre Mim",
+        "title": "🧑 Sobre Mim",
         "description": "Desenvolvedor apaixonado por criar experiências únicas. Especializado em React, Flutter e JavaScript."
       },
       "technologies": {
         "title": "💻 Tecnologias"
       },
       "experience": {
-        "title": "🚀 Experiência",
+        "title": "💼 Experiência",
         "items": [
           {
             "role": "Desenvolvedor Full Stack",

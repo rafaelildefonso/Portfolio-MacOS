@@ -89,14 +89,30 @@
   flex-shrink: 0;
 }
 
-.tag-dot.react { background: #61dafb; }
-.tag-dot.typescript { background: #3178c6; }
-.tag-dot.nodejs { background: #68a063; }
-.tag-dot.javascript { background: #f7df1e; }
-.tag-dot.html { background: #e34f26; }
-.tag-dot.css { background: #2965f1; }
-.tag-dot.prisma { background: #2d3748; }
-.tag-dot.docker { background: #2496ed; }
+.tag-dot.react {
+  background: var(--tag-react);
+}
+.tag-dot.typescript {
+  background: var(--tag-typescript);
+}
+.tag-dot.nodejs {
+  background: var(--tag-nodejs);
+}
+.tag-dot.javascript {
+  background: var(--tag-javascript);
+}
+.tag-dot.html {
+  background: var(--tag-html);
+}
+.tag-dot.css {
+  background: var(--tag-css);
+}
+.tag-dot.prisma {
+  background: var(--tag-prisma);
+}
+.tag-dot.docker {
+  background: var(--tag-docker);
+}
 
 .finder-content {
   flex: 1;
@@ -136,6 +152,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5.4px;
 }
 
 .view-btn:hover {
@@ -169,7 +186,7 @@
   padding: 8px 32px 8px 32px;
   border: 1px solid var(--search-border);
   border-radius: 8px;
-  background: var(--search-bg);
+  background: var(--input-bg);
   color: var(--search-text);
   font-size: 13px;
   transition: all 0.2s ease;
@@ -181,7 +198,7 @@
   box-shadow: 0 0 0 2px var(--search-focus-glow);
 }
 
-.finder-search svg {
+.finder-search .search-icon {
   position: absolute;
   left: 10px;
   color: var(--finder-search-icon);
@@ -246,6 +263,27 @@
   padding: 24px;
   overflow-y: auto;
   align-content: start;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.finder-projects-grid::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.finder-projects-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.finder-projects-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.finder-projects-grid::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .project-card {
@@ -289,8 +327,8 @@
 }
 
 .favorite-btn.active {
-  color: #ffd700;
-  background: rgba(255, 215, 0, 0.2);
+  color: var(--color-favorite);
+  background: var(--color-favorite-bg);
 }
 
 .favorite-count {
@@ -325,7 +363,7 @@
 }
 
 .project-preview::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: var(--finder-preview-overlay);
@@ -388,9 +426,9 @@
 }
 
 .project-tech span.active {
-  background: var(--tech-tag-active);
+  background: var(--tech-text);
   color: white;
-  border-color: var(--tech-tag-active);
+  border-color: var(--tech-text);
 }
 
 .project-tech span {
@@ -439,7 +477,7 @@
   padding: 8px 16px;
   border: 1px solid var(--button-border);
   border-radius: 16px;
-  background: var(--button-bg);
+  background: #333;
   color: var(--button-text);
   font-size: 13px;
   font-weight: 500;

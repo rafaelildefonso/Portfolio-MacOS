@@ -10,7 +10,7 @@
   --color-black: #000000;
   --color-transparent: transparent;
   --color-splash-bg: #000000;
-  
+
   /* Grayscale */
   --color-gray-50: #fafafa;
   --color-gray-100: #f5f5f5;
@@ -22,26 +22,26 @@
   --color-gray-700: #616161;
   --color-gray-800: #424242;
   --color-gray-900: #212121;
-  
+
   /* Primary Colors */
-  --color-primary: #007AFF;
+  --color-primary: #007aff;
   --color-primary-light: #5a9eff;
   --color-primary-dark: #0051a8;
   --color-primary-contrast: var(--color-white);
-  
+
   /* Accent Colors */
   --color-accent: #34c759;
   --color-accent-light: #69db7e;
   --color-accent-dark: #1f7e34;
-  
+
   /* Status Colors */
   --color-success: #34c759;
   --color-warning: #ff9500;
   --color-error: #ff3b30;
-  --color-info: #007AFF;
+  --color-info: #007aff;
   --color-status-connected: #34c759;
   --color-status-disconnected: #ff3b30;
-  
+
   /* Window Control Colors */
   --window-close: #ff5f57;
   --window-close-hover: #ff3b30;
@@ -52,37 +52,37 @@
   --window-maximize: #28c940;
   --window-maximize-hover: #34c759;
   --window-maximize-icon: #006400;
-  
+
   /* Status Colors */
   --color-lock-icon: #34c759;
   --color-badge-bg: rgba(0, 0, 0, 0.1);
   --color-badge-text: inherit;
   --color-badge-active-bg: rgba(255, 255, 255, 0.3);
-  
+
   /* Backgrounds */
   --color-bg-primary: var(--color-white);
   --color-bg-secondary: var(--color-gray-100);
   --color-bg-tertiary: var(--color-gray-200);
   --color-bg-overlay: rgba(0, 0, 0, 0.5);
-  
+
   /* Text Colors */
   --color-text-primary: var(--color-gray-900);
   --color-text-secondary: var(--color-gray-700);
   --color-text-tertiary: var(--color-gray-600);
   --color-text-quaternary: var(--color-gray-500);
   --color-text-inverse: var(--color-white);
-  
+
   /* Borders */
   --color-border-light: rgba(0, 0, 0, 0.1);
   --color-border-medium: rgba(0, 0, 0, 0.2);
   --color-border-heavy: rgba(0, 0, 0, 0.3);
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
-  
+
   /* Glass Effects */
   --glass-bg: rgba(255, 255, 255, 0.2);
   --glass-border: rgba(255, 255, 255, 0.1);
@@ -92,8 +92,12 @@
   --glass-bg-darker: rgba(0, 0, 0, 0.1);
   --glass-bg-dark: rgba(30, 30, 30, 0.2);
   --glass-border-dark: rgba(255, 255, 255, 0.05);
-  --glass-gradient-dark: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 45, 45, 0.8) 100%);
-  
+  --glass-gradient-dark: linear-gradient(
+    135deg,
+    rgba(26, 26, 26, 0.8) 0%,
+    rgba(45, 45, 45, 0.8) 100%
+  );
+
   /* Safari App */
   --safari-bg: rgba(255, 255, 255, 0.85);
   --safari-toolbar-bg: rgba(245, 245, 247, 0.95);
@@ -126,9 +130,9 @@
   --safari-about-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   --safari-about-card-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   --safari-tech-tag-bg: rgba(0, 122, 255, 0.1);
-  --safari-tech-tag-text: #007AFF;
+  --safari-tech-tag-text: #007aff;
   --safari-experience-divider: rgba(0, 0, 0, 0.1);
-  
+
   /* Finder App */
   --finder-bg: rgba(255, 255, 255, 0.9);
   --finder-sidebar-bg: rgba(240, 240, 245, 0.8);
@@ -156,11 +160,11 @@
   --finder-search-bg: rgba(0, 0, 0, 0.05);
   --finder-search-border: transparent;
   --finder-search-text: #1d1d1f;
-  --finder-search-caret: #007AFF;
+  --finder-search-caret: #007aff;
   --finder-card-bg: #ffffff;
   --finder-card-border: rgba(0, 0, 0, 0.05);
-  --finder-card-hover-border: #007AFF;
-  --finder-card-selected-border: #007AFF;
+  --finder-card-hover-border: #007aff;
+  --finder-card-selected-border: #007aff;
   --finder-card-selected-glow: rgba(0, 122, 255, 0.2);
   --finder-card-text: #1d1d1f;
   --finder-card-title: #1d1d1f;
@@ -171,25 +175,39 @@
   --finder-tag-bg: rgba(0, 0, 0, 0.05);
   --finder-tag-border: transparent;
   --finder-tag-hover-bg: rgba(0, 0, 0, 0.1);
-  
+
   /* Tech Tags */
   --tech-bg: rgba(0, 122, 255, 0.1);
-  --tech-text: #007AFF;
+  --tech-text: #007aff;
   --tech-react: #61dafb;
   --tech-typescript: #3178c6;
   --tech-node: #30d158;
-  
+
+  /* Tech Tags (Consolidated) */
+  --tag-react: #61dafb;
+  --tag-typescript: #3178c6;
+  --tag-nodejs: #68a063;
+  --tag-javascript: #f7df1e;
+  --tag-html: #e34f26;
+  --tag-css: #2965f1;
+  --tag-prisma: #2d3748;
+  --tag-docker: #2496ed;
+
+  /* Favorites */
+  --color-favorite: #ffd700;
+  --color-favorite-bg: rgba(255, 215, 0, 0.2);
+
   /* Buttons */
   --button-bg: #ffffff;
   --button-text: #1d1d1f;
   --button-border: rgba(0, 0, 0, 0.1);
   --button-hover-bg: #f5f5f7;
   --button-hover-border: rgba(0, 0, 0, 0.15);
-  --button-primary-bg: #007AFF;
+  --button-primary-bg: #007aff;
   --button-primary-text: #ffffff;
-  --button-primary-border: #007AFF;
+  --button-primary-border: #007aff;
   --button-primary-hover: #0051a8;
-  
+
   /* Numbers App */
   --numbers-bg: #ffffff;
   --numbers-toolbar-bg: #f5f5f7;
@@ -237,18 +255,18 @@
   --numbers-btn-outline-text: #1d1d1f;
   --numbers-btn-outline-hover: rgba(0, 0, 0, 0.05);
   --numbers-btn-outline-hover-border: rgba(0, 0, 0, 0.3);
-  --numbers-btn-primary-bg: #007AFF;
+  --numbers-btn-primary-bg: #007aff;
   --numbers-btn-primary-text: #ffffff;
   --numbers-btn-primary-hover: #0051a8;
   --numbers-skill-card-hover: #fafafa;
   --numbers-skill-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  
+
   /* Mail App */
   --mail-bg: rgba(255, 255, 255, 0.95);
   --mail-sidebar-bg: rgba(235, 235, 240, 0.9);
   --mail-sidebar-border: rgba(0, 0, 0, 0.1);
   --mail-content-bg: #ffffff;
-  --mail-btn-primary: #007AFF;
+  --mail-btn-primary: #007aff;
   --mail-btn-hover: #0051a8;
   --mail-btn-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
   --mail-btn-hover-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
@@ -264,9 +282,9 @@
   --mail-input-focus: 0 0 0 3px rgba(0, 122, 255, 0.2);
   --mail-contact-bg: rgba(0, 0, 0, 0.03);
   --mail-contact-hover: rgba(0, 0, 0, 0.06);
-  --mail-icon-color: #007AFF;
+  --mail-icon-color: #007aff;
   --mail-divider: rgba(0, 0, 0, 0.1);
-  
+
   /* Component Specific - Light Theme */
   --dock-bg: rgba(255, 255, 255, 0.2);
   --dock-border: var(--glass-border);
@@ -274,7 +292,7 @@
   --dock-item-hover: rgba(255, 255, 255, 0.1);
   --dock-item-active: rgba(255, 255, 255, 0.2);
   --dock-glow-opacity: 0.4;
-  
+
   /* Dock dot (active app indicator) */
   --dock-dot-size: 4px;
   --dock-dot-margin: 2px;
@@ -283,10 +301,9 @@
   --dock-dot-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
   --dock-label-bg: rgba(0, 0, 0, 0.8);
   --dock-label-arrow: rgba(0, 0, 0, 0.8);
-  --dock-item-shadow: 
-    -1px -1px 0 0 rgba(255, 255, 255, 0.3),
+  --dock-item-shadow: -1px -1px 0 0 rgba(255, 255, 255, 0.3),
     1px 1px 0 0 rgba(0, 0, 0, 0.2);
-  
+
   --menubar-bg: var(--glass-bg);
   --menubar-text: var(--color-text-inverse);
   --menubar-hover: rgba(255, 255, 255, 0.2);
@@ -299,7 +316,7 @@
   --menubar-dropdown-border: rgba(255, 255, 255, 0.1);
   --menubar-dropdown-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   --menubar-status-hover: rgba(255, 255, 255, 0.15);
-  
+
   --window-bg: rgba(255, 255, 255, 0.8);
   --window-border: rgba(255, 255, 255, 0.2);
   --window-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -308,28 +325,28 @@
   --window-header-border: rgba(255, 255, 255, 0.1);
   --window-resize-handle: rgba(0, 0, 0, 0.2);
   --window-title-color: #1d1d1f;
-  
+
   --button-bg: rgba(255, 255, 255, 0.1);
   --button-hover: rgba(255, 255, 255, 0.2);
   --button-active: rgba(255, 255, 255, 0.3);
   --button-text: var(--color-text-inverse);
-  
-  --input-bg: rgba(255, 255, 255, 0.1);
-  --input-border: rgba(255, 255, 255, 0.1);
-  --input-text: var(--color-text-inverse);
-  --input-placeholder: rgba(255, 255, 255, 0.5);
-  
+
+  --input-bg: rgba(0, 0, 0, 0.05);
+  --input-border: rgba(0, 0, 0, 0.1);
+  --input-text: var(--color-text-primary);
+  --input-placeholder: rgba(0, 0, 0, 0.5);
+
   --card-bg: rgba(255, 255, 255, 0.1);
   --card-border: rgba(255, 255, 255, 0.1);
   --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
+
   --tooltip-bg: rgba(0, 0, 0, 0.8);
   --tooltip-text: var(--color-white);
-  
+
   --scrollbar-track: transparent;
   --scrollbar-thumb: rgba(255, 255, 255, 0.25);
   --scrollbar-thumb-hover: rgba(255, 255, 255, 0.35);
-  
+
   /* Form Elements */
   --form-bg: rgba(255, 255, 255, 0.1);
   --form-border: rgba(0, 0, 0, 0.1);
@@ -337,118 +354,30 @@
   --form-placeholder: #6e6e73;
   --form-focus: rgba(0, 122, 255, 0.3);
   --form-focus-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-  
+
   /* Buttons */
-  --btn-primary-bg: #007AFF;
-  --btn-primary-hover: #0051D5;
+  --btn-primary-bg: #007aff;
+  --btn-primary-hover: #0051d5;
   --btn-primary-text: white;
   --btn-primary-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
   --btn-primary-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
-  
+
   /* Control Center */
   --control-center-bg: rgba(255, 255, 255, 0.1);
-  --control-center-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 12px 48px rgba(0, 0, 0, 0.2);
+  --control-center-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1),
+    0 12px 48px rgba(0, 0, 0, 0.2);
   --control-section-bg: rgba(0, 0, 0, 0.05);
   --control-section-hover: rgba(0, 0, 0, 0.08);
-  --control-section-active: #007AFF;
+  --control-section-active: #007aff;
   --control-icon-bg: rgba(0, 0, 0, 0.05);
   --control-icon-color: #6e6e73;
   --control-slider-bg: rgba(0, 0, 0, 0.1);
-  --control-slider-thumb: #007AFF;
+  --control-slider-thumb: #007aff;
   --control-slider-thumb-shadow: 0 2px 6px rgba(0, 122, 255, 0.3);
   --control-slider-thumb-hover: 0 4px 12px rgba(0, 122, 255, 0.5);
   --control-quickaction-bg: rgba(0, 0, 0, 0.05);
   --control-quickaction-hover: rgba(0, 0, 0, 0.08);
   --control-wifi-icon-bg: rgba(0, 122, 255, 0.1);
-  --color-bg-primary: #1a1a1a;
-  --color-bg-secondary: #2c2c2e;
-  --color-bg-tertiary: #3a3a3c;
-  
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #ebebf5;
-  --color-text-tertiary: #d1d1d6;
-  --color-text-quaternary: #8e8e93;
-  --color-text-muted: #98989d;
-  
-  --color-border-light: rgba(255, 255, 255, 0.1);
-  --color-border-medium: rgba(255, 255, 255, 0.15);
-  --color-border-heavy: rgba(255, 255, 255, 0.2);
-  --color-border-resize: rgba(0, 0, 0, 0.2);
-  
-  /* Component Specific - Dark Theme */
-  --window-bg: rgba(22, 22, 23, 0.8);
-  --window-border: rgba(255, 255, 255, 0.1);
-  --window-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --window-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.5);
-  --window-header-bg: rgba(36, 36, 38, 0.95);
-  --window-header-border: rgba(255, 255, 255, 0.15);
-  --window-resize-handle: rgba(255, 255, 255, 0.3);
-  --window-title-color: #f5f5f7;
-  
-  /* Form Elements - Dark */
-  --form-bg: rgba(60, 60, 60, 0.5);
-  --form-border: rgba(255, 255, 255, 0.1);
-  --form-text: #f5f5f7;
-  --form-placeholder: #98989d;
-  --form-focus: rgba(0, 122, 255, 0.4);
-  --form-focus-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
-  
-  /* Buttons - Dark */
-  --btn-primary-bg: rgba(0, 122, 255, 0.8);
-  --btn-primary-hover: rgba(0, 100, 200, 0.9);
-  --btn-primary-text: white;
-  --btn-primary-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-  --btn-primary-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
-  
-  /* Profile Section - Dark */
-  --profile-avatar-border: rgba(255, 255, 255, 0.1);
-  --profile-avatar-bg: rgba(30, 30, 30, 0.3);
-  --profile-name: #f5f5f7;
-  --profile-title: #98989d;
-  
-  /* List Items - Dark */
-  --list-divider: rgba(255, 255, 255, 0.08);
-  --list-item-hover: rgba(60, 60, 60, 0.4);
-  --list-item-active: rgba(80, 80, 80, 0.6);
-  
-  --button-bg: rgba(120, 120, 128, 0.25);
-  --button-hover: rgba(120, 120, 128, 0.4);
-  --button-active: rgba(120, 120, 128, 0.5);
-  --button-text: var(--color-white);
-  --button-border: rgba(255, 255, 255, 0.1);
-  
-
-  --dock-border: rgba(255, 255, 255, 0.1);
-  --dock-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.3),
-    -1px -1px 0 0 rgba(255, 255, 255, 0.3),
-    1px 1px 0 0 rgba(0, 0, 0, 0.2);
-  --dock-item-bg: rgba(255, 255, 255, 0.1);
-  --dock-item-hover: rgba(255, 255, 255, 0.2);
-  --dock-item-active: rgba(255, 255, 255, 0.3);
-  --dock-item-dot: rgba(255, 255, 255, 0.6);
-    
-  --input-bg: rgba(120, 120, 128, 0.15);
-  --input-border: rgba(255, 255, 255, 0.1);
-  --input-text: var(--color-white);
-  --input-placeholder: rgba(255, 255, 255, 0.5);
-  --input-focus: rgba(0, 122, 255, 0.3);
-  
-  --card-bg: rgba(44, 44, 46, 0.95);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  --card-hover: rgba(255, 255, 255, 0.15);
-  --card-active: rgba(0, 0, 0, 0.1);
-  --card-dark-bg: rgba(40, 40, 40, 0.8);
-  --card-dark-hover: rgba(60, 60, 60, 0.6);
-  
-  --tooltip-bg: rgba(20, 20, 20, 0.95);
-  --tooltip-text: var(--color-white);
-  --tooltip-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
-  --scrollbar-thumb: rgba(255, 255, 255, 0.45);
-  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.55);
-  --scrollbar-track: transparent;
 }
 
 /* Dark Theme Overrides */
@@ -473,7 +402,7 @@
   --mail-contact-bg: rgba(255, 255, 255, 0.05);
   --mail-contact-hover: rgba(255, 255, 255, 0.1);
   --mail-divider: rgba(255, 255, 255, 0.1);
-  
+
   /* Numbers App Dark Mode */
   --numbers-bg: rgba(30, 30, 30, 0.9);
   --numbers-toolbar-bg: rgba(40, 40, 40, 0.95);
@@ -522,7 +451,7 @@
   --numbers-btn-primary-bg: #0a84ff;
   --numbers-btn-primary-text: #ffffff;
   --numbers-btn-primary-hover: #0071e3;
-  
+
   /* Safari App Dark Mode */
   --safari-bg: rgba(30, 30, 30, 0.9);
   --safari-toolbar-bg: rgba(40, 40, 40, 0.95);
@@ -547,7 +476,7 @@
   --safari-experience-divider: rgba(255, 255, 255, 0.1);
   --safari-text-primary: #f5f5f7;
   --safari-text-secondary: #98989d;
-  
+
   /* Finder Dark Mode */
   --finder-bg: rgba(30, 30, 30, 0.9);
   --finder-sidebar-bg: rgba(40, 40, 40, 0.8);
@@ -591,17 +520,17 @@
   --finder-tag-bg: rgba(255, 255, 255, 0.1);
   --finder-tag-border: rgba(255, 255, 255, 0.1);
   --finder-tag-hover-bg: rgba(255, 255, 255, 0.2);
-  
+
   /* Menu Bar Dark Mode */
   --menubar-bg: rgba(30, 30, 30, 0.3);
   --menubar-hover: rgba(255, 255, 255, 0.15);
   --menubar-active: rgba(255, 255, 255, 0.25);
   --menubar-dropdown-bg: rgba(40, 40, 40, 0.9);
   --menubar-dropdown-border: rgba(60, 60, 60, 0.6);
-  
+
   /* Dock Dark Mode */
   --dock-glow-opacity: 0.5;
-  
+
   /* Dock dot (active app indicator) */
   --dock-dot-size: 4px;
   --dock-dot-margin: 2px;
@@ -610,7 +539,7 @@
   --dock-dot-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
   --dock-label-bg: rgba(20, 20, 20, 0.95);
   --dock-label-arrow: rgba(20, 20, 20, 0.95);
-  
+
   /* Control Center Dark Mode */
   --control-center-bg: rgba(30, 30, 30, 0.3);
   --control-section-bg: rgba(255, 255, 255, 0.1);
@@ -624,18 +553,18 @@
   --color-bg-primary: #1a1a1a;
   --color-bg-secondary: #2c2c2e;
   --color-bg-tertiary: #3a3a3c;
-  
+
   --color-text-primary: #ffffff;
   --color-text-secondary: #ebebf5;
   --color-text-tertiary: #d1d1d6;
   --color-text-quaternary: #8e8e93;
   --color-text-muted: #98989d;
-  
+
   --color-border-light: rgba(255, 255, 255, 0.1);
   --color-border-medium: rgba(255, 255, 255, 0.15);
   --color-border-heavy: rgba(255, 255, 255, 0.2);
   --color-border-resize: rgba(0, 0, 0, 0.2);
-  
+
   /* Component Specific - Dark Theme */
   --window-bg: rgba(22, 22, 23, 0.8);
   --window-border: rgba(255, 255, 255, 0.1);
@@ -645,7 +574,7 @@
   --window-header-border: rgba(255, 255, 255, 0.15);
   --window-resize-handle: rgba(255, 255, 255, 0.3);
   --window-title-color: #f5f5f7;
-  
+
   /* Form Elements - Dark */
   --form-bg: rgba(60, 60, 60, 0.5);
   --form-border: rgba(255, 255, 255, 0.1);
@@ -653,48 +582,46 @@
   --form-placeholder: #98989d;
   --form-focus: rgba(0, 122, 255, 0.4);
   --form-focus-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
-  
+
   /* Buttons - Dark */
   --btn-primary-bg: rgba(0, 122, 255, 0.8);
   --btn-primary-hover: rgba(0, 100, 200, 0.9);
   --btn-primary-text: white;
   --btn-primary-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
   --btn-primary-hover-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
-  
+
   /* Profile Section - Dark */
   --profile-avatar-border: rgba(255, 255, 255, 0.1);
   --profile-avatar-bg: rgba(30, 30, 30, 0.3);
   --profile-name: #f5f5f7;
   --profile-title: #98989d;
-  
+
   /* List Items - Dark */
   --list-divider: rgba(255, 255, 255, 0.08);
   --list-item-hover: rgba(60, 60, 60, 0.4);
   --list-item-active: rgba(80, 80, 80, 0.6);
-  
+
   --button-bg: rgba(120, 120, 128, 0.25);
   --button-hover: rgba(120, 120, 128, 0.4);
   --button-active: rgba(120, 120, 128, 0.5);
   --button-text: var(--color-white);
   --button-border: rgba(255, 255, 255, 0.1);
-  
+
   --dock-bg: rgba(50, 50, 50, 0.3);
   --dock-border: rgba(255, 255, 255, 0.1);
-  --dock-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.3),
-    -1px -1px 0 0 rgba(255, 255, 255, 0.3),
-    1px 1px 0 0 rgba(0, 0, 0, 0.2);
+  --dock-shadow: 0 4px 30px rgba(0, 0, 0, 0.3),
+    -1px -1px 0 0 rgba(255, 255, 255, 0.3), 1px 1px 0 0 rgba(0, 0, 0, 0.2);
   --dock-item-bg: rgba(255, 255, 255, 0.1);
   --dock-item-hover: rgba(255, 255, 255, 0.2);
   --dock-item-active: rgba(255, 255, 255, 0.3);
   --dock-item-dot: rgba(255, 255, 255, 0.6);
-    
+
   --input-bg: rgba(120, 120, 128, 0.15);
   --input-border: rgba(255, 255, 255, 0.1);
   --input-text: var(--color-white);
   --input-placeholder: rgba(255, 255, 255, 0.5);
   --input-focus: rgba(0, 122, 255, 0.3);
-  
+
   --card-bg: rgba(44, 44, 46, 0.95);
   --card-border: rgba(255, 255, 255, 0.1);
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -702,11 +629,11 @@
   --card-active: rgba(0, 0, 0, 0.1);
   --card-dark-bg: rgba(40, 40, 40, 0.8);
   --card-dark-hover: rgba(60, 60, 60, 0.6);
-  
+
   --tooltip-bg: rgba(20, 20, 20, 0.95);
   --tooltip-text: var(--color-white);
   --tooltip-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
+
   --scrollbar-thumb: rgba(255, 255, 255, 0.45);
   --scrollbar-thumb-hover: rgba(255, 255, 255, 0.55);
   --scrollbar-track: transparent;
@@ -714,16 +641,32 @@
 
 /* Animation Keyframes */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

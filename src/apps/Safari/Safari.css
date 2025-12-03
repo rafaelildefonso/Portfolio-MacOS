@@ -86,6 +86,27 @@
   border-bottom-right-radius: 12px;
   border: 1px solid var(--safari-toolbar-border);
   border-top: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.safari-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.safari-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.safari-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.safari-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .about-section {
@@ -225,30 +246,30 @@
     flex-wrap: wrap;
     padding: 8px 12px;
   }
-  
+
   .safari-url-bar {
     order: 1;
     width: 100%;
     margin-top: 8px;
   }
-  
+
   .safari-content {
     padding: 20px 16px;
   }
-  
+
   .profile-avatar {
     width: 160px;
     height: 160px;
   }
-  
+
   .profile-name {
     font-size: 28px;
   }
-  
+
   .profile-title {
     font-size: 16px;
   }
-  
+
   .about-grid {
     grid-template-columns: 1fr;
   }
@@ -264,7 +285,7 @@
     height: auto;
     gap: 8px;
   }
-  
+
   .safari-nav-buttons {
     order: 1;
   }
@@ -273,33 +294,33 @@
     order: 2;
     margin-left: auto;
   }
-  
+
   .safari-url-bar {
     order: 3;
     width: 100%;
     margin-top: 4px;
     height: 32px;
   }
-  
+
   .safari-content {
     padding: 16px;
   }
-  
+
   .profile-avatar {
     width: 120px;
     height: 120px;
     margin-bottom: 16px;
     border-width: 3px;
   }
-  
+
   .profile-name {
     font-size: 24px;
   }
-  
+
   .profile-title {
     font-size: 14px;
   }
-  
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 16px;

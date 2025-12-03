@@ -1,6 +1,11 @@
-import { useTranslation } from 'react-i18next';
-import { ShareIcon } from '../../assets/icons/Icons';
-import './Safari.css';
+import { useTranslation } from "react-i18next";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  LockIcon,
+  ShareIcon,
+} from "../../assets/icons/Icons";
+import "./Safari.css";
 
 interface ExperienceItem {
   role: string;
@@ -43,34 +48,28 @@ interface SafariTranslations {
 
 export const Safari = () => {
   const { t } = useTranslation();
-  const safariT = t('safari', { returnObjects: true }) as SafariTranslations;
+  const safariT = t("safari", { returnObjects: true }) as SafariTranslations;
   const profile = safariT.profile;
   return (
     <div className="safari-app">
       <div className="safari-toolbar">
         <div className="safari-nav-buttons">
           <button className="safari-nav-btn" aria-label={safariT.back}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <ChevronLeftIcon size={16} />
           </button>
           <button className="safari-nav-btn" aria-label={safariT.forward}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <ChevronRightIcon size={16} />
           </button>
         </div>
         <div className="safari-url-bar">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="lock-icon">
-            <path d="M4 6V4.5C4 2.567 5.567 1 7 1C8.433 1 10 2.567 10 4.5V6M3 6H11C11.552 6 12 6.448 12 7V12C12 12.552 11.552 13 11 13H3C2.448 13 2 12.552 2 12V7C2 6.448 2.448 6 3 6Z" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-          </svg>
+          <LockIcon className="lock-icon" size={16} />
           <span>{safariT.link}</span>
         </div>
         <button className="safari-share-btn" aria-label={safariT.share}>
-          <ShareIcon/>
+          <ShareIcon />
         </button>
       </div>
-      
+
       <div className="safari-content">
         <div className="about-section">
           <div className="profile-header">
@@ -123,7 +122,8 @@ export const Safari = () => {
               <ul className="education-list">
                 {profile.education.items.map((item, index) => (
                   <li key={index}>
-                    <strong>{item.degree}</strong><br />
+                    <strong>{item.degree}</strong>
+                    <br />
                     <span>{item.institution}</span>
                   </li>
                 ))}

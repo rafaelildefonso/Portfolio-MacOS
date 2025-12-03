@@ -36,7 +36,6 @@
   background: transparent;
 }
 
-
 /* Liquid glass effect */
 .control-center .liquidGlass-effect {
   position: absolute;
@@ -95,9 +94,7 @@
   transition: all 0.2s;
   text-align: left;
   isolation: isolate;
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.25),
-    0 5px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .control-module .liquidGlass-effect {
@@ -141,12 +138,12 @@
 .module-title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--color-text-inverse);
 }
 
 .module-subtitle {
   font-size: 11px;
-  color: var(--text-tertiary);
+  color: var(--color-text-inverse);
 }
 
 /* Theme Buttons */
@@ -167,7 +164,7 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
-  color: #1d1d1f;
+  color: var(--color-text-inverse);
   font-size: 18px;
 }
 
@@ -180,8 +177,8 @@
 }
 
 .theme-btn.active {
-  background: #007AFF;
-  border-color: #007AFF;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   color: white;
 }
 
@@ -206,7 +203,6 @@
   isolation: isolate;
   position: relative;
 }
-
 
 /* Music Player */
 .music-player .liquidGlass-effect {
@@ -242,7 +238,7 @@
 .music-title {
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--color-text-inverse);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -252,7 +248,7 @@
 
 .music-artist {
   font-size: 11px;
-  color: var(--text-tertiary);
+  color: var(--color-text-tertiary);
   margin-top: 2px;
 }
 
@@ -284,7 +280,8 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-.forward-button, .backward-button {
+.forward-button,
+.backward-button {
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -313,7 +310,7 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   isolation: isolate;
-position: relative;
+  position: relative;
 }
 
 .slider-module .liquidGlass-effect {
@@ -326,7 +323,7 @@ input[type="range"].slider {
   --track-height: 4px;
   --track-color: rgba(255, 255, 255, 0.2);
   --thumb-color: rgba(255, 255, 255, 0.9);
-  
+
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -343,7 +340,7 @@ input[type="range"].slider::-webkit-slider-runnable-track {
   height: var(--track-height);
   background: var(--track-color);
   border-radius: 2px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /* Thumb */
@@ -353,7 +350,7 @@ input[type="range"].slider::-webkit-slider-thumb {
   height: 12px;
   border-radius: 12px;
   background: var(--thumb-color);
-  cursor: pointer;
+  /* cursor: pointer; */
   margin-top: calc((var(--track-height) - var(--thumb-height)) * 0.3);
   position: relative;
   z-index: 2;
@@ -364,7 +361,7 @@ input[type="range"].slider::-webkit-slider-thumb {
 
 /* Progress fill - Using background gradient for smooth fill */
 input[type="range"].slider::before {
-  content: '';
+  content: "";
   position: absolute;
   height: var(--track-height);
   width: 100%;
@@ -410,7 +407,7 @@ input[type="range"].slider::-moz-range-thumb {
   border: none;
   border-radius: 20px;
   background: var(--thumb-color);
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
   z-index: 2;
   transition: all 0.2s;
@@ -439,13 +436,13 @@ input[type="range"].slider::-moz-range-thumb {
   flex: 1;
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--color-text-inverse);
 }
 
 .slider-value {
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--color-text-secondary);
   min-width: 35px;
   text-align: right;
 }
@@ -474,14 +471,14 @@ input[type="range"].slider::-moz-range-thumb {
   height: 16px;
   border-radius: 20px;
   background: var(--color-white);
-  cursor: pointer;
+  /* cursor: pointer; */
   border: none;
 }
 
 .slider-value {
   font-size: 13px;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--color-text-inverse);
   min-width: 40px;
   text-align: right;
 }
@@ -514,7 +511,7 @@ input[type="range"].slider::-moz-range-thumb {
   justify-content: center;
   background: rgba(0, 122, 255, 0.1);
   border-radius: 10px;
-  color: #007AFF;
+  color: var(--color-primary);
 }
 
 .wifi-info {
@@ -527,24 +524,24 @@ input[type="range"].slider::-moz-range-thumb {
 .wifi-info strong {
   font-size: 14px;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--color-text-inverse);
 }
 
 .wifi-info span {
   font-size: 12px;
-  color: #6e6e73;
+  color: var(--color-text-secondary);
 }
 
 .status-indicator {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ff3b30;
+  background: var(--color-status-disconnected);
   flex-shrink: 0;
 }
 
 .status-indicator.connected {
-  background: #34c759;
+  background: var(--color-status-connected);
 }
 
 /* Quick Actions */
@@ -565,7 +562,7 @@ input[type="range"].slider::-moz-range-thumb {
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
-  color: #1d1d1f;
+  color: var(--color-text-inverse);
 }
 
 .quick-action-btn {
@@ -627,7 +624,7 @@ input[type="range"].slider::-moz-range-thumb {
   transition: all 0.2s;
   font-size: 11px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--color-text-inverse);
 }
 
 .appearance-btn:hover {
@@ -635,85 +632,61 @@ input[type="range"].slider::-moz-range-thumb {
 }
 
 .appearance-btn.active {
-  background: rgba(0, 122, 255, 1);
+  background: var(--color-primary);
   color: white;
-  border-color: rgba(0, 122, 255, 1);
+  border-color: var(--color-primary);
 }
 
 .appearance-icon {
   font-size: 20px;
 }
 
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-
-  .control-module,
-  .slider-module,
-  .appearance-section {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .appearance-btn {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f5f5f7;
-  }
-
-  .appearance-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  .slider {
-    background: rgba(255, 255, 255, 0.2);
-  }
+[data-theme="dark"] .control-section h3 {
+  color: var(--color-text-secondary);
 }
 
-
-[data-theme='dark'] .control-section h3 {
-  color: #98989d;
-}
-
-[data-theme='dark'] .theme-btn {
+[data-theme="dark"] .theme-btn {
   background: rgba(255, 255, 255, 0.1);
-  color: #f5f5f7;
+  color: var(--color-text-inverse);
 }
 
-[data-theme='dark'] .theme-btn:hover {
+[data-theme="dark"] .theme-btn:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-[data-theme='dark'] .slider-container {
+[data-theme="dark"] .slider-container {
   background: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme='dark'] .slider {
+[data-theme="dark"] .slider {
   background: rgba(255, 255, 255, 0.2);
 }
 
-[data-theme='dark'] .slider-value {
-  color: #f5f5f7;
+[data-theme="dark"] .slider-value {
+  color: var(--color-text-inverse);
 }
 
-[data-theme='dark'] .wifi-btn {
+[data-theme="dark"] .wifi-btn {
   background: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme='dark'] .wifi-btn:hover {
+[data-theme="dark"] .wifi-btn:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-[data-theme='dark'] .wifi-info strong {
-  color: #f5f5f7;
+[data-theme="dark"] .wifi-info strong {
+  color: var(--color-text-inverse);
 }
 
-[data-theme='dark'] .wifi-info span {
-  color: #98989d;
+[data-theme="dark"] .wifi-info span {
+  color: var(--color-text-secondary);
 }
 
-[data-theme='dark'] .quick-action-btn {
+[data-theme="dark"] .quick-action-btn {
   background: rgba(255, 255, 255, 0.1);
-  color: #f5f5f7;
+  color: var(--color-text-inverse);
 }
 
-[data-theme='dark'] .quick-action-btn:hover {
+[data-theme="dark"] .quick-action-btn:hover {
   background: rgba(255, 255, 255, 0.15);
 }

@@ -3,8 +3,7 @@
   position: absolute;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12),
-    0 6px 12px rgba(0, 0, 0, 0.08),
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.08),
     0 16px 64px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.2s ease;
@@ -17,9 +16,7 @@
 }
 
 .macos-window:hover {
-  box-shadow: 
-    0 0 0 0.5px rgba(0, 0, 0, 0.1),
-    0 12px 48px rgba(0, 0, 0, 0.2),
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.1), 0 12px 48px rgba(0, 0, 0, 0.2),
     0 24px 96px rgba(0, 0, 0, 0.15);
 }
 
@@ -105,23 +102,20 @@
 }
 
 .window-control.close {
-  background-color:  #FF5F57 ;
+  background-color: var(--window-close);
 }
 
 .window-control.close svg {
-      padding: 0.15rem;
+  padding: 0.15rem;
 }
-
 
 .window-control.minimize {
-  background-color:  #FFBD2E ;
+  background-color: var(--window-minimize);
 }
-
 
 .window-control.maximize {
-  background-color:  #28C940 ;
+  background-color: var(--window-maximize);
 }
-
 
 .window-control:hover {
   transform: scale(1.1);
@@ -138,7 +132,7 @@
   transform: translateX(-50%);
   font-size: 13px;
   font-weight: 600;
-  color: #1d1d1f;
+  color: var(--window-title-color);
   pointer-events: none;
   max-width: 60%;
   white-space: nowrap;
@@ -181,42 +175,18 @@
 }
 
 .window-resize-handle::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    right: 4px;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid rgba(0, 0, 0, 0.3);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
-    pointer-events: none;
-    border-radius: 0 0 6px 0;
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  border-radius: 0 0 6px 0;
 }
 
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  .macos-window {
-    background: rgba(40, 40, 40, 0.3);
-  }
-
-  .window-titlebar {
-    background: rgba(50, 50, 50, 0.6);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .window-title {
-    color: #f5f5f7;
-  }
-
-  .window-content {
-    background: rgba(30, 30, 30, 0.3);
-    color: #f5f5f7;
-  }
-
-  .window-resize-handle::after {
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-}
 
 /* Scrollbar Styling */
 .window-content::-webkit-scrollbar {

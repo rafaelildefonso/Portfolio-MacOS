@@ -108,7 +108,11 @@ const Splash = () => {
   if (!isLoading) return null;
 
   return (
-    <div ref={containerRef} className="splash-screen">
+    <div
+      ref={containerRef}
+      className="splash-screen"
+      style={{ cursor: "none" }}
+    >
       <audio
         ref={audioRef}
         src="/sounds/mac-startup-sound.mp3"

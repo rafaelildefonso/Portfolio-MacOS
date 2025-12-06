@@ -245,5 +245,33 @@
       "search": "Pesquisar",
       "controlCenter": "Centro de Controle"
     }
+  },
+  "appStore": {
+    "sidebar": {
+      "discover": "Descobrir",
+      "arcade": "Arcade",
+      "create": "Criar",
+      "work": "Trabalho",
+      "certificates": "Certificados",
+      "play": "Jogar",
+      "develop": "Desenvolver",
+      "categories": "Categorias",
+      "search": "Buscar"
+    },
+    "hero": {
+      "badge": "EVENTO EM DESTAQUE",
+      "title": "Meu Currículo",
+      "subtitle": "Experiência e Formação",
+      "description": "Confira minha trajetória profissional, competências técnicas e formação acadêmica detalhada aqui."
+    },
+    "sections": {
+      "certificates": "Meus Certificados",
+      "allCertificates": "Todos os Certificados",
+      "certificatesDesc": "Minha coleção de conquistas acadêmicas e técnicas.",
+      "seeAll": "Ver tudo",
+      "view": "VISUALIZAR",
+      "developing": "Em Desenvolvimento",
+      "developingDesc": "Esta seção estará disponível em breve."
+    }
   }
 }

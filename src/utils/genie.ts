@@ -101,13 +101,12 @@ const captureWindowContent = async (element: HTMLElement): Promise<string> => {
         useCORS: true,
         logging: false,
         allowTaint: true,
-        windowWidth: element.offsetWidth,
         windowHeight: element.offsetHeight,
-        removeContainer: false,
+        removeContainer: true,
       });
 
       // Restaurar visibilidade original
-      element.style.display = 'originalDisplay';
+      element.style.display = "originalDisplay";
       element.style.visibility = originalVisibility;
       element.style.opacity = originalOpacity;
 

@@ -246,5 +246,33 @@
       "search": "Search",
       "controlCenter": "Control Center"
     }
+  },
+  "appStore": {
+    "sidebar": {
+      "discover": "Discover",
+      "arcade": "Arcade",
+      "create": "Create",
+      "work": "Work",
+      "certificates": "Certificates",
+      "play": "Play",
+      "develop": "Develop",
+      "categories": "Categories",
+      "search": "Search"
+    },
+    "hero": {
+      "badge": "FEATURED EVENT",
+      "title": "My Resume",
+      "subtitle": "Experience and Education",
+      "description": "Check out my professional journey, technical skills and detailed academic background here."
+    },
+    "sections": {
+      "certificates": "My Certificates",
+      "allCertificates": "All Certificates",
+      "certificatesDesc": "My collection of academic and technical achievements.",
+      "seeAll": "See all",
+      "view": "VIEW",
+      "developing": "Under Development",
+      "developingDesc": "This section will be available soon."
+    }
   }
 }

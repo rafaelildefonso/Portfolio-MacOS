@@ -6,6 +6,7 @@ import { Safari } from "../../apps/Safari/Safari";
 import { Finder } from "../../apps/Finder/Finder";
 import { Mail } from "../../apps/Mail/Mail";
 import { Numbers } from "../../apps/Numbers/Numbers";
+import { AppStore } from "../../apps/AppStore/AppStore";
 import "./Dock.css";
 
 const Dock = () => {
@@ -169,6 +170,16 @@ const Dock = () => {
           appId: "skills",
         });
         break;
+      case "app_store":
+        openWindow({
+          title: "App Store",
+          appIcon: "/images/icons/app_store.png",
+          content: <AppStore />,
+          position: { x: centerX, y: centerY },
+          size: { width: 1000, height: 700 },
+          appId: "app_store",
+        });
+        break;
       default:
         console.log("App não implementado:", appId);
     }
@@ -196,6 +207,12 @@ const Dock = () => {
       alt: t("apps.skills"),
       label: t("apps.skills"),
       appId: "skills",
+    },
+    {
+      icon: "app_store",
+      alt: "App Store",
+      label: "App Store",
+      appId: "app_store",
     },
     {
       icon: "github",

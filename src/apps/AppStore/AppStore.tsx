@@ -36,15 +36,11 @@ const SidebarIcon = ({ icon }: { icon: string }) => {
 export const AppStore = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState("discover");
-  const [selectedApp, setSelectedApp] = useState<AppItem | null>(null);
 
   const handleAppClick = (app: AppItem) => {
     // If it has a download URL, open it (Resume/Certificate)
     if (app.downloadUrl) {
       window.open(app.downloadUrl, "_blank");
-    } else {
-      // Otherwise show details (not implemented fully for this simplified version, but logic is here)
-      setSelectedApp(app);
     }
   };
 
@@ -229,15 +225,6 @@ export const AppStore = () => {
 
       {renderContent()}
 
-      {/* Basic Modal for Details (Optional/Expansion) */}
-      {/* {selectedApp && !selectedApp.downloadUrl && (
-          <div className="app-modal-overlay" onClick={() => setSelectedApp(null)}>
-              <div className="app-modal" onClick={e => e.stopPropagation()}>
-                  <button onClick={() => setSelectedApp(null)} style={{position: 'absolute', top: 20, right: 20}}>X</button>
-                  <h1>{selectedApp.title}</h1>
-              </div>
-          </div>
-      )} */}
     </div>
   );
 };

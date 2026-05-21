@@ -1,7 +1,7 @@
 # Projeto 🖥️ Portfólio Interativo - macOS Style
 
 <div align="center">
-  <img src="public/images/wallpaper.jpg" alt="Preview do Projeto" width="800"/>
+  <img src="public/images/banner.png" alt="Preview do Projeto" width="800"/>
   
   [![Versão](https://img.shields.io/badge/versão-1.0.0-blue)](https://github.com/rafaelildefonso/portfolio/releases)
   [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)](https://reactjs.org/)

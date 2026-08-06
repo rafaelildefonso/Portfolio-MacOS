@@ -74,7 +74,7 @@ export const Safari = () => {
         <div className="about-section">
           <div className="profile-header">
             <div className="profile-avatar">
-              <img src="/images/foto_minha.jpg" alt="Rafael Ildefonso" />
+              <img src="/images/foto_minha.jpg" style={{}} alt="Rafael Ildefonso" />
             </div>
             <h1 className="profile-name">{profile.name}</h1>
             <p className="profile-title">{profile.title}</p>

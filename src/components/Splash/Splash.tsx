@@ -7,6 +7,20 @@ const Splash = () => {
   const indicatorRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const audioPlayedRef = useRef(false);
+
+  // Oculta o cursor customizado enquanto a splash está ativa
+  useEffect(() => {
+    document.documentElement.classList.add("splash-active");
+  }, []);
+
+  // Restaura o cursor quando a splash termina (mesmo permanecendo montada)
+  useEffect(() => {
+    if (!isLoading) {
+      document.documentElement.classList.remove("splash-active");
+      document.documentElement.style.overflow = "";
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -16,10 +30,7 @@ const Splash = () => {
 
     // Start the loading animation
     if (indicatorRef.current) {
-      // Reset position to be off-screen to the left
       gsap.set(indicatorRef.current, { x: "-100%" });
-
-      // Animate from left to right
       const tl = gsap.timeline();
       tl.to(indicatorRef.current, {
         x: "0%",
@@ -28,80 +39,68 @@ const Splash = () => {
       });
     }
 
-    // Track when the component mounts
     const startTime = Date.now();
     const MIN_DISPLAY_TIME = 3000; // 3 seconds minimum display time
+    let finished = false;
 
-    // Handle page load and resources
-    const handleLoad = () => {
+    const finishSplash = () => {
+      if (finished) return;
+      finished = true;
+
       const elapsed = Date.now() - startTime;
       const remainingTime = Math.max(0, MIN_DISPLAY_TIME - elapsed);
 
-      // Play the sound if audio element exists
-      if (audioRef.current) {
-        const playPromise = audioRef.current.play();
-
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              // When audio finishes playing
-              audioRef.current?.addEventListener("ended", () => {
-                // Wait for the minimum display time before hiding
-
-                setTimeout(() => {
-                  const splashScreen = containerRef.current;
-                  if (splashScreen) {
-                    splashScreen.style.opacity = "0";
-                  }
-                }, remainingTime);
-
-                setTimeout(() => {
-                  setIsLoading(false);
-                }, remainingTime + 1000);
-              });
-            })
-            .catch((error) => {
-              console.log(
-                "Audio playback failed, continuing without sound",
-                error
-              );
-              // If audio fails, wait for the minimum display time
-              setTimeout(() => {
-                const splashScreen = containerRef.current;
-                if (splashScreen) {
-                  splashScreen.style.opacity = "0";
-                }
-              }, remainingTime);
-
-              setTimeout(() => {
-                setIsLoading(false);
-              }, remainingTime + 1000);
-            });
+      setTimeout(() => {
+        const splashScreen = containerRef.current;
+        if (splashScreen) {
+          splashScreen.style.opacity = "0";
         }
-      } else {
-        // Fallback if audio element is not available
-        setTimeout(() => {
-          setIsLoading(false);
-          document.documentElement.style.overflow = "";
-        }, Math.max(remainingTime, 2000)); // Ensure at least 2 seconds for fallback
+      }, remainingTime);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, remainingTime + 1200);
+    };
+
+    // Tenta tocar o som; se o autoplay for bloqueado, tenta de novo no
+    // primeiro gesto do usuário (clique/tecla).
+    const tryPlay = () => {
+      if (audioPlayedRef.current || !audioRef.current) return;
+      audioPlayedRef.current = true;
+      const promise = audioRef.current.play();
+      if (promise !== undefined) {
+        promise.catch(() => {
+          audioPlayedRef.current = false; // permite nova tentativa
+        });
       }
     };
 
-    // Check if page is already loaded
+    tryPlay();
+    const retryPlay = () => tryPlay();
+    window.addEventListener("pointerdown", retryPlay);
+    window.addEventListener("keydown", retryPlay);
+
+    const onAudioEnded = () => finishSplash();
+    audioRef.current?.addEventListener("ended", onAudioEnded);
+
+    // Finaliza quando os recursos carregarem
+    const handleLoad = () => setTimeout(finishSplash, 300);
     if (document.readyState === "complete") {
-      // Small delay to ensure everything is ready
       setTimeout(handleLoad, 300);
     } else {
-      window.addEventListener("load", () => {
-        // Small delay to ensure everything is ready
-        setTimeout(handleLoad, 300);
-      });
+      window.addEventListener("load", handleLoad);
     }
 
-    // Cleanup
+    // Desarme de segurança: garante que a splash sempre saia, mesmo sem áudio
+    const safetyTimer = setTimeout(finishSplash, Math.max(MIN_DISPLAY_TIME, 6000));
+
     return () => {
+      finished = true;
+      clearTimeout(safetyTimer);
       window.removeEventListener("load", handleLoad);
-      document.documentElement.style.overflow = "";
+      window.removeEventListener("pointerdown", retryPlay);
+      window.removeEventListener("keydown", retryPlay);
+      audioRef.current?.removeEventListener("ended", onAudioEnded);
     };
   }, []);
 

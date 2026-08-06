@@ -4,9 +4,9 @@
   <img src="public/banner.png" alt="Preview do Projeto" width="800"/>
   
   [![Versão](https://img.shields.io/badge/versão-1.0.0-blue)](https://github.com/rafaelildefonso/portfolio/releases)
-  [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)](https://reactjs.org/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-  [![Vite](https://img.shields.io/badge/Vite-4.3.9-646CFF?logo=vite)](https://vitejs.dev/)
+  [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+  [![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite)](https://vitejs.dev/)
   [![Licença](https://img.shields.io/badge/licença-MIT-green)](LICENSE)
 </div>
 
@@ -28,28 +28,32 @@ Bem-vindo ao meu portfólio interativo inspirado no macOS! Este projeto é uma e
   - Design consistente em todas as páginas
 
 - **Aplicativos Personalizados**
-  - **Safari**: Navegação pelo portfólio
+  - **Safari**: Apresentação "Sobre Mim"
+  - **Finder**: Navegação pelos projetos
   - **Mail**: Formulário de contato funcional
-  - **Numbers**: Apresentação de habilidades e estatísticas
-  - E mais...
+  - **Numbers**: Habilidades e estatísticas
+  - **App Store**: Central de downloads
 
 - **Interatividade**
-  - Animações suaves
-  - Efeitos de genie nas janelas
+  - Animações suaves (efeito genie com slice, otimizado com cache de snapshot)
+  - Animações de genie nas janelas
   - Menu de contexto com atalhos
   - Controle de volume e brilho
+  - Cursor customizado com ícones dinâmicos
 
 ## 🚀 Tecnologias Utilizadas
 
 - **Frontend**
-  - React 18 + TypeScript
+  - React 19 + TypeScript
   - Vite para build e desenvolvimento
-  - CSS Modules para estilização
+  - TailwindCSS
   - Framer Motion para animações
-  - React Icons para ícones
+  - GSAP
+  - i18next / react-i18next (pt/en)
 
 - **Funcionalidades Avançadas**
   - Gerenciamento de estado com Context API
+  - Animações de janelas via efeito genie (slice)
   - Efeitos sonoros interativos
   - Responsividade para diferentes tamanhos de tela
   - Otimização de performance
@@ -67,8 +71,10 @@ Acesse a demo:
 src/
 ├── apps/               # Aplicativos do sistema
 │   ├── Mail/          # Aplicativo de e-mail/contato
-│   ├── Safari/        # Navegador do portfólio
-│   └── Numbers/       # Estatísticas e habilidades
+│   ├── Safari/        # Apresentação "Sobre Mim"
+│   ├── Finder/        # Projetos
+│   ├── Numbers/       # Estatísticas e habilidades
+│   └── AppStore/      # Central de downloads
 ├── assets/            # Recursos estáticos
 ├── components/        # Componentes reutilizáveis
 │   ├── Dock/          # Barra de aplicativos

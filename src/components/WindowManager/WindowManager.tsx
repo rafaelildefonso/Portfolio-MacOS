@@ -17,6 +17,7 @@ export const WindowManager = () => {
             size={window.size}
             zIndex={window.zIndex}
             isMaximized={window.isMaximized}
+            isVisible={window.isVisible}
           >
             {window.content}
           </Window>

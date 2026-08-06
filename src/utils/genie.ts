@@ -1,5 +1,7 @@
 // Genie Effect - Adaptado do código original de Hakan Bilgin (c) 2013
 // Convertido para TypeScript e React
+// Otimizado: snapshot em cache por janela + transições mais rápidas,
+// mantendo o efeito slice genuíno do macOS.
 
 interface Dimensions {
   w: number;
@@ -9,45 +11,26 @@ interface Dimensions {
   obj: HTMLElement;
 }
 
+// Cache de snapshot por janela (evita re-rasterizar em abrir/minimizar/restaurar)
+const snapshotCache = new WeakMap<HTMLElement, string>();
+
+export const clearGenieCache = (el: HTMLElement) => {
+  snapshotCache.delete(el);
+};
+
 const getDimensions = (el: HTMLElement): Dimensions | null => {
-  // Usar getBoundingClientRect para posições absolutas mais precisas
   const rect = el.getBoundingClientRect();
   const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
   const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
-  const dim: Dimensions = {
+  return {
     w: rect.width || el.offsetWidth,
     h: rect.height || el.offsetHeight,
     t: rect.top + scrollY,
     l: rect.left + scrollX,
     obj: el,
   };
-
-  return dim;
 };
-
-// Função auxiliar para obter o centro de um elemento
-// const getElementCenter = (
-//   el: HTMLElement | null
-// ): { x: number; y: number } | null => {
-//   if (!el) return null;
-
-//   try {
-//     const rect = el.getBoundingClientRect();
-//     const scrollX =
-//       window.pageXOffset || document.documentElement.scrollLeft || 0;
-//     const scrollY =
-//       window.pageYOffset || document.documentElement.scrollTop || 0;
-
-//     return {
-//       x: rect.left + scrollX + rect.width / 2,
-//       y: rect.top + scrollY + rect.height / 2,
-//     };
-//   } catch (error) {
-//     console.error("Erro ao obter centro do elemento:", error);
-//     return null;
-//   }
-// };
 
 const prefixedEvent = (
   el: HTMLElement,
@@ -65,35 +48,36 @@ const prefixedEvent = (
 
 const STEP_HEIGHT = (window as any).chrome ? 3 : 5;
 
-// Capturar screenshot da janela usando html2canvas ou fallback
-const captureWindowContent = async (element: HTMLElement): Promise<string> => {
-  // Garantir que o elemento esteja visível para captura
+const nextFrame = () =>
+  new Promise<void>((r) => requestAnimationFrame(() => r()));
+
+// Capturar screenshot da janela usando html2canvas ou fallback (com cache)
+const captureWindowContent = async (
+  element: HTMLElement,
+  cacheKey: HTMLElement | null = null
+): Promise<string> => {
+  const key = cacheKey || element;
+  const cached = snapshotCache.get(key);
+  if (cached !== undefined) return cached;
+
   const originalVisibility = element.style.visibility;
   const originalOpacity = element.style.opacity;
   const originalDisplay = element.style.display;
 
   try {
-    // Tentar importar html2canvas dinamicamente
     let html2canvas: any;
     try {
       html2canvas = (await import("html2canvas")).default;
     } catch (e) {
-      // Se não conseguir importar, tentar do window
       html2canvas = (window as any).html2canvas;
     }
 
     if (html2canvas && typeof html2canvas === "function") {
-      // Garantir visibilidade completa
       element.style.display = originalDisplay || "block";
       element.style.visibility = "visible";
       element.style.opacity = "1";
 
-      // Aguardar renderização completa (múltiplos frames)
-      await new Promise((r) =>
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => requestAnimationFrame(r))
-        )
-      );
+      await nextFrame();
 
       const canvas = await html2canvas(element, {
         backgroundColor: null,
@@ -105,54 +89,31 @@ const captureWindowContent = async (element: HTMLElement): Promise<string> => {
         removeContainer: true,
       });
 
-      // Restaurar visibilidade original
-      element.style.display = "originalDisplay";
+      element.style.display = originalDisplay;
       element.style.visibility = originalVisibility;
       element.style.opacity = originalOpacity;
 
-      return canvas.toDataURL("image/png");
+      const dataUrl = canvas.toDataURL("image/png");
+      snapshotCache.set(key, dataUrl);
+      return dataUrl;
     }
   } catch (e) {
     console.log("html2canvas não disponível ou erro:", e);
   }
 
-  // Fallback melhorado: criar clone visual da janela
+  // Fallback: preencher com a cor de fundo
   try {
-    // Garantir visibilidade
     element.style.visibility = "hidden";
     element.style.opacity = "1";
+    await nextFrame();
 
-    // Aguardar renderização
-    await new Promise((r) =>
-      requestAnimationFrame(() => requestAnimationFrame(r))
-    );
-
-    // Criar clone da janela para captura
-    const clone = element.cloneNode(true) as HTMLElement;
-    clone.style.position = "absolute";
-    clone.style.left = "-9999px";
-    clone.style.top = "0";
-    clone.style.visibility = "visible";
-    clone.style.opacity = "1";
-    clone.style.transform = "none";
-    clone.style.transition = "none";
-    clone.style.width = `${element.offsetWidth}px`;
-    clone.style.height = `${element.offsetHeight}px`;
-
-    document.body.appendChild(clone);
-
-    // Aguardar renderização do clone
-    await new Promise((r) => requestAnimationFrame(r));
-
-    // Tentar usar getImageData do canvas para capturar o clone
-    const rect = clone.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     const canvas = document.createElement("canvas");
     canvas.width = Math.max(rect.width, 1);
     canvas.height = Math.max(rect.height, 1);
     const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      // Preencher com cor de fundo
       const styles = window.getComputedStyle(element);
       const bgColor = styles.backgroundColor;
       const fillColor =
@@ -161,51 +122,18 @@ const captureWindowContent = async (element: HTMLElement): Promise<string> => {
           : "rgba(255, 255, 255, 0.9)";
       ctx.fillStyle = fillColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
       const dataUrl = canvas.toDataURL("image/png");
-
-      // Remover clone
-      document.body.removeChild(clone);
-
-      // Restaurar visibilidade original
       element.style.visibility = originalVisibility;
       element.style.opacity = originalOpacity;
-
+      snapshotCache.set(key, dataUrl);
       return dataUrl;
     }
-
-    // Remover clone se não usou
-    if (document.body.contains(clone)) {
-      document.body.removeChild(clone);
-    }
   } catch (e) {
-    console.log("Erro ao criar clone visual:", e);
+    console.log("Erro no fallback de captura:", e);
   }
 
-  // Último fallback: usar background color/image
-  const styles = window.getComputedStyle(element);
-  const bgImage = styles.backgroundImage;
-
-  // Se tem background-image, usar
-  if (
-    bgImage &&
-    bgImage !== "none" &&
-    bgImage !== "initial" &&
-    bgImage !== "inherit"
-  ) {
-    const match = bgImage.match(/url\((['"]?)(.*?)\1\)/i);
-    if (match && match[2]) {
-      // Restaurar visibilidade original
-      element.style.visibility = originalVisibility;
-      element.style.opacity = originalOpacity;
-      return match[2];
-    }
-  }
-
-  // Restaurar visibilidade original
   element.style.visibility = originalVisibility;
   element.style.opacity = originalOpacity;
-
   return "";
 };
 
@@ -222,7 +150,6 @@ export const genieExpand = (
       return;
     }
 
-    // Obter dimensões sem causar flash (usando visibility: hidden)
     const originalDisplay = "none";
     const originalVisibility = "hidden";
 
@@ -231,7 +158,6 @@ export const genieExpand = (
 
     const targetDim = getDimensions(targetElement);
 
-    // Restaurar imediatamente
     targetElement.style.display = originalDisplay;
     targetElement.style.visibility = originalVisibility;
 
@@ -241,8 +167,7 @@ export const genieExpand = (
       return;
     }
 
-    // IMPORTANTE: Capturar conteúdo da janela SEM causar flash
-    // Clonar a janela para captura off-screen
+    // Clonar a janela para captura off-screen não causar flash
     const clone = targetElement.cloneNode(true) as HTMLElement;
     clone.style.display = "block";
     clone.style.visibility = "visible";
@@ -253,25 +178,19 @@ export const genieExpand = (
     clone.style.width = `${targetDim.w}px`;
     clone.style.height = `${targetDim.h}px`;
 
-    // Copiar estilos computados importantes se necessário (background, etc)
     const computedStyle = window.getComputedStyle(targetElement);
     clone.style.backgroundColor = computedStyle.backgroundColor;
     clone.style.backgroundImage = computedStyle.backgroundImage;
 
     document.body.appendChild(clone);
 
-    // Aguardar renderização do clone
-    await new Promise((r) =>
-      requestAnimationFrame(() => requestAnimationFrame(r))
-    );
+    await nextFrame();
 
-    // Capturar conteúdo do clone
-    const windowBg = await captureWindowContent(clone);
+    // Capturar conteúdo (com cache da janela real para replays)
+    const windowBg = await captureWindowContent(clone, targetElement);
 
-    // Remover clone
     document.body.removeChild(clone);
 
-    // Criar elemento genie ANTES de ocultar a janela
     const genieEl = document.createElement("div");
     genieEl.className = "genie";
     genieEl.style.position = "fixed";
@@ -282,7 +201,6 @@ export const genieExpand = (
     genieEl.style.zIndex = "10000";
     genieEl.style.pointerEvents = "none";
 
-    // Configurar dimensões e posição do target (janela)
     genieEl.style.width = `${targetDim.w}px`;
     genieEl.style.height = `${targetDim.h}px`;
     genieEl.style.top = `${targetDim.t}px`;
@@ -301,13 +219,11 @@ export const genieExpand = (
         "rgba(255, 255, 255, 0.9)";
     }
 
-    // Adicionar genie ao DOM ANTES de ocultar a janela
     document.body.appendChild(genieEl);
 
-    // Aguardar um frame para garantir que o genie está renderizado
-    await new Promise((r) => requestAnimationFrame(r));
+    await nextFrame();
 
-    // AGORA ocultar a janela para a animação (genie já está visível)
+    // Ocultar a janela agora que o genie já está visível
     targetElement.style.visibility = "hidden";
     targetElement.style.opacity = "0";
 
@@ -319,36 +235,31 @@ export const genieExpand = (
       return;
     }
 
-    // Diferença entre posições (do ícone para a janela)
-    const diffT = sourceDim.t - targetDimFinal.t; // Diferença vertical
+    // Âncora vertical: centro do ícone (o genie emerge de trás do ícone do dock)
+    const sourceAnchorY = sourceDim.t + sourceDim.h / 2;
 
-    // Configurar origem como um ponto pequeno no centro do ícone
+    const diffT = sourceAnchorY - targetDimFinal.t;
+
     const sourceCenter = sourceDim.l + sourceDim.w / 2;
-    const startWidth = 4; // Ponto pequeno
+    const startWidth = 4;
     const startLeft = sourceCenter - startWidth / 2;
 
-    // Calcular radianos para curva suave
     const radiansLeft = Math.floor((startLeft - targetDimFinal.l) / 2);
     const radiansWidth = Math.floor((startWidth - targetDimFinal.w) / 2);
     const rwOffset = radiansWidth - startWidth;
     const stepLength = Math.ceil(
-      (sourceDim.t - targetDimFinal.t) / STEP_HEIGHT
+      (sourceAnchorY - targetDimFinal.t) / STEP_HEIGHT
     );
     const increase = (Math.PI * 2) / (stepLength * 2);
     let counter = 4.75;
 
-    // Criar steps (baseado no código original)
     const steps: HTMLDivElement[] = [];
     for (let i = 0; i < stepLength; i++) {
       const step = document.createElement("div");
       step.className = "genie-step";
 
-      // Calcular background position (do código original)
       const bgy = diffT - i * STEP_HEIGHT;
 
-      // Calcular posição e largura com curva seno (baseado no código original)
-      // Os steps são posicionados relativos ao elemento genie (que está na posição da janela)
-      // Mas começam visualmente do ícone através do background-position
       const left = Math.ceil(Math.sin(counter) * radiansLeft + radiansLeft);
       const width = Math.ceil(Math.sin(counter) * radiansWidth - rwOffset);
 
@@ -367,7 +278,6 @@ export const genieExpand = (
       counter += increase;
     }
 
-    // Adicionar listener para transição
     let transitionHandled = false;
     const handleTransitionEnd = (e: TransitionEvent) => {
       if (transitionHandled) return;
@@ -378,14 +288,12 @@ export const genieExpand = (
         e.propertyName === "background-position-y"
       ) {
         if (genieEl.classList.contains("expand")) {
-          // Alinhar steps
           steps.forEach((step) => {
             step.style.left = "0px";
             step.style.width = `${targetDimFinal.w}px`;
           });
           genieEl.classList.add("fan");
 
-          // Aguardar animação de width
           const handleWidthTransition = (e: TransitionEvent) => {
             if (e.propertyName === "width" && !transitionHandled) {
               transitionHandled = true;
@@ -417,9 +325,8 @@ export const genieExpand = (
       handleTransitionEnd
     );
 
-    // Iniciar animação após delay
-    setTimeout(() => {
-      const sDim = sourceDim;
+    // Iniciar animação imediatamente (sem delay desnecessário)
+    requestAnimationFrame(() => {
       const tDim = targetDimFinal;
 
       steps.forEach((step, i) => {
@@ -428,9 +335,9 @@ export const genieExpand = (
         step.style.backgroundPosition = `0% ${bgy}%`;
       });
 
-      sourceElement.style.backgroundPosition = `0 -${sDim.h + 10}px`;
+      sourceElement.style.backgroundPosition = `0 -${sourceDim.h + 10}px`;
       genieEl.classList.add("expand");
-    }, 100);
+    });
   });
 };
 
@@ -449,22 +356,9 @@ export const genieCollapse = (
       return;
     }
 
-    // IMPORTANTE: Capturar conteúdo da janela ANTES de ocultá-la
-    // Garantir que a janela esteja visível para captura
-    const wasHidden =
-      sourceElement.style.visibility === "hidden" ||
-      window.getComputedStyle(sourceElement).visibility === "hidden";
-    if (wasHidden) {
-      sourceElement.style.visibility = "visible";
-      sourceElement.style.opacity = "1";
-      // Aguardar renderização
-      await new Promise((r) => requestAnimationFrame(r));
-    }
-
-    // Capturar conteúdo da janela enquanto visível
+    // Capturar conteúdo (usa cache se já capturado nesta sessão)
     const windowBg = await captureWindowContent(sourceElement);
 
-    // Criar elemento genie ANTES de ocultar a janela
     const genieEl = document.createElement("div");
     genieEl.className = "genie";
     genieEl.style.position = "fixed";
@@ -475,7 +369,6 @@ export const genieCollapse = (
     genieEl.style.zIndex = "10000";
     genieEl.style.pointerEvents = "none";
 
-    // Copiar posição e tamanho da janela
     genieEl.style.width = `${sourceDim.w}px`;
     genieEl.style.height = `${sourceDim.h}px`;
     genieEl.style.top = `${sourceDim.t}px`;
@@ -494,20 +387,19 @@ export const genieCollapse = (
         "rgba(255, 255, 255, 0.9)";
     }
 
-    // Adicionar genie ao DOM ANTES de ocultar a janela
     document.body.appendChild(genieEl);
 
-    // Aguardar um frame para garantir que o genie está renderizado
-    await new Promise((r) => requestAnimationFrame(r));
+    await nextFrame();
 
-    // AGORA ocultar a janela para a animação (genie já está visível)
     sourceElement.style.visibility = "hidden";
     sourceElement.style.opacity = "0";
 
-    const stepLength = Math.ceil((targetDim.t - sourceDim.t) / STEP_HEIGHT);
+    // Âncora vertical: centro do ícone (o genie colapsa para trás do ícone)
+    const targetAnchorY = targetDim.t + targetDim.h / 2;
+
+    const stepLength = Math.ceil((targetAnchorY - sourceDim.t) / STEP_HEIGHT);
     const steps: HTMLDivElement[] = [];
 
-    // Criar steps iniciais
     for (let i = 0; i < stepLength; i++) {
       const step = document.createElement("div");
       step.className = "genie-step";
@@ -535,13 +427,11 @@ export const genieCollapse = (
 
     let transitionHandled = false;
 
-    // Animar colapso - baseado no código original
-    setTimeout(() => {
-      const steps = genieEl.childNodes as NodeListOf<HTMLElement>;
+    requestAnimationFrame(() => {
+      const genieSteps = genieEl.childNodes as NodeListOf<HTMLElement>;
 
-      // Configurar alvo como um ponto pequeno no centro do ícone
       const targetCenter = targetDim.l + targetDim.w / 2;
-      const finalWidth = 4; // Ponto pequeno
+      const finalWidth = 4;
       const finalLeft = targetCenter - finalWidth / 2;
 
       const radiansLeft = Math.floor((finalLeft - sourceDim.l) / 2);
@@ -550,8 +440,8 @@ export const genieCollapse = (
       const increase = (Math.PI * 2) / (stepLength * 2);
       let counter = 4.7;
 
-      for (let i = 0; i < steps.length; i++) {
-        const step = steps[i];
+      for (let i = 0; i < genieSteps.length; i++) {
+        const step = genieSteps[i];
         step.style.left =
           Math.ceil(Math.sin(counter) * radiansLeft + radiansLeft) + "px";
         step.style.width =
@@ -564,11 +454,10 @@ export const genieCollapse = (
 
         if (e.propertyName === "left") {
           if (genieEl.classList.contains("collapse")) {
-            // Ajustar background position final
-            const diffT = targetDim.t + sourceDim.t - 100; // Valor empírico do original
+            const diffT = targetAnchorY + sourceDim.t - 100;
 
-            for (let i = 0; i < steps.length; i++) {
-              const step = steps[i];
+            for (let i = 0; i < genieSteps.length; i++) {
+              const step = genieSteps[i];
               const stepHeight = step.offsetHeight;
               step.style.backgroundPosition = `0px ${
                 diffT + i - i * stepHeight
@@ -579,7 +468,6 @@ export const genieCollapse = (
             genieEl.classList.add("change-pace");
             genieEl.style.height = "0px";
 
-            // Aguardar animação de background-position final
             const handleBgTransition = (e: TransitionEvent) => {
               if (
                 (e.propertyName === "background-position" ||
@@ -596,8 +484,8 @@ export const genieCollapse = (
                 genieEl.remove();
                 onComplete?.();
                 resolve();
-                if (steps.length > 0) {
-                  steps[steps.length - 1].removeEventListener(
+                if (genieSteps.length > 0) {
+                  genieSteps[genieSteps.length - 1].removeEventListener(
                     "transitionend",
                     handleBgTransition
                   );
@@ -605,14 +493,13 @@ export const genieCollapse = (
               }
             };
 
-            if (steps.length > 0) {
+            if (genieSteps.length > 0) {
               prefixedEvent(
-                steps[steps.length - 1],
+                genieSteps[genieSteps.length - 1],
                 "transitionend",
                 handleBgTransition
               );
             } else {
-              // Fallback se não houver steps
               onComplete?.();
               resolve();
             }
@@ -620,9 +507,9 @@ export const genieCollapse = (
         }
       };
 
-      if (steps.length > 0) {
+      if (genieSteps.length > 0) {
         prefixedEvent(
-          steps[steps.length - 1],
+          genieSteps[genieSteps.length - 1],
           "transitionend",
           handleTransitionEnd
         );
@@ -630,7 +517,7 @@ export const genieCollapse = (
         onComplete?.();
         resolve();
       }
-    }, 100);
+    });
   });
 };
 
@@ -646,17 +533,14 @@ export const popEffect = (
       return;
     }
 
-    // Capturar estilos originais
     const originalTransition = element.style.transition;
     const originalTransform = element.style.transform;
     const originalOpacity = element.style.opacity;
 
-    // Aplicar animação pop
-    element.style.transition = "transform 0.2s ease-out, opacity 0.2s ease-out";
+    element.style.transition = "transform 0.14s ease-out, opacity 0.14s ease-out";
     element.style.transform = "scale(0.8)";
     element.style.opacity = "0";
 
-    // Aguardar animação terminar
     const handleTransitionEnd = (e: TransitionEvent) => {
       if (
         e.target === element &&
@@ -666,6 +550,7 @@ export const popEffect = (
         element.style.transition = originalTransition;
         element.style.transform = originalTransform;
         element.style.opacity = originalOpacity;
+        clearGenieCache(element);
         onComplete?.();
         resolve();
       }
@@ -673,15 +558,15 @@ export const popEffect = (
 
     element.addEventListener("transitionend", handleTransitionEnd);
 
-    // Fallback timeout
     setTimeout(() => {
       element.removeEventListener("transitionend", handleTransitionEnd);
       element.style.transition = originalTransition;
       element.style.transform = originalTransform;
       element.style.opacity = originalOpacity;
+      clearGenieCache(element);
       onComplete?.();
       resolve();
-    }, 300);
+    }, 220);
   });
 };
 

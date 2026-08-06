@@ -17,6 +17,11 @@
   -webkit-user-select: none;
 }
 
+/* Oculta o cursor customizado durante a tela de splash (carregamento) */
+html.splash-active .custom-cursor {
+  display: none !important;
+}
+
 .custom-cursor img {
   /* Ensure the image doesn't add layout shift or interaction */
   display: block;

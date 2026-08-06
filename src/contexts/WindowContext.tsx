@@ -39,6 +39,26 @@ interface WindowContextType {
   ) => void;
 }
 
+// Mapeamento de títulos legados para IDs de aplicativo do dock
+const APP_ID_MAP: Record<string, string> = {
+  "Sobre Mim": "about_me",
+  "Projetos": "projects",
+  "Contato": "contact",
+  "Habilidades": "skills",
+};
+
+// Resolve o appId do dock a partir de uma janela (evita duplicação de mapeamento)
+const resolveAppId = (window: {
+  appId?: string;
+  title: string;
+}): string => {
+  return (
+    window.appId ||
+    APP_ID_MAP[window.title] ||
+    window.title.toLowerCase()
+  );
+};
+
 const WindowContext = createContext<WindowContextType | undefined>(undefined);
 
 export const WindowProvider = ({ children }: { children: ReactNode }) => {
@@ -102,17 +122,7 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
     ) as HTMLElement;
 
     // Mapear títulos para IDs de aplicativo do dock
-    const appIdMap: Record<string, string> = {
-      "Sobre Mim": "about_me",
-      "Projetos": "projects",
-      "Contato": "contact",
-      "Habilidades": "skills",
-    };
-
-    const appId =
-      windowProps.appId ||
-      appIdMap[windowProps.title] ||
-      windowProps.title.toLowerCase();
+    const appId = resolveAppId(windowProps);
     const dockIcon = document.querySelector(
       `[data-dock-app="${appId}"]`
     ) as HTMLElement;
@@ -206,16 +216,7 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
       `[data-window-id="${id}"]`
     ) as HTMLElement;
 
-    // Mapear títulos para IDs de aplicativo do dock
-    const appIdMap: Record<string, string> = {
-      "Sobre Mim": "about_me",
-      Projetos: "projects",
-      Contato: "contact",
-      Habilidades: "skills",
-    };
-
-    const appId =
-      window.appId || appIdMap[window.title] || window.title.toLowerCase();
+    const appId = resolveAppId(window);
     const dockIcon = document.querySelector(
       `[data-dock-app="${appId}"]`
     ) as HTMLElement;
@@ -300,16 +301,7 @@ export const WindowProvider = ({ children }: { children: ReactNode }) => {
         `[data-window-id="${id}"]`
       ) as HTMLElement;
 
-      // Mapear títulos para IDs de aplicativo do dock
-      const appIdMap: Record<string, string> = {
-        "Sobre Mim": "about_me",
-        Projetos: "projects",
-        Contato: "contact",
-        Habilidades: "skills",
-      };
-
-      const appId =
-        window.appId || appIdMap[window.title] || window.title.toLowerCase();
+      const appId = resolveAppId(window);
       const dockIcon = document.querySelector(
         `[data-dock-app="${appId}"]`
       ) as HTMLElement;
